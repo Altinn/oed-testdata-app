@@ -1,0 +1,80 @@
+{
+  "DaEventList": [
+    [
+      {
+        "specversion": "1.0",
+        "id": "a7a7d8b9-7956-4031-922e-b9c02f4a3643",
+        "source": "https://domstol.no",
+        "type": "DODSFALLSAK-STATUS_OPPDATERT",
+        "datacontenttype": "application/json",
+        "time": "1900-01-01T00:00:00Z",
+        "data": {
+          "@id": "https://hendelsesliste.test.domstol.no/api/objects/a7a7d8b9-7956-4031-922e-b9c02f4a3643"
+        }
+      }
+    ]
+  ],
+  "DaCaseList": [
+    {
+      "sakId": "a7a7d8b9-7956-4031-922e-b9c02f4a3643",
+      "avdode": "24817296595",
+      "embete": "Oslo Tingrett",
+      "status": "MOTTATT",
+      "parter": [
+        {
+          "nin": "05844498863",
+          "role": "MOR",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
+        },
+        {
+          "nin": "13814497164",
+          "role": "FAR",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
+        },
+        {
+          "nin": "13837297278",
+          "role": "GJENLEV_PARTNER",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
+        },
+        {
+          "nin": "15870897739",
+          "role": "BARN",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
+        },
+        {
+          "nin": "10839998622",
+          "role": "BARN",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
+        }
+      ],
+      "receivedDate": "1900-01-01T00:00:00Z",
+      "deadlineDate": "1900-01-01T00:00:00Z",
+      "resultatType": "PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99",
+      "skifteattest": {
+        "arvinger": [ "05844498863", "13814497164", "13837297278", "15870897739", "10839998622" ],
+        "arvingerSomPaatarSegGjeldsansvar": [ "05844498863" ],
+        "resultat": "PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99"
+      }
+    }
+  ]
+}

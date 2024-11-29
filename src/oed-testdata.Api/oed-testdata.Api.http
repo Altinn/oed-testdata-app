@@ -1,0 +1,6 @@
+@oed_testdata.Api_HostAddress = http://localhost:5014
+
+GET {{oed_testdata.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

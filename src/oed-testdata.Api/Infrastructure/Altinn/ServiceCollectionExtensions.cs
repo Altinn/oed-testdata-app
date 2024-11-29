@@ -2,7 +2,7 @@
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddMaskinportenClient(
+    public static IServiceCollection AddAltinnClient(
         this IServiceCollection services, 
         IConfiguration configuration)
     {
@@ -10,9 +10,9 @@ public static class ServiceCollectionExtensions
 
         services
             .AddMemoryCache()
-            .AddTransient<MaskinportenAuthHandler>()
+            .AddTransient<AltinnAuthHandler>()
             .AddHttpClient<IAltinnClient, AltinnClient>()
-            .AddHttpMessageHandler<MaskinportenAuthHandler>();
+            .AddHttpMessageHandler<AltinnAuthHandler>();
 
         return services;
     }

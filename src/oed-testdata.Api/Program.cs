@@ -1,18 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
 using oed_testdata.Api.Infrastructure.Altinn;
 using oed_testdata.Api.Infrastructure.TestdataStore;
+using oed_testdata.Api.Oed;
 using oed_testdata.Api.Services;
 using oed_testdata.Api.Testdata.Estate;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
 builder.Services.AddTransient<ITestService, TestService>();
-builder.Services.AddMaskinportenClient(builder.Configuration);
+builder.Services.AddAltinnClient(builder.Configuration);
 builder.Services.AddTestdataStore();
 
 var app = builder.Build();
@@ -25,37 +24,15 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapEstateEndpoints();
+app.MapOedInstanceEndpoints();
 
 app.UseHttpsRedirection();
- 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
 
 
 app.MapGet("/test", async ([FromServices]ITestService testService) =>
 {
-    await testService.Test();
+    var instanceData = await testService.Test();
+    return TypedResults.Ok(instanceData);
 }).WithName("Test");
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
-
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

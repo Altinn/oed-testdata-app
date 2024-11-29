@@ -33,7 +33,6 @@ public class AltinnClient(
         return altinnResponse.Instances;
     }
 
-    // https://platform.tt02.altinn.no/storage/api/v1/instances/{{instanceId}}/data/{{instanceDataId}}
     public async Task<List<Instance>> GetOedInstancesByDeceasedNin(string deceasedNin)
     {
         var baseUri = new Uri(options.CurrentValue.PlatformUrl, UriKind.Absolute);

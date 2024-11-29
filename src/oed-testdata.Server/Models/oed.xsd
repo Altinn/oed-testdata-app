@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="oed" type="OED_M" />
+	<xs:complexType name="OED_M">
+		<xs:sequence>
+			<xs:element name="CaseId" type="Text" />
+			<xs:element name="DeceasedInfo" type="DeceasedInfo" />
+			<xs:element minOccurs="1" maxOccurs="unbounded" name="Heirs" type="HeirInfo" />
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="StatusNotifications" type="StatusNotification" />
+			<xs:element name="MarriagePactsFromRegister" type="Text" />
+			<xs:element name="PropertyRights" type="Text" />
+			<xs:element name="ProbateDeadline" type="Date" />
+			<xs:element name="DistrictCourtName" type="Text" />
+			<xs:element name="ProbateResult" type="ProbateResult" />
+			<xs:element name="CaseStatus" type="Text" />
+			<xs:element name="Version" type="Text" />
+			<xs:element name="EstateRevoked" type="xs:boolean" />
+			<xs:element name="MyTaxUri" type="Text" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProbateResult">
+		<xs:sequence>
+			<xs:element name="Result" type="Text" />
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="Heirs" type="Text" />
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="AcceptsDebtHeirs" type="Text" />
+			<xs:element name="Received" type="Text" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DeceasedInfo">
+		<xs:sequence>
+			<xs:element name="Deceased" type="Person" />
+			<xs:element name="ContactPerson" type="Person" />
+			<xs:element name="DateOfDeath" type="Text" />
+			<xs:element name="MaritalStatus" type="Integer" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HeirInfo">
+		<xs:sequence>
+			<xs:element name="Heir" type="Person" />
+			<xs:element name="EstateReadyCorrespondenceSent" type="xs:boolean" />
+			<xs:element name="ProbateIssuedCorrespondenceSent" type="xs:boolean" />
+			<xs:element name="Waiver60DayPeriod" type="xs:boolean" />
+			<xs:element name="WillingToAssumeDebt" type="xs:boolean" />
+			<xs:element name="SignedDate" type="xs:dateTime" nillable="true"/>
+			<xs:element name="PreferredSettlementProcedure" type="Text"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StatusNotification">
+		<xs:sequence>
+			<xs:element name="PartyID" type="Text" />
+			<xs:element name="Timestamp" type="Text" />
+			<xs:element name="StatusNotificationType" type="Text" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Person">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="UserId" nillable="true" type="Integer" />
+			<xs:element name="PartyId" type="Integer" />
+			<xs:element name="Birthday" type="Text" />
+			<xs:element name="Nin" type="Text" />
+			<xs:element name="FirstName" type="Text" />
+			<xs:element name="MiddleName" type="Text" />
+			<xs:element name="LastName" type="Text" />
+			<xs:element name="Address" type="Address" />
+			<xs:element name="Role" type="Text" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Address">
+		<xs:sequence>
+			<xs:element name="StreetAddress" type="Text" />
+			<xs:element name="PostalCode" type="Text" />
+			<xs:element name="City" type="Text" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="Date">
+		<xs:restriction base="xs:date" />
+	</xs:simpleType>
+	<xs:simpleType name="Decimal">
+		<xs:restriction base="xs:decimal" />
+	</xs:simpleType>
+	<xs:simpleType name="Integer">
+		<xs:restriction base="xs:integer" />
+	</xs:simpleType>
+	<xs:simpleType name="Text">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+</xsd:schema>

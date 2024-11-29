@@ -69,12 +69,8 @@
       ],
       "receivedDate": "1900-01-01T00:00:00Z",
       "deadlineDate": "1900-01-01T00:00:00Z",
-      "resultatType": "PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99",
-      "skifteattest": {
-        "arvinger": [ "05844498863", "13814497164", "13837297278", "15870897739", "10839998622" ],
-        "arvingerSomPaatarSegGjeldsansvar": [ "05844498863" ],
-        "resultat": "PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99"
-      }
+      "resultatType": null,
+      "skifteattest": null
     }
   ]
 }

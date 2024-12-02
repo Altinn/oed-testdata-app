@@ -1,0 +1,1 @@
+export const ESTATE_API = "/api/testdata/estate/";

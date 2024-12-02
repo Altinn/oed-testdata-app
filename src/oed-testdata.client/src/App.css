@@ -1,11 +1,23 @@
-﻿#root {
-    max-width: 1280px;
-    margin: 0 auto;
+﻿main {
+    margin: 5rem auto;
+    max-width: 1200px;
+    padding: 1rem;
+  }
+  
+  pre {
+    background-color: var(--fds-colors-grey-100);
     padding: 2rem;
-    text-align: center;
-}
-
-th, td {
-    padding-left: 1rem;
-    padding-right: 1rem;
-}
+    border-radius: 0.25rem;
+    overflow-x: auto;
+  }
+  
+  .container__flex {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 2rem;
+  }
+  
+  .xml-container {
+    margin-top: 5rem;
+  }
+  

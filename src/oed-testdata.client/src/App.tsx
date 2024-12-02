@@ -1,56 +1,95 @@
-import { useEffect, useState } from 'react';
-import './App.css';
+import { Heading } from "@digdir/designsystemet-react";
+import "./App.css";
+import Card from "./components/card";
 
-interface Forecast {
-    date: string;
-    temperatureC: number;
-    temperatureF: number;
-    summary: string;
+export interface IPerson {
+  ssn: string;
+  relation?: string;
 }
 
+export interface IData {
+  estateSsn: string;
+  heirs: IPerson[];
+}
+
+const testdata = [
+  {
+    estateSsn: "24817296595",
+    heirs: [
+      {
+        ssn: "05844498863",
+        relation: "MOR",
+      },
+      {
+        ssn: "13814497164",
+        relation: "FAR",
+      },
+      {
+        ssn: "13837297278",
+        relation: "GJENLEV_PARTNER",
+      },
+      {
+        ssn: "15870897739",
+        relation: "BARN",
+      },
+      {
+        ssn: "10839998622",
+        relation: "BARN",
+      },
+    ],
+  },
+  /* new testdata with only two childs left */
+  {
+    estateSsn: "24817296597",
+    heirs: [
+      {
+        ssn: "15870897739",
+        relation: "BARN",
+      },
+      {
+        ssn: "10839998622",
+        relation: "BARN",
+      },
+    ],
+  },
+  /* new testdata with 3 child and gjenlevende partner */
+  {
+    estateSsn: "24817296593",
+    heirs: [
+      {
+        ssn: "15870897739",
+        relation: "BARN",
+      },
+      {
+        ssn: "10839998622",
+        relation: "BARN",
+      },
+      {
+        ssn: "13837297278",
+        relation: "GJENLEV_PARTNER",
+      },
+    ],
+  },
+];
+
 function App() {
-    const [forecasts, setForecasts] = useState<Forecast[]>();
+  return (
+    <main>
+      <Heading level={1} size="xl" spacing>
+        Digitalt Dødsbo - Testdata
+      </Heading>
 
-    useEffect(() => {
-        populateWeatherData();
-    }, []);
-
-    const contents = forecasts === undefined
-        ? <p><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationreact">https://aka.ms/jspsintegrationreact</a> for more details.</em></p>
-        : <table className="table table-striped" aria-labelledby="tableLabel">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Temp. (C)</th>
-                    <th>Temp. (F)</th>
-                    <th>Summary</th>
-                </tr>
-            </thead>
-            <tbody>
-                {forecasts.map(forecast =>
-                    <tr key={forecast.date}>
-                        <td>{forecast.date}</td>
-                        <td>{forecast.temperatureC}</td>
-                        <td>{forecast.temperatureF}</td>
-                        <td>{forecast.summary}</td>
-                    </tr>
-                )}
-            </tbody>
-        </table>;
-
-    return (
-        <div>
-            <h1 id="tableLabel">Weather forecast</h1>
-            <p>This component demonstrates fetching data from the server.</p>
-            {contents}
-        </div>
-    );
-
-    async function populateWeatherData() {
-        const response = await fetch('weatherforecast');
-        const data = await response.json();
-        setForecasts(data);
-    }
+      <ul className="container__flex">
+        {testdata.map((data) => {
+          return (
+            <li key={data.estateSsn}>
+              <Card data={data} />
+            </li>
+          );
+        })}
+      </ul>
+    </main>
+  );
 }
 
 export default App;

@@ -1,4 +1,6 @@
-﻿using System.Security.Claims;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Security.Claims;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using oed_testdata.Server.Infrastructure.OedEvents;
@@ -20,12 +22,13 @@ namespace oed_testdata.Server.Testdata.Estate
         {
             group.MapGet("/", GetAll);
             group.MapGet("/{estateSsn}", GetSingleByEstateSsn);
-            group.MapPost("/", CreateOrUpdateEstate);
+            group.MapPost("/", CreateOrRecreateEstate);
+            group.MapPatch("/{estateSsn}", PatchEstate);
 
             return group;
         }
 
-        private static async Task<Ok<IEnumerable<EstateDto>>> GetAll(ITestdataStore store, ClaimsPrincipal user)
+        private static async Task<Ok<IEnumerable<EstateDto>>> GetAll(ITestdataStore store)
         {
             var data = await store.ListAll();
             return TypedResults.Ok(data.Select(EstateMapper.Map));
@@ -36,7 +39,8 @@ namespace oed_testdata.Server.Testdata.Estate
             var data = await store.GetByEstateSsn(estateSsn);
             return TypedResults.Ok(EstateMapper.Map(data));
         }
-        private static async Task<IResult> CreateOrUpdateEstate(
+
+        private static async Task<IResult> CreateOrRecreateEstate(
             ITestdataStore store, 
             ILoggerFactory loggerFactory, 
             IOedEventsClient oedEventsClient,
@@ -50,15 +54,9 @@ namespace oed_testdata.Server.Testdata.Estate
             try
             {
                 var data = await store.GetByEstateSsn(request.EstateSsn);
-
-                //// Poster først en update med status FEILFORT for å fjerne alle tilganger til boet
-                //data.UpdateTimestamps(DateTimeOffset.Now - TimeSpan.FromSeconds(1));
-                //data.SetFeilfortStatus();
-                //await oedEventsClient.PostDaEvent(data);
-
-                // Poster deretter en vanlig oppdatering av boet som vil oppdatere instansen og populere korrekte roller for alle parter i boet
-                data.UpdateTimestamps(DateTimeOffset.Now);
                 data.SetMottattStatus();
+                data.UpdateTimestamps(DateTimeOffset.Now);
+
                 await oedEventsClient.PostDaEvent(data);
 
                 return TypedResults.Ok(EstateMapper.Map(data));
@@ -69,8 +67,65 @@ namespace oed_testdata.Server.Testdata.Estate
                 return TypedResults.BadRequest();
             }
         }
+
+        private static async Task<IResult> PatchEstate(
+            ITestdataStore store,
+            ILoggerFactory loggerFactory,
+            IOedEventsClient oedEventsClient,
+            [FromRoute] string estateSsn,
+            [FromBody] PatchEstateRequest request)
+        {
+            var logger = loggerFactory.CreateLogger(typeof(EstateEndpoints));
+
+            if (string.IsNullOrWhiteSpace(estateSsn) || 
+                string.IsNullOrWhiteSpace(request.EstateSsn) ||
+                estateSsn != request.EstateSsn)
+            {
+                return TypedResults.BadRequest();
+            }
+
+            try
+            {
+                var data = await store.GetByEstateSsn(request.EstateSsn);
+
+                if (request.Status is not null)
+                {
+                    data.DaCaseList.Single().Status = request.Status.ToString()!;
+                }
+
+                data.UpdateTimestamps(DateTimeOffset.Now);
+                await oedEventsClient.PostDaEvent(data);
+                
+                return TypedResults.Ok(EstateMapper.Map(data));
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e, "Ooops!");
+                return TypedResults.BadRequest();
+            }
+        }
+
     }
 
 
-    public record CreateOrUpdateEstateRequest(string EstateSsn);
+    public class CreateOrUpdateEstateRequest
+    {
+        public required string EstateSsn { get; init; }
+    }
+
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    public enum EstateStatus
+    {
+        MOTTATT = 0,
+        FERDIGBEHANDLET = 1,
+        FEILFORT = 2,
+    }
+
+    public class PatchEstateRequest
+    {
+        public required string EstateSsn { get; init; }
+
+        [JsonConverter(typeof(JsonStringEnumConverter<EstateStatus>))]
+        public EstateStatus? Status { get; init; }
+    }
 }

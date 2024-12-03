@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using oed_testdata.Server.Infrastructure.Altinn;
 using oed_testdata.Server.Infrastructure.Auth;
+using oed_testdata.Server.Infrastructure.OedEvents;
 using oed_testdata.Server.Infrastructure.TestdataStore;
 using oed_testdata.Server.Oed;
 using oed_testdata.Server.Services;
@@ -39,6 +40,7 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddTransient<ITestService, TestService>();
 builder.Services.AddAltinnClient(builder.Configuration);
+builder.Services.AddOedEventsClient(builder.Configuration);
 builder.Services.AddTestdataStore();
 
 var app = builder.Build();

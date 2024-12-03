@@ -8,15 +8,25 @@ import LoginDialog from "./components/login";
 
 function App() {
   const { data, loading } = useFetchData<Estate[]>(ESTATE_API);
+  const isAuthenticated = localStorage.getItem("auth") === "true";
+
+  if (!isAuthenticated) {
+    return (
+      <main>
+        <Heading level={1} size="xl" spacing>
+          Digitalt Dødsbo - Testdata
+        </Heading>
+
+        <LoginDialog />
+      </main>
+    );
+  }
 
   return (
     <main>
       <Heading level={1} size="xl" spacing>
         Digitalt Dødsbo - Testdata
       </Heading>
-
-
-      <LoginDialog />
 
       {loading && (
         <Paragraph size="md" className="flex-center">

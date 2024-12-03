@@ -5,7 +5,6 @@ import {
   Button,
   ErrorMessage,
   Heading,
-  Paragraph,
   Textfield,
 } from "@digdir/designsystemet-react";
 export default function LoginDialog() {
@@ -82,7 +81,6 @@ export default function LoginDialog() {
           <ErrorMessage>
             Feil brukernavn eller passord. Prøv igjen.
           </ErrorMessage>
-
         )}
         <Button type="submit">Logg inn</Button>
       </form>

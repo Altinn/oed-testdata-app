@@ -10,7 +10,7 @@ namespace oed_testdata.Server.Infrastructure.Auth
     {
         public static void MapBasicAuthenticationEndpoints(this WebApplication app)
         {
-            app.MapGroup("/auth").MapEndpoints();
+            app.MapGroup("/api/auth").MapEndpoints();
         }
 
         private static RouteGroupBuilder MapEndpoints(this RouteGroupBuilder group)

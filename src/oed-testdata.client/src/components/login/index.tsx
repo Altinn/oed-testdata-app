@@ -11,7 +11,7 @@ export default function LoginDialog() {
     setIsLoading(true);
 
     try{
-      fetch('https://localhost:7280/auth/login', {
+      fetch(`/api/auth/login`, {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -41,7 +41,7 @@ export default function LoginDialog() {
   }
 
   if (localStorage.getItem("auth") === "true") return null;
-  
+
   return (
     <div id="login-dialog">
       <h1>LOGIN</h1>

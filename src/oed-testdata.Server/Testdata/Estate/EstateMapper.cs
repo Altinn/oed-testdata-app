@@ -4,18 +4,17 @@ namespace oed_testdata.Server.Testdata.Estate;
 
 public static class EstateMapper
 {
-    public static EstateDto Map(DaData daData)
+    public static EstateDto Map(EstateData estateData)
     {
-        return daData.DaCaseList
-            .Select(da => new EstateDto
+        return new EstateDto
+        {
+            EstateSsn = estateData.EstateSsn,
+            EstateName = estateData.EstateName,
+            Heirs = estateData.Data.DaCaseList.Single().Parter.Select(p => new Heir
             {
-                EstateSsn = da.Avdode,
-                Heirs = da.Parter.Select(p => new Heir
-                {
-                    Ssn = p.Nin,
-                    Relation = p.Role
-                })
+                Ssn = p.Nin,
+                Relation = p.Role
             })
-            .Single();
+        };
     }
 }

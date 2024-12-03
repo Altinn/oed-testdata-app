@@ -3,6 +3,7 @@
     public class EstateDto
     {
         public required string EstateSsn { get; init; }
+        public required string EstateName { get; init; }
         public required IEnumerable<Heir> Heirs { get; init; }
     }
 

@@ -35,7 +35,7 @@ export default function EstateCard({ data }: IProps) {
   return (
     <article className="card">
       <Heading level={2} size="md" spacing className="card__heading">
-        Dødsbo
+        Dødsbo - {data.estateName}
         <CopyToClipboard value={data.estateSsn} />
       </Heading>
 

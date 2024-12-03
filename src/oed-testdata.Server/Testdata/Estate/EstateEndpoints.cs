@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Security.Claims;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -53,13 +52,15 @@ namespace oed_testdata.Server.Testdata.Estate
             
             try
             {
-                var data = await store.GetByEstateSsn(request.EstateSsn);
+                var estate = await store.GetByEstateSsn(request.EstateSsn);
+
+                var data = estate.Data;
                 data.SetMottattStatus();
                 data.UpdateTimestamps(DateTimeOffset.Now);
 
                 await oedEventsClient.PostDaEvent(data);
 
-                return TypedResults.Ok(EstateMapper.Map(data));
+                return TypedResults.Ok(EstateMapper.Map(estate));
             }
             catch (Exception e)
             {
@@ -86,7 +87,8 @@ namespace oed_testdata.Server.Testdata.Estate
 
             try
             {
-                var data = await store.GetByEstateSsn(request.EstateSsn);
+                var estate = await store.GetByEstateSsn(request.EstateSsn);
+                var data = estate.Data;
 
                 if (request.Status is not null)
                 {
@@ -96,7 +98,7 @@ namespace oed_testdata.Server.Testdata.Estate
                 data.UpdateTimestamps(DateTimeOffset.Now);
                 await oedEventsClient.PostDaEvent(data);
                 
-                return TypedResults.Ok(EstateMapper.Map(data));
+                return TypedResults.Ok(EstateMapper.Map(estate));
             }
             catch (Exception e)
             {

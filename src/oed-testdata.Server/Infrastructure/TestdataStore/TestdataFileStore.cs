@@ -2,28 +2,55 @@
 
 namespace oed_testdata.Server.Infrastructure.TestdataStore;
 
+public class EstateData
+{
+    public required string EstateSsn { get; init; }
+    public required string EstateName { get; init; }
+    public required DaData Data { get; init; }
+}
+
 public class TestdataFileStore : ITestdataStore
 {
     private const string EstatePath = "./Testdata/Json/Estate";
 
-    public async Task<IEnumerable<DaData>> ListAll()
+    public async Task<IEnumerable<EstateData>> ListAll()
     {
         EnsureDirectory();
 
-        var daDataList = new List<DaData>();
+        var estateList = new List<EstateData>();
         foreach (var file in Directory.EnumerateFiles(EstatePath))
         {
             await using var filestream = File.OpenRead(file);
+            
             var daData = await JsonSerializer.DeserializeAsync<DaData>(filestream);
-
             daData!.UpdateTimestamps(DateTimeOffset.UtcNow);
-            daDataList.Add(daData);
+
+            var estateData = new EstateData
+            {
+                EstateSsn = daData.DaCaseList.Single().Avdode,
+                EstateName = ParseEstateNameFromFileName(file),
+                Data = daData
+            };
+
+            estateList.Add(estateData);
         }
 
-        return daDataList;
+        return estateList;
     }
 
-    public async Task<DaData> GetByEstateSsn(string estateSsn)
+    private static string ParseEstateNameFromFileName(string filepath)
+    {
+        var filename = Path.GetFileNameWithoutExtension(filepath);
+        var parts = filename.Split("-");
+        
+        if (parts.Length != 2 || string.IsNullOrWhiteSpace(parts[1])) 
+            return "";
+
+        var estateName = parts[1].Replace("_", " ");
+        return estateName;
+    }
+
+    public async Task<EstateData> GetByEstateSsn(string estateSsn)
     {
         EnsureDirectory();
 
@@ -34,10 +61,14 @@ public class TestdataFileStore : ITestdataStore
 
         await using var filestream = File.OpenRead(file);
         var daData = await JsonSerializer.DeserializeAsync<DaData>(filestream);
-
         daData!.UpdateTimestamps(DateTimeOffset.UtcNow);
 
-        return daData;
+        return new EstateData
+        {
+            EstateSsn = daData.DaCaseList.Single().Avdode,
+            EstateName = ParseEstateNameFromFileName(file),
+            Data = daData
+        };
     }
 
     private static void EnsureDirectory()

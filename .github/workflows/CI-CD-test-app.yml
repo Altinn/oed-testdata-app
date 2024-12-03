@@ -38,7 +38,7 @@ jobs:
       run: dotnet test -c Release --no-build --verbosity normal
 
     - name: Publish
-      run: dotnet publish ./src/oed-testdata.Server/oed-testdata.Server.csproj --no-build -c Release -o ./publish
+      run: mkdir -p /home/runner/.aspnet/https && dotnet publish ./src/oed-testdata.Server/oed-testdata.Server.csproj --no-build -c Release -o ./publish
 
     - name: Deploy to Azure App Service (Test)
       uses: azure/webapps-deploy@v2

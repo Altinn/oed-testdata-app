@@ -15,3 +15,8 @@ ul {
 .numeric {
   font-variant-numeric: tabular-nums;
 }
+
+/* use view transitions by default */
+@view-transition {
+  navigation: auto;
+}

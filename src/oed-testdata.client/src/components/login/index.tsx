@@ -1,61 +1,89 @@
 import { useState } from "react";
 import "./style.css";
-
+import { AUTH_LOGIN_API } from "../../utils/constants";
+import {
+  Button,
+  ErrorMessage,
+  Heading,
+  Textfield,
+} from "@digdir/designsystemet-react";
 export default function LoginDialog() {
-  const [username, setUsername] = useState<string>();
-  const [password, setPassword] = useState<string>();
+  const [formData, setFormData] = useState({ username: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
+  const [formError, setFormError] = useState(false);
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
 
-    try{
-      fetch(`/api/auth/login`, {
-        method: 'GET',
-        credentials: 'include',
+    const { username, password } = formData;
+
+    try {
+      fetch(AUTH_LOGIN_API, {
+        method: "GET",
+        credentials: "include",
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Basic ' + btoa(username + ':' + password)
-        }
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Basic " + btoa(username + ":" + password),
+        },
       })
-      .then(
-        function(response) {
+        .then(function (response) {
+          if (response.status === 401) {
+            setFormError(true);
+            return;
+          }
+
           if (response.status !== 200) {
-            console.log('Looks like there was a problem. Status Code: ' +
-              response.status);
+            console.log(
+              "Looks like there was a problem. Status Code: " + response.status
+            );
             return;
           }
           localStorage.setItem("auth", "true");
-          location.reload();
-        }
-      )
-      .catch(function(err) {
-        console.log('Fetch Error :-S', err);
-      });     
-    }
-    finally {
+          window.location.reload();
+        })
+        .catch(function (err) {
+          console.log("Fetch Error :-S", err);
+        });
+    } finally {
       setIsLoading(false);
     }
-  }
-
-  if (localStorage.getItem("auth") === "true") return null;
+  };
 
   return (
-    <div id="login-dialog">
-      <h1>LOGIN</h1>
+    <section id="login-dialog">
+      <Heading level={2} size="md" spacing>
+        Innlogging
+      </Heading>
+
       <form onSubmit={onSubmit}>
-        <label>
-          Username: 
-          <input name="username" type="text" onChange={(e) => setUsername(e.target.value)} disabled={isLoading} />
-        </label>
-        <label>
-          Password: 
-          <input name="password" type="password" onChange={(e) => setPassword(e.target.value)} disabled={isLoading} />
-        </label>        
-        <button type="submit" disabled={isLoading}>{isLoading ? "Loading..." : "Login!"}</button>
+        <Textfield
+          label="Brukernavn"
+          name="username"
+          error={formError}
+          onChange={(e) =>
+            setFormData({ ...formData, username: e.target.value })
+          }
+          disabled={isLoading}
+        />
+        <Textfield
+          label="Passord"
+          name="password"
+          type="password"
+          error={formError}
+          onChange={(e) =>
+            setFormData({ ...formData, password: e.target.value })
+          }
+          disabled={isLoading}
+        />
+        {formError && (
+          <ErrorMessage>
+            Feil brukernavn eller passord. Prøv igjen.
+          </ErrorMessage>
+        )}
+        <Button type="submit">Logg inn</Button>
       </form>
-    </div>
+    </section>
   );
 }

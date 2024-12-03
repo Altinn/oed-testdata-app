@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Http.HttpResults;
 using oed_testdata.Server.Infrastructure.TestdataStore;
 
 namespace oed_testdata.Server.Testdata.Estate
@@ -7,7 +8,7 @@ namespace oed_testdata.Server.Testdata.Estate
     {
         public static void MapEstateEndpoints(this WebApplication app)
         {
-            app.MapGroup("/api/testdata/estate").MapEndpoints();
+            app.MapGroup("/api/testdata/estate").MapEndpoints().RequireAuthorization();
             //.RequireAuthorization();
         }
 
@@ -19,7 +20,7 @@ namespace oed_testdata.Server.Testdata.Estate
             return group;
         }
 
-        private static async Task<Ok<IEnumerable<EstateDto>>> GetAll(ITestdataStore store)
+        private static async Task<Ok<IEnumerable<EstateDto>>> GetAll(ITestdataStore store, ClaimsPrincipal user)
         {
             var data = await store.ListAll();
             return TypedResults.Ok(data.Select(EstateMapper.Map));

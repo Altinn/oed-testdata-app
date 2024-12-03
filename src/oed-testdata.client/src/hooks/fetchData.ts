@@ -8,6 +8,7 @@ export const useFetchData = <T>(url: string) => {
     const fetchData = async () => {
       try {
         const response = await fetch(url);
+        if (response.status === 401) localStorage.setItem("auth", "false");
         const result = await response.json();
         setData(result as T);
       } catch (error) {

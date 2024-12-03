@@ -1,7 +1,7 @@
 import { Button, Heading, Label } from "@digdir/designsystemet-react";
 import "./style.css";
 import CopyToClipboard from "../copyToClipboard";
-import { ArrowCirclepathIcon } from "@navikt/aksel-icons";
+import { ArrowCirclepathIcon, TrashIcon } from "@navikt/aksel-icons";
 import { Estate } from "../../interfaces/IEstate";
 
 interface IProps {

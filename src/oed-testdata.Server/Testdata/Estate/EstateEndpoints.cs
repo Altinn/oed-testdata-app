@@ -50,7 +50,17 @@ namespace oed_testdata.Server.Testdata.Estate
             try
             {
                 var data = await store.GetByEstateSsn(request.EstateSsn);
+
+                // Poster først en update med status FEILFORT for å fjerne alle tilganger til boet
+                data.UpdateTimestamps(DateTimeOffset.Now - TimeSpan.FromSeconds(1));
+                data.SetFeilfortStatus();
                 await oedEventsClient.PostDaEvent(data);
+
+                // Poster deretter en vanlig oppdatering av boet som vil oppdatere instansen og populere korrekte roller for alle parter i boet
+                data.UpdateTimestamps(DateTimeOffset.Now);
+                data.SetMottattStatus();
+                await oedEventsClient.PostDaEvent(data);
+
                 return TypedResults.Ok(EstateMapper.Map(data));
             }
             catch (Exception e)

@@ -18,6 +18,16 @@ public class DaData
         daCase.ReceivedDate = timestamp;
         daCase.DeadlineDate = timestamp.AddDays(60);
     }
+
+    public void SetFeilfortStatus()
+    {
+        DaCaseList.Single().Status = "FEILFORT";
+    }
+
+    public void SetMottattStatus()
+    {
+        DaCaseList.Single().Status = "MOTTATT";
+    }
 }
 
 public class DaEvent

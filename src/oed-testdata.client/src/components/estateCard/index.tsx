@@ -1,17 +1,17 @@
 import { Button, Heading, Label } from "@digdir/designsystemet-react";
-import { IData } from "../../App";
 import "./style.css";
 import CopyToClipboard from "../copyToClipboard";
-import { ArrowCirclepathIcon, TrashIcon } from "@navikt/aksel-icons";
+import { ArrowCirclepathIcon } from "@navikt/aksel-icons";
+import { Estate } from "../../interfaces/IEstate";
 
 interface IProps {
-  data: IData;
+  data: Estate;
 }
 
-export default function Card({ data }: IProps) {
+export default function EstateCard({ data }: IProps) {
   return (
     <article className="card">
-      <Heading level={2} size="md" spacing>
+      <Heading level={2} size="md" spacing className="card__heading">
         Dødsbo
         <CopyToClipboard value={data.estateSsn} />
       </Heading>
@@ -34,10 +34,6 @@ export default function Card({ data }: IProps) {
       </section>
 
       <div className="card__footer">
-        <Button color="danger" variant="secondary" size="sm" disabled>
-          <TrashIcon title="a11y-title" fontSize="1.5rem" />
-          Slett
-        </Button>
         <Button color="first" size="sm">
           <ArrowCirclepathIcon title="a11y-title" fontSize="1.5rem" />
           Nullstill

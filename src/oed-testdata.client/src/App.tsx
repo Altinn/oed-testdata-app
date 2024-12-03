@@ -1,6 +1,6 @@
 import { Heading, Paragraph, Spinner } from "@digdir/designsystemet-react";
 import "./App.css";
-import Card from "./components/card";
+import EstateCard from "./components/estateCard";
 import { ESTATE_API } from "./utils/constants";
 import { useFetchData } from "./hooks/fetchData";
 import { Estate } from "./interfaces/IEstate";
@@ -25,7 +25,7 @@ function App() {
         {data?.map((estate) => {
           return (
             <li key={estate.estateSsn}>
-              <Card data={estate} />
+              <EstateCard data={estate} />
             </li>
           );
         })}

@@ -3,7 +3,7 @@ import "./style.css";
 import { AUTH_LOGIN_API } from "../../utils/constants";
 import {
   Button,
-  ErrorSummaryRoot,
+  ErrorMessage,
   Heading,
   Paragraph,
   Textfield,
@@ -79,11 +79,10 @@ export default function LoginDialog() {
           disabled={isLoading}
         />
         {formError && (
-          <ErrorSummaryRoot>
-            <Paragraph size="sm">
-              Feil brukernavn eller passord. Prøv igjen.
-            </Paragraph>
-          </ErrorSummaryRoot>
+          <ErrorMessage>
+            Feil brukernavn eller passord. Prøv igjen.
+          </ErrorMessage>
+
         )}
         <Button type="submit">Logg inn</Button>
       </form>

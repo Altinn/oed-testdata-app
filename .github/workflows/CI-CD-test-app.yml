@@ -1,4 +1,4 @@
-name: CI/CD authz-app
+name: CI/CD testapp-app
 
 on:
   push:

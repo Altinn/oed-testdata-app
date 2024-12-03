@@ -4,6 +4,9 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddTestdataStore(this IServiceCollection services)
     {
-        return services.AddTransient<ITestdataStore, TestdataFileStore>();
+        services.AddMemoryCache();
+        services.AddTransient<ITestdataStore, TestdataFileStore>();
+
+        return services;
     }
 }

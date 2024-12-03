@@ -1,6 +1,12 @@
 @oed_testdata.Server_HostAddress = http://localhost:5149
 
-GET {{oed_testdata.Server_HostAddress}}/weatherforecast/
+
+
+# Get all
+GET {{oed_testdata.Server_HostAddress}}/api/testdata/estate/
 Accept: application/json
 
+#Get Estate
+@oed_testdata.estateSsn = 12345678901
+GET  {{oed_testdata.Server_HostAddress}}/api/testdata/estate/{{oed_testdata.estateSsn}}
 ###

@@ -73,13 +73,16 @@ app.MapBasicAuthenticationEndpoints();
 app.MapEstateEndpoints();
 app.MapOedInstanceEndpoints();
 
-app.UseHttpsRedirection();
-
-app.MapGet("/test", async ([FromServices] ITestService testService) =>
+if (app.Environment.IsDevelopment())
 {
-    var instanceData = await testService.Test();
-    return TypedResults.Ok(instanceData);
-}).WithName("Test").RequireAuthorization();
+    app.MapGet("/test", async ([FromServices] ITestService testService) =>
+    {
+        var instanceData = await testService.Test();
+        return TypedResults.Ok(instanceData);
+    }).WithName("Test").RequireAuthorization();
+}
+
+app.UseHttpsRedirection();
 
 app.MapFallbackToFile("/index.html");
 

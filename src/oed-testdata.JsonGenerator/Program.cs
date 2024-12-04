@@ -22,7 +22,7 @@ try
             new Parter
             {
                 Nin = freg.id,
-                Role = freg.tenorRelasjonsnavn.ToUpper(),
+                Role = PartRoleConverter.Convert(freg.tenorRelasjonsnavn),
                 Formuesfullmakt = true,
                 PaatarGjeldsansvar = false,
                 GodkjennerSkifteattest = false

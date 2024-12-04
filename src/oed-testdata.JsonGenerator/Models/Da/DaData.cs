@@ -108,7 +108,8 @@ public class Parter
     public required string Nin { get; set; }
 
     [JsonPropertyName("role")]
-    public required string Role { get; set; }
+    [JsonConverter(typeof(JsonStringEnumConverter<PartRole>))]
+    public required PartRole Role { get; set; }
 
     [JsonPropertyName("formuesfullmakt")]
     public required bool Formuesfullmakt { get; set; }
@@ -124,4 +125,131 @@ public class Parter
 
     [JsonPropertyName("godkjennerSkifteattest")]
     public required bool GodkjennerSkifteattest { get; set; }
+}
+
+
+[System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+public enum PartRole
+{
+
+    [System.Runtime.Serialization.EnumMember(Value = @"PART_ANNEN")]
+    PART_ANNEN = 0,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"GJENLEV_EKTEFELLE_PARTNER")]
+    GJENLEV_EKTEFELLE_PARTNER = 1,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"GJENLEV_PARTNER")]
+    GJENLEV_PARTNER = 2,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"GJENLEV_SAMBOER")]
+    GJENLEV_SAMBOER = 3,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"BARN")]
+    BARN = 4,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"BARNEBARN")]
+    BARNEBARN = 5,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"SAERKULLSBARN")]
+    SAERKULLSBARN = 6,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"SAERKULLSBARN_BARN")]
+    SAERKULLSBARN_BARN = 7,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"FAR")]
+    FAR = 8,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"MOR")]
+    MOR = 9,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"SOESKEN")]
+    SOESKEN = 10,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"SOESKENS_BARN")]
+    SOESKENS_BARN = 11,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"SOESKENS_BARNEBARN")]
+    SOESKENS_BARNEBARN = 12,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"HALV_SOESKEN")]
+    HALV_SOESKEN = 13,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"HALV_SOESKENS_BARN")]
+    HALV_SOESKENS_BARN = 14,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"FARFAR")]
+    FARFAR = 15,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"FARMOR")]
+    FARMOR = 16,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"MORFAR")]
+    MORFAR = 17,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"MORMOR")]
+    MORMOR = 18,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"ONKEL")]
+    ONKEL = 19,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"TANTE")]
+    TANTE = 20,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"FETTER")]
+    FETTER = 21,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"KUSINE")]
+    KUSINE = 22,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"STATEN")]
+    STATEN = 23,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"AVDOEDE")]
+    AVDOEDE = 24,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"FORDRINGSHAVER")]
+    FORDRINGSHAVER = 25,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"AVDOEDE_EKTEFELLE_PARTNER")]
+    AVDOEDE_EKTEFELLE_PARTNER = 26,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"TEST_ARVING_FULL")]
+    TEST_ARVING_FULL = 27,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"TEST_ARVING_BEGR")]
+    TEST_ARVING_BEGR = 28,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"VERGE")]
+    VERGE = 29,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"FORELDREVERGE_AKTOER")]
+    FORELDREVERGE_AKTOER = 30,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"MIDLERTIDIGVERGE_AKTOER")]
+    MIDLERTIDIGVERGE_AKTOER = 31,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"FULLMEKTIG")]
+    FULLMEKTIG = 32,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"PROSFULL")]
+    PROSFULL = 33,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"FREMTIDSFULLMEKTIG")]
+    FREMTIDSFULLMEKTIG = 34,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"GJENLEV_EKTEFELLE")]
+    GJENLEV_EKTEFELLE = 35,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"MOTTAKER_FULLMAKT_DOEDSBO_LITEN_VERDI")]
+    MOTTAKER_FULLMAKT_DOEDSBO_LITEN_VERDI = 36,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"BARNEBARNS_BARN")]
+    BARNEBARNS_BARN = 37,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"SOESKENS_BARNEBARNS_BARN")]
+    SOESKENS_BARNEBARNS_BARN = 38,
+
+    [System.Runtime.Serialization.EnumMember(Value = @"HALV_SOESKENS_BARNEBARN")]
+    HALV_SOESKENS_BARNEBARN = 39,
+
 }

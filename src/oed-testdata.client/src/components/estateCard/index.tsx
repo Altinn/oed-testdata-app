@@ -17,7 +17,7 @@ export default function EstateCard({ data }: IProps) {
   const handleResetEstate = async () => {
     try {
       setLoadingResetEstate(true);
-      await fetch(`${ESTATE_API}${data.estateSsn}`, {
+      await fetch(ESTATE_API, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

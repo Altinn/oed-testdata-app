@@ -14,10 +14,10 @@ export default function CopyToClipboard({ value }: IProps) {
   return (
     <div className="copy-to-clipboard">
       <Paragraph className={isNumeric ? "numeric" : ""}>{value}</Paragraph>
-      <Tooltip content="kopiert" open={copied === value} >
+      <Tooltip content="kopiert" open={copied === value} placement="right" >
         <Button
           icon
-          color="first"
+          color="second"
           variant="tertiary"
           size="small"
           onClick={() => {

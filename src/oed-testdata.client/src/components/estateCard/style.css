@@ -1,4 +1,5 @@
 .card {
+  height: 100%;
   display: flex;
   flex-direction: column;
   border: 2px dashed var(--fds-semantic-border-neutral-default);
@@ -12,6 +13,7 @@
 
   .card__content {
     padding: 1rem 1.5rem;
+    flex-grow: 1;
     ul {
       margin-bottom: 1rem;
     }
@@ -21,6 +23,8 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
       padding: 0.5rem 1rem;
       background-color: var(--fds-semantic-surface-neutral-subtle);
       margin-bottom: 1rem;

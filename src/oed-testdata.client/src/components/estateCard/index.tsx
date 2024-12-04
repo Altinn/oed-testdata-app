@@ -1,35 +1,53 @@
+import { useState } from "react";
 import { Button, Heading, Label, Spinner } from "@digdir/designsystemet-react";
 import "./style.css";
 import CopyToClipboard from "../copyToClipboard";
-import { ArrowCirclepathIcon } from "@navikt/aksel-icons";
+import { ArrowCirclepathIcon, PadlockUnlockedIcon } from "@navikt/aksel-icons";
 import { Estate } from "../../interfaces/IEstate";
 import { ESTATE_API } from "../../utils/constants";
-import { useState } from "react";
 
 interface IProps {
   data: Estate;
 }
 
 export default function EstateCard({ data }: IProps) {
-  const [loading, setLoading] = useState(false);
+
+  const [loadingResetEstate, setLoadingResetEstate] = useState(false);
+  const [loadingRemoveRoles, setLoadingRemoveRoles] = useState(false);
 
   const handleResetEstate = async () => {
-    setLoading(true);
-    const response = await fetch(ESTATE_API, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ estateSsn: data.estateSsn }),
-    });
-
-    /* TODO: handle response success or failure with toasts */
-
-    if (!response.ok) {
-      console.error("Error resetting estate:", response.statusText);
+    try {
+      setLoadingResetEstate(true);
+      await fetch(`${ESTATE_API}${data.estateSsn}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ estateSsn: data.estateSsn }),
+      });
+    } catch (error) {
+      console.error("Error resetting estate:", error);
+    } finally {
+      setLoadingResetEstate(false);
     }
+  };
 
-    setLoading(false);
+  const handleRemoveRoles = async () => {
+    const estateUrl = `${ESTATE_API}${data.estateSsn}`;
+    try {
+      setLoadingRemoveRoles(true);
+      await fetch(`${estateUrl}/roles`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ estateSsn: data.estateSsn, status: "FEILFORT" }),
+      });
+    } catch (error) {
+      console.error("Error removing roles:", error);
+    } finally {
+      setLoadingRemoveRoles(false);
+    }
   };
 
   return (
@@ -58,12 +76,31 @@ export default function EstateCard({ data }: IProps) {
 
       <div className="card__footer">
         <Button
-          color="first"
-          size="sm"
-          onClick={handleResetEstate}
-          aria-disabled={loading}
+          variant="secondary"
+          onClick={handleRemoveRoles}
+          disabled={loadingRemoveRoles}
+          aria-disabled={loadingRemoveRoles}
         >
-          {loading ? (
+          {loadingRemoveRoles ? (
+            <>
+              <Spinner variant="interaction" title="loading" size="sm" />
+              Laster...
+            </>
+          ) : (
+            <>
+              <PadlockUnlockedIcon title="fjern roller" fontSize="1.5rem" />
+              Fjern roller
+            </>
+          )}
+        </Button>
+        <Button
+          variant="secondary"
+          color="danger"
+          onClick={handleResetEstate}
+          disabled={loadingResetEstate}
+          aria-disabled={loadingResetEstate}
+        >
+          {loadingResetEstate ? (
             <>
               <Spinner variant="interaction" title="loading" size="sm" />
               Laster...
@@ -71,7 +108,7 @@ export default function EstateCard({ data }: IProps) {
           ) : (
             <>
               <ArrowCirclepathIcon title="a11y-title" fontSize="1.5rem" />
-              Nullstill
+              Nullstill bo
             </>
           )}
         </Button>

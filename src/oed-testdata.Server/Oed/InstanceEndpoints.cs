@@ -9,8 +9,10 @@ namespace oed_testdata.Server.Oed
     {
         public static void MapOedInstanceEndpoints(this WebApplication app)
         {
-            app.MapGroup("/api/oed/instance").MapEndpoints();
-            //.RequireAuthorization();
+            app
+                .MapGroup("/api/oed/instance")
+                .MapEndpoints()
+                .RequireAuthorization();
         }
 
         private static RouteGroupBuilder MapEndpoints(this RouteGroupBuilder group)
@@ -31,10 +33,11 @@ namespace oed_testdata.Server.Oed
         {
             var instances = await altinnClient.GetOedInstancesByDeceasedNin(estateSsn);
 
-            var instanceId = instances.First().Id;
-            var instanceDataId = instances.First().Data.First(data => data.ContentType == "application/xml").Id;
+            var partyId = instances.First().InstanceOwner.PartyId;
+            var oedInstanceGuid = instances.First().Data.First().InstanceGuid;
+            var oedInstanceDataGuid = instances.First().Data.First(data => data.ContentType == "application/xml").Id;
 
-            var data = await altinnClient.GetOedInstanceData<OED_M>(instanceId, instanceDataId);
+            var data = await altinnClient.GetInstanceData<OED_M>(partyId, oedInstanceGuid, oedInstanceDataGuid);
 
             return TypedResults.Ok(data);
         }

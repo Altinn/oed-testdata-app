@@ -42,7 +42,7 @@ namespace oed_testdata.Server.Testdata.Estate
         private static async Task<IResult> CreateOrRecreateEstate(
             ITestdataStore store, 
             ILoggerFactory loggerFactory, 
-            IOedEventsClient oedEventsClient,
+            IOedClient oedClient,
             [FromBody]CreateOrUpdateEstateRequest request)
         {
             var logger = loggerFactory.CreateLogger(typeof(EstateEndpoints));
@@ -58,7 +58,7 @@ namespace oed_testdata.Server.Testdata.Estate
                 data.SetMottattStatus();
                 data.UpdateTimestamps(DateTimeOffset.Now);
 
-                await oedEventsClient.PostDaEvent(data);
+                await oedClient.PostDaEvent(data);
 
                 return TypedResults.Ok(EstateMapper.Map(estate));
             }
@@ -72,7 +72,7 @@ namespace oed_testdata.Server.Testdata.Estate
         private static async Task<IResult> PatchEstate(
             ITestdataStore store,
             ILoggerFactory loggerFactory,
-            IOedEventsClient oedEventsClient,
+            IOedClient oedClient,
             [FromRoute] string estateSsn,
             [FromBody] PatchEstateRequest request)
         {
@@ -96,7 +96,7 @@ namespace oed_testdata.Server.Testdata.Estate
                 }
 
                 data.UpdateTimestamps(DateTimeOffset.Now);
-                await oedEventsClient.PostDaEvent(data);
+                await oedClient.PostDaEvent(data);
                 
                 return TypedResults.Ok(EstateMapper.Map(estate));
             }

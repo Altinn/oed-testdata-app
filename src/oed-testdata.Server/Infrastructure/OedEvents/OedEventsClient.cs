@@ -4,19 +4,39 @@ using oed_testdata.Server.Infrastructure.TestdataStore;
 
 namespace oed_testdata.Server.Infrastructure.OedEvents;
 
-public interface IOedEventsClient
+public interface IOedClient
 {
     public Task PostDaEvent(DaData data);
+    public Task DeleteOedInstance(string partyId, string oedInstanceGuid);
+    public Task DeleteOedDeclarationInstance(string partyId, string oedDeclarationInstanceGuid);
 }
 
-public class OedEventsClient(HttpClient httpClient) : IOedEventsClient
+public class OedClient(HttpClient httpClient) : IOedClient
 {
     public async Task PostDaEvent(DaData data)
     {
         var json = JsonSerializer.Serialize(data);
         using var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-        var response = await httpClient.PostAsync("/digdir/oed-events/da-events/api/v1/test", content);
+        const string path = "/digdir/oed-events/da-events/api/v1/test";
+
+        var response = await httpClient.PostAsync(path, content);
+        response.EnsureSuccessStatusCode();
+    }
+    
+    public async Task DeleteOedInstance(string partyId, string oedInstanceGuid)
+    {
+        var path = $"/digdir/oed/instances/{partyId}/{oedInstanceGuid}?hard=true";
+
+        var response = await httpClient.DeleteAsync(path);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task DeleteOedDeclarationInstance(string partyId, string oedDeclarationInstanceGuid)
+    {
+        var path = $"/digdir/oed-declaration/instances/{partyId}/{oedDeclarationInstanceGuid}?hard=true";
+
+        var response = await httpClient.DeleteAsync(path);
         response.EnsureSuccessStatusCode();
     }
 }

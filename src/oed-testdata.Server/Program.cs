@@ -40,7 +40,7 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddTransient<ITestService, TestService>();
 builder.Services.AddAltinnClient(builder.Configuration);
-builder.Services.AddOedEventsClient(builder.Configuration);
+builder.Services.AddOedClient(builder.Configuration);
 builder.Services.AddTestdataStore();
 
 var app = builder.Build();
@@ -79,7 +79,7 @@ app.MapGet("/test", async ([FromServices] ITestService testService) =>
 {
     var instanceData = await testService.Test();
     return TypedResults.Ok(instanceData);
-}).WithName("Test");
+}).WithName("Test").RequireAuthorization();
 
 app.MapFallbackToFile("/index.html");
 

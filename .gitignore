@@ -482,3 +482,4 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+/src/oed-testdata.Server/Testdata/Json/Estate/18855699938-RYDDIG_BARNESKOLE.json

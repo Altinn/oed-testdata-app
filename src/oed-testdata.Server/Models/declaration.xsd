@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:seres="http://seres.no/xsd/forvaltningsdata" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xsd:annotation>
+    <xsd:documentation>
+      <xs:attribute name="rootNode" fixed="" />
+    </xsd:documentation>
+  </xsd:annotation>
+  <xsd:complexType name="Address">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="StreetAddress" type="xsd:string" />
+      <xsd:element minOccurs="0" name="PostalCode" type="xsd:string" />
+      <xsd:element minOccurs="0" name="City" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ProbatePrefill">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="Name" type="xsd:string" />
+      <xsd:element minOccurs="0" name="Address" type="Address" />
+      <xsd:element minOccurs="0" name="DateOfDeath" type="xsd:string" />
+      <xsd:element minOccurs="0" name="MaritalStatus" type="xsd:string" />
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="Heirs" type="Heir" />
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="MarriagePactsFromRegister" type="MarriagePactFromRegister" />
+      <xsd:element minOccurs="0" maxOccurs="unbounded" name="AgriculturalPropertyFromRegister" type="AgriculturalPropertyFromRegister" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="MarriagePactFromRegister">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="DateOfSignature" type="xsd:string" />
+      <xsd:element minOccurs="0" name="SpouseFullName" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="AgriculturalPropertyFromRegister">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="MunicipalityLandNumber" type="xsd:string" />
+      <xsd:element minOccurs="0" name="PropertyUnitNumber" type="xsd:string" />
+      <xsd:element minOccurs="0" name="MunicipalityNumber" type="xsd:string" />
+      <xsd:element minOccurs="0" name="Municipality" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Heir">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="Name" type="xsd:string" />
+      <xsd:element minOccurs="0" name="Kinship" type="xsd:string" />
+      <xsd:element minOccurs="0" name="PartyId" type="xsd:long" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="declaration">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element minOccurs="0" maxOccurs="unbounded" name="TestamentClaims">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element minOccurs="0" name="DateOfSignature" type="xsd:string" />
+              <xsd:element minOccurs="0" name="Modified" type="xsd:string" />
+              <xsd:element minOccurs="0" name="SF_ModifiedByName" type="xsd:string" />
+              <xsd:element minOccurs="0" name="ModifiedBy" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element minOccurs="0" maxOccurs="unbounded" name="SF_TestamentClaims">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element minOccurs="0" name="SF_DateOfSignature" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element minOccurs="0" maxOccurs="unbounded" name="MarriagePactClaims">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element minOccurs="0" name="DateOfSignature" type="xsd:string" />
+              <xsd:element minOccurs="0" name="Modified" type="xsd:string" />
+              <xsd:element minOccurs="0" name="SF_ModifiedByName" type="xsd:string" />
+              <xsd:element minOccurs="0" name="ModifiedBy" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element minOccurs="0" maxOccurs="unbounded" name="SF_MarriagePactClaims">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element minOccurs="0" name="SF_DateOfSignature" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element minOccurs="0" maxOccurs="unbounded" name="AgriculturalPropertyClaims">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element minOccurs="0" name="MunicipalityNumber" type="xsd:string" />
+              <xsd:element minOccurs="0" name="PropertyUnitNumber" type="xsd:string" />
+              <xsd:element minOccurs="0" name="MunicipalityLandNumber" type="xsd:string" />
+              <xsd:element minOccurs="0" name="Modified" type="xsd:string" />
+              <xsd:element minOccurs="0" name="SF_ModifiedByName" type="xsd:string" />
+              <xsd:element minOccurs="0" name="ModifiedBy" type="xsd:string" />
+              <xsd:element minOccurs="0" name="Municipality" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element minOccurs="0" maxOccurs="unbounded" name="SF_AgriculturalPropertyClaims">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element minOccurs="0" name="SF_MunicipalityNumber" type="xsd:string" />
+              <xsd:element minOccurs="0" name="SF_MunicipalityLandNumber" type="xsd:string" />
+              <xsd:element minOccurs="0" name="SF_PropertyUnitNumber" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element minOccurs="0" name="MaritalStatusClaims">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element minOccurs="0" name="MaritalStatus" type="xsd:string" />
+              <xsd:element minOccurs="0" name="Modified" type="xsd:string" />
+              <xsd:element minOccurs="0" name="SF_ModifiedByName" type="xsd:string" />
+              <xsd:element minOccurs="0" name="ModifiedBy" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element minOccurs="0" name="SF_MaritalStatusClaims">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element minOccurs="0" name="MaritalStatus" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element minOccurs="0" name="HasAdditionalTestaments" type="xsd:boolean" />
+        <xsd:element minOccurs="0" name="IsMaritalStatusCorrect" type="xsd:boolean" />
+        <xsd:element minOccurs="0" maxOccurs="unbounded" name="SignatureClaims">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element minOccurs="0" name="PartyId" type="xsd:string" />
+              <xsd:element minOccurs="0" name="AcceptsDebt" type="xsd:boolean" />
+              <xsd:element minOccurs="0" name="Voids60DaysDeadline" type="xsd:boolean" />
+              <xsd:element minOccurs="0" name="ProbateType" type="xsd:string" />
+              <xsd:element minOccurs="0" name="AcceptsTermsAndConditions" type="xsd:boolean" />
+              <xsd:element minOccurs="0" name="Signed" type="xsd:boolean" />
+              <xsd:element minOccurs="0" name="SignedTime" type="xsd:string" />
+              <xsd:element minOccurs="0" name="SF_PartyName" type="xsd:string" />
+              <xsd:element minOccurs="0" name="SubmissionCorrespondenceSent" type="xsd:boolean" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element minOccurs="0" name="ReferrerOedInstanceId" type="xsd:string" />
+        <xsd:element minOccurs="0" name="ProbatePrefill" type="ProbatePrefill" />
+        <xsd:element minOccurs="0" name="HasAdditionalMarriagePacts" type="xsd:boolean" />
+        <xsd:element minOccurs="0" name="CurrentUserHasAcceptedTerms" type="xsd:boolean" />
+        <xsd:element minOccurs="0" name="CurrentUserHasAcceptedEstateLowValue" type="xsd:string" />
+        <xsd:element minOccurs="0" name="HasAdditionalAgriProperties" type="xsd:boolean" />
+        <xsd:element minOccurs="0" name="CurrentUserHasAcceptedPublicDivision" type="xsd:string" />
+        <xsd:element minOccurs="0" name="CurrentUserHasAcceptedUndividedEstate" type="xsd:string" />
+        <xsd:element minOccurs="0" name="CurrentUserHasAcceptedDebt" type="xsd:boolean" />
+        <xsd:element minOccurs="0" name="CurrentUsersChosenProbateType" type="xsd:string" />
+        <xsd:element minOccurs="0" name="SF_MarriagePacts" type="xsd:string" />
+        <xsd:element minOccurs="0" name="SF_Agriculture" type="xsd:string" />
+        <xsd:element minOccurs="0" name="SF_Heirs" type="xsd:string" />
+        <xsd:element minOccurs="0" name="SF_PartyName" type="xsd:string" />
+        <xsd:element minOccurs="0" name="SF_Testament" type="xsd:string" />
+        <xsd:element minOccurs="0" name="SF_MaritalStatus" type="xsd:string" />
+        <xsd:element minOccurs="0" name="IsTestamentsCorrect" type="xsd:boolean" />
+        <xsd:element minOccurs="0" name="SF_SignatureSummary" type="xsd:string" />
+        <xsd:element minOccurs="0" name="HasDeceasedSpousePartner" type="xsd:boolean" />
+        <xsd:element minOccurs="0" name="DeceasedIsInUndividedEstateClaim">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element minOccurs="0" name="DeceasedIsInUndividedEstate" type="xsd:string" />
+              <xsd:element minOccurs="0" name="Modified" type="xsd:string" />
+              <xsd:element minOccurs="0" name="ModifiedBy" type="xsd:string" />
+              <xsd:element minOccurs="0" name="SF_ModifiedBy" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element minOccurs="0" name="CurrentUserEditProbateChoice" type="xsd:string" />
+        <xsd:element minOccurs="0" name="CurrentUserHasSigned" type="xsd:boolean" />
+        <xsd:element minOccurs="0" name="SF_CurrentUserSignature" type="xsd:string" />
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xs:schema>

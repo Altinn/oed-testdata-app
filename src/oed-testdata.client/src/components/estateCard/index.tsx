@@ -11,7 +11,6 @@ interface IProps {
 }
 
 export default function EstateCard({ data }: IProps) {
-
   const [loadingResetEstate, setLoadingResetEstate] = useState(false);
   const [loadingRemoveRoles, setLoadingRemoveRoles] = useState(false);
 
@@ -36,7 +35,7 @@ export default function EstateCard({ data }: IProps) {
     const estateUrl = `${ESTATE_API}${data.estateSsn}`;
     try {
       setLoadingRemoveRoles(true);
-      await fetch(`${estateUrl}/roles`, {
+      await fetch(estateUrl, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

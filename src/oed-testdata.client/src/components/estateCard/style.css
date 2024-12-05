@@ -37,4 +37,11 @@
     gap: 1rem;
     padding: 0 1.5rem 1.5rem 1rem;
   }
+
+  .card__toast {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 1rem 1.5rem;
+  }
 }

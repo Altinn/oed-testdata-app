@@ -5,6 +5,7 @@ import CopyToClipboard from "../copyToClipboard";
 import { ArrowCirclepathIcon, PadlockUnlockedIcon } from "@navikt/aksel-icons";
 import { Estate } from "../../interfaces/IEstate";
 import { ESTATE_API } from "../../utils/constants";
+import { useToast } from "../../context/toastContext";
 
 interface IProps {
   data: Estate;
@@ -13,6 +14,7 @@ interface IProps {
 export default function EstateCard({ data }: IProps) {
   const [loadingResetEstate, setLoadingResetEstate] = useState(false);
   const [loadingRemoveRoles, setLoadingRemoveRoles] = useState(false);
+  const { addToast } = useToast();
 
   const handleResetEstate = async () => {
     try {
@@ -24,8 +26,10 @@ export default function EstateCard({ data }: IProps) {
         },
         body: JSON.stringify({ estateSsn: data.estateSsn }),
       });
+      addToast("Dødsboet ble nullstilt.", "success");
     } catch (error) {
       console.error("Error resetting estate:", error);
+      addToast("Noe gikk galt. Prøv igjen.", "danger");
     } finally {
       setLoadingResetEstate(false);
     }
@@ -42,8 +46,10 @@ export default function EstateCard({ data }: IProps) {
         },
         body: JSON.stringify({ estateSsn: data.estateSsn, status: "FEILFORT" }),
       });
+      addToast("Rollene ble fjernet.", "success");
     } catch (error) {
       console.error("Error removing roles:", error);
+      addToast("Noe gikk galt. Prøv igjen.", "danger");
     } finally {
       setLoadingRemoveRoles(false);
     }
@@ -82,7 +88,7 @@ export default function EstateCard({ data }: IProps) {
         >
           {loadingRemoveRoles ? (
             <>
-              <Spinner variant="interaction" title="loading" size="sm" />
+              <Spinner variant="interaction" title="laster" size="sm" />
               Laster...
             </>
           ) : (
@@ -101,7 +107,7 @@ export default function EstateCard({ data }: IProps) {
         >
           {loadingResetEstate ? (
             <>
-              <Spinner variant="interaction" title="loading" size="sm" />
+              <Spinner variant="interaction" title="laster" size="xs" />
               Laster...
             </>
           ) : (

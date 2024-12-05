@@ -50,14 +50,14 @@ public class TestdataFileStore : ITestdataStore
         return estateName;
     }
 
-    public async Task<EstateData> GetByEstateSsn(string estateSsn)
+    public async Task<EstateData?> GetByEstateSsn(string estateSsn)
     {
         EnsureDirectory();
 
         var files = Directory.EnumerateFiles(EstatePath);
         var file = files.SingleOrDefault(f => f.Contains(estateSsn));
 
-        if (file is null) throw new Exception("File not found");
+        if (file is null) return null;
 
         await using var filestream = File.OpenRead(file);
         var daData = await JsonSerializer.DeserializeAsync<DaData>(filestream);

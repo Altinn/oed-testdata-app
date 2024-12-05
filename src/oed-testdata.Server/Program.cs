@@ -1,8 +1,12 @@
+using Altinn.ApiClients.Maskinporten.Config;
+using Altinn.ApiClients.Maskinporten.Extensions;
+using Altinn.ApiClients.Maskinporten.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using oed_testdata.Server.CloudEvents;
 using oed_testdata.Server.Infrastructure.Altinn;
 using oed_testdata.Server.Infrastructure.Auth;
+using oed_testdata.Server.Infrastructure.Maskinporten;
 using oed_testdata.Server.Infrastructure.OedEvents;
 using oed_testdata.Server.Infrastructure.TestdataStore;
 using oed_testdata.Server.Oed;
@@ -41,6 +45,7 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddTransient<ITestService, TestService>();
 builder.Services.AddAltinnClient(builder.Configuration);
+builder.Services.AddMaskinportenClient(builder.Configuration);
 builder.Services.AddOedClient(builder.Configuration);
 builder.Services.AddTestdataStore();
 

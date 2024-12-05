@@ -3,5 +3,5 @@
 public interface ITestdataStore
 {
     public Task<IEnumerable<EstateData>> ListAll();
-    public Task<EstateData> GetByEstateSsn(string estateSsn);
+    public Task<EstateData?> GetByEstateSsn(string estateSsn);
 }

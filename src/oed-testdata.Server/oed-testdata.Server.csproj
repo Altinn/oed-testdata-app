@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
 		<TargetFramework>net9.0</TargetFramework>
@@ -12,6 +12,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Altinn.ApiClients.Maskinporten" Version="9.2.1" />
 		<PackageReference Include="Altinn.Platform.Storage.Interface" Version="4.0.4" />
 		<PackageReference Include="CloudNative.CloudEvents.AspNetCore" Version="2.8.0" />
 		<PackageReference Include="CloudNative.CloudEvents.SystemTextJson" Version="2.8.0" />

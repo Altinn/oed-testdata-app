@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
+using oed_testdata.Server.CloudEvents;
 using oed_testdata.Server.Infrastructure.Altinn;
 using oed_testdata.Server.Infrastructure.Auth;
 using oed_testdata.Server.Infrastructure.OedEvents;
@@ -33,8 +34,8 @@ if (builder.Environment.IsDevelopment())
     );
 }
 
-builder.Services.AddBasicAuthentication(builder.Configuration, builder.Environment); 
-builder.Services.AddAuthorization();
+builder.Services.AddBasicAuthentication(builder.Configuration, builder.Environment);
+builder.Services.AddBasicAuthorization(builder.Configuration);
 
 builder.Services.AddOpenApi();
 
@@ -72,6 +73,7 @@ if (app.Environment.IsDevelopment())
 app.MapBasicAuthenticationEndpoints();
 app.MapEstateEndpoints();
 app.MapOedInstanceEndpoints();
+app.MapCloudEventEndpoints();
 
 if (app.Environment.IsDevelopment())
 {
@@ -81,6 +83,7 @@ if (app.Environment.IsDevelopment())
         return TypedResults.Ok(instanceData);
     }).WithName("Test").RequireAuthorization();
 }
+
 
 app.UseHttpsRedirection();
 

@@ -1,13 +1,16 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 
 namespace oed_testdata.Server.Infrastructure.Auth
 {
     public static class ServiceCollectionExtensions
     {
+        private const string ConfigSectionName = "AuthSettings";
+
         public static IServiceCollection AddBasicAuthentication(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment environment)
         {
-            services.Configure<AuthSettings>(configuration.GetSection("AuthSettings"));
-
+            services.Configure<AuthSettings>(configuration.GetSection(ConfigSectionName));
+            
             services
                 .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
@@ -29,5 +32,30 @@ namespace oed_testdata.Server.Infrastructure.Auth
 
             return services;
         }
+
+        public static IServiceCollection AddBasicAuthorization(this IServiceCollection services, IConfiguration configuration)
+        {
+            var auth = configuration.GetSection(ConfigSectionName).Get<AuthSettings>();
+
+            services.AddHttpContextAccessor();
+            services.AddScoped<IAuthorizationHandler, QueryParamRequirementHandler>();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(AuthorizationPolicies.CloudEvents, builder =>
+                {
+                    builder.AddRequirements(new QueryParamRequirement(
+                        auth!.CloudEventQueryParamName,
+                        auth.CloudEventSecret));
+                });
+            });
+
+            return services;
+        }
+    }
+
+    public static class AuthorizationPolicies
+    {
+        public const string CloudEvents = "CloudEvents";
     }
 }

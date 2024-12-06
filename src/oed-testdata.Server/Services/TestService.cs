@@ -1,8 +1,12 @@
-﻿using Altinn.App.Models;
+﻿using System.Text.Json;
+using Altinn.App.Models;
 using oed_testdata.Server.Infrastructure.Altinn;
+using oed_testdata.Server.Infrastructure.Maskinporten;
+using oed_testdata.Server.Infrastructure.Maskinporten.Models;
 using oed_testdata.Server.Infrastructure.OedEvents;
 using oed_testdata.Server.Infrastructure.TestdataStore;
 using oed_testdata.Server.Models;
+using static System.Net.WebRequestMethods;
 
 namespace oed_testdata.Server.Services
 {
@@ -14,7 +18,9 @@ namespace oed_testdata.Server.Services
     public class TestService(
         IAltinnClient altinnClient,
         IOedClient oedClient,
-        ITestdataStore store)
+        ITestdataStore store,
+        IHttpClientFactory httpClientFactory,
+        IMaskinportenClient maskinportenClient)
         : ITestService
     {
         public async Task<object> Test()
@@ -52,11 +58,26 @@ namespace oed_testdata.Server.Services
                 oedDeclarationInstanceGuid, 
                 oedDeclarationInstanceDataGuid);
 
-
             // SLETTER
             //await oedClient.DeleteOedDeclarationInstance(partyId, oedDeclarationInstanceGuid);
 
-            return oedDeclarationInstanceData;
+
+            // Get declaration
+            var declaration = await maskinportenClient.GetDeclaration(partyId, oedDeclarationInstanceGuid);
+
+
+            //var maskinportenClient = httpClientFactory.CreateClient(MaskinportenConstants.HttpClientName);
+            //var path = $"https://digdir.apps.tt02.altinn.no/digdir/oed/api/declarations/{partyId}/{oedDeclarationInstanceGuid}";
+            //var response = await maskinportenClient.GetAsync(path);
+
+            //var s = await response.Content.ReadAsStringAsync();
+            ////await using var contentStream = await response.Content.ReadAsStreamAsync();
+            //var data = JsonSerializer.Deserialize<Declaration>(s);
+
+            ////var data = MaskinportenJsonSerializer.Deserialize<Declaration>(contentStream);
+           
+
+            return declaration;
         }
     }
 }

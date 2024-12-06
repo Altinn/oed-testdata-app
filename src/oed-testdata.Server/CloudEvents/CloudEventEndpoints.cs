@@ -1,5 +1,11 @@
-﻿using CloudNative.CloudEvents;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using CloudNative.CloudEvents;
+using oed_testdata.Server.Infrastructure.Altinn;
 using oed_testdata.Server.Infrastructure.Auth;
+using oed_testdata.Server.Infrastructure.Maskinporten;
+using oed_testdata.Server.Infrastructure.OedEvents;
+using oed_testdata.Server.Infrastructure.TestdataStore;
 
 namespace oed_testdata.Server.CloudEvents;
 
@@ -22,28 +28,80 @@ public static class CloudEventEndpoints
         return group;
     }
 
-    private static async Task<IResult> ReceiveCloudEvent(CloudEventWrapper cloudEventWrapper)
+    private static async Task<IResult> ReceiveCloudEvent(
+        CloudEventWrapper cloudEventWrapper,
+        ITestdataStore store,
+        IAltinnClient altinnClient,
+        IMaskinportenClient maskinportenClient,
+        IOedClient oedClient,
+        ILoggerFactory loggerFactory)
     {
+        var logger = loggerFactory.CreateLogger(typeof(CloudEventEndpoints).FullName!);
         var cloudEvent = cloudEventWrapper.Item;
 
-        await Handle(cloudEvent);
+        logger.LogInformation("Received cloud event type [{CloudEventType}]", cloudEvent.Type);
+
+        // Unknown events are ignored 
+        if (cloudEvent.Type != CloudEventType.DeclarationSubmitted)
+        {
+            logger.LogInformation("Ignoring unknown cloud event type [{CloudEventType}]", cloudEvent.Type);
+            return TypedResults.Ok();
+        }
+
+        var estateSsn = cloudEvent.Subject;
+        var estate = await store.GetByEstateSsn(estateSsn!);
+
+        // If the subject is unknown we ignore the event
+        if (estate == null)
+        {
+            logger.LogInformation("Ignoring cloud event for unknown subject [{Subject}]", cloudEvent.Subject);
+            return TypedResults.Ok();
+        }
+
+        // OK, we shuld handle this event....
+        logger.LogInformation("Handling cloud event for subject [{Subject}]", cloudEvent.Subject);
+
+        var eventData = (cloudEvent.Data as JsonElement?)?.Deserialize<DeclarationSubmittedData>();
+        
+        var declarationInstances = await altinnClient.GetOedDeclarationInstancesByDeceasedNin(estate.EstateSsn);
+        var partyId = declarationInstances.First().InstanceOwner.PartyId;
+        var oedDeclarationInstanceGuid = declarationInstances.First().Data.First().InstanceGuid;
+
+        var declaration = await maskinportenClient.GetDeclaration(partyId, oedDeclarationInstanceGuid);
+        
+        var daCase = estate.Data.DaCaseList.First();
+        daCase.SakId = eventData?.DaCaseId ?? daCase.SakId;
+
+        // Do we have alle the data we need to issue the probate? If not, ignore the event
+        if (declaration.Submitted is null || declaration.Heirs is null || declaration.SignatureClaims is null)
+        {
+            logger.LogInformation("Ignoring cloud event due to missing data for subject [{Subject}]", cloudEvent.Subject);
+            return TypedResults.Ok();
+        }
+
+        // Issue probate based on data from the declaration
+        daCase.ResultatType = "PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99";
+        daCase.Skifteattest = new Skifteattest
+        {
+            Resultat = "PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99",
+            Arvinger = declaration.Heirs
+                .Select(h => h.Nin)
+                .ToArray(),
+            ArvingerSomPaatarSegGjeldsansvar = declaration.SignatureClaims
+                .Where(h => h.AcceptsDebt)
+                .Select(h => h.HeirNin)
+                .ToArray()
+        };
+        
+        await oedClient.PostDaEvent(estate.Data);
+        logger.LogInformation("Issued probate for subject [{Subject}]", cloudEvent.Subject);
+
         return TypedResults.Ok();
     }
+}
 
-    private static Task Handle(CloudEvent cloudEvent) => cloudEvent.Type switch
-    {
-        CloudEventType.WebhookValidation => HandleWebhookValidation(cloudEvent),
-        CloudEventType.DeclarationSubmitted => HandleDeclarationSubmitted(cloudEvent),
-        _ => Task.CompletedTask
-    };
-
-    private static Task HandleWebhookValidation(CloudEvent cloudEvent)
-    {
-        return Task.CompletedTask;
-    }
-
-    private static Task HandleDeclarationSubmitted(CloudEvent cloudEvent)
-    {
-        return Task.CompletedTask;
-    }
+public class DeclarationSubmittedData
+{
+    [JsonPropertyName("daCaseId")]
+    public required string DaCaseId { get; set; }
 }

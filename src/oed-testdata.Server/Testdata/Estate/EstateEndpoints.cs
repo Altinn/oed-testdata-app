@@ -27,10 +27,16 @@ namespace oed_testdata.Server.Testdata.Estate
             return group;
         }
 
-        private static async Task<Ok<IEnumerable<EstateDto>>> GetAll(ITestdataStore store)
+        private static async Task<Ok<IEnumerable<EstateDto>>> GetAll(
+            [FromHeader(Name = "X-Feature-IncludeHiddenEstates")]bool? showHidden,
+            ITestdataStore store)
         {
             var data = await store.ListAll();
-            return TypedResults.Ok(data.Select(EstateMapper.Map));
+            var filtereData = showHidden.HasValue && showHidden.Value
+                ? data
+                : data.Where(estate => !EstateConstants.HiddenEstates.Contains(estate.EstateSsn));
+
+            return TypedResults.Ok(filtereData.Select(EstateMapper.Map));
         }
 
         private static async Task<Ok<EstateDto>> GetSingleByEstateSsn(ITestdataStore store, string estateSsn)

@@ -1,0 +1,76 @@
+{
+  "DaEventList": [
+    [
+      {
+        "specversion": "1.0",
+        "id": "3588376f-3432-493a-b04b-d4dd8dfd213c",
+        "source": "https://domstol.no",
+        "type": "DODSFALLSAK-STATUS_OPPDATERT",
+        "datacontenttype": "application/json",
+        "time": "2024-12-09T11:14:23.510443+01:00",
+        "data": {
+          "@id": "https://hendelsesliste.test.domstol.no/api/objects/3588376f-3432-493a-b04b-d4dd8dfd213c"
+        }
+      }
+    ]
+  ],
+  "DaCaseList": [
+    {
+      "sakId": "3588376f-3432-493a-b04b-d4dd8dfd213c",
+      "avdode": "16873948381",
+      "embete": "Oslo Tingrett",
+      "status": "MOTTATT",
+      "parter": [
+        {
+          "nin": "05916896346",
+          "role": "BARN",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
+        },
+        {
+          "nin": "04926596182",
+          "role": "BARN",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
+        },
+        {
+          "nin": "09820847811",
+          "role": "MOR",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
+        },
+        {
+          "nin": "21840948312",
+          "role": "FAR",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
+        },
+        {
+          "nin": "12883649409",
+          "role": "GJENLEV_EKTEFELLE_PARTNER",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
+        }
+      ],
+      "receivedDate": "2024-12-09T11:14:23.5108595+01:00",
+      "deadlineDate": "2025-02-07T11:14:23.510877+01:00",
+      "resultatType": null,
+      "skifteattest": null
+    }
+  ]
+}

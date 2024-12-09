@@ -2,6 +2,7 @@
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using oed_testdata.Server.Infrastructure.Altinn;
 using oed_testdata.Server.Infrastructure.OedEvents;
 using oed_testdata.Server.Infrastructure.TestdataStore;
 
@@ -49,6 +50,7 @@ namespace oed_testdata.Server.Testdata.Estate
             ITestdataStore store, 
             ILoggerFactory loggerFactory, 
             IOedClient oedClient,
+            IAltinnClient altinnClient,
             [FromBody]CreateOrUpdateEstateRequest request)
         {
             var logger = loggerFactory.CreateLogger(typeof(EstateEndpoints));
@@ -58,8 +60,32 @@ namespace oed_testdata.Server.Testdata.Estate
             
             try
             {
+                // Get estate from testapp store (files)
                 var estate = await store.GetByEstateSsn(request.EstateSsn);
+                if (estate is null)
+                {
+                    return TypedResults.BadRequest();
+                }
 
+                // Delete any existing declarations for this estate
+                var declarationInstances = await altinnClient.GetOedDeclarationInstancesByDeceasedNin(estate.EstateSsn);
+                if (declarationInstances is { Count: > 0 })
+                {
+                    var partyId = declarationInstances.First().InstanceOwner.PartyId;
+                    var declarationInstanceGuid = declarationInstances.First().Data.First().InstanceGuid;
+                    await oedClient.DeleteOedDeclarationInstance(partyId, declarationInstanceGuid);
+                }
+
+                // Delete any existing instance data for this estate
+                var estateInstances = await altinnClient.GetOedInstancesByDeceasedNin(estate.EstateSsn);
+                if (estateInstances is { Count: > 0 })
+                {
+                    var partyId = estateInstances.First().InstanceOwner.PartyId;
+                    var estateInstanceGuid = estateInstances.First().Data.First().InstanceGuid;
+                    await oedClient.DeleteOedInstance(partyId, estateInstanceGuid);
+                }
+
+                // Update estate data and post DA event to create/recreate estate from scratch
                 var data = estate.Data;
                 data.SetMottattStatus();
                 data.UpdateTimestamps(DateTimeOffset.Now);

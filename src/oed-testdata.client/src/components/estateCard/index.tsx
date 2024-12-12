@@ -19,13 +19,25 @@ export default function EstateCard({ data }: IProps) {
   const handleResetEstate = async () => {
     try {
       setLoadingResetEstate(true);
-      await fetch(ESTATE_API, {
+      const response = await fetch(ESTATE_API, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ estateSsn: data.estateSsn }),
       });
+
+      /* if auth token expired show toast */
+      if (response.status === 401) {
+        addToast(
+          "Autentiseringstoken har utløpt. Vennligst logg inn igjen.",
+          "danger"
+        );
+        return;
+      }
+      if (!response.ok) {
+        addToast("Noe gikk galt. Prøv igjen", "danger");
+      }
       addToast("Dødsboet ble nullstilt.", "success");
     } catch (error) {
       console.error("Error resetting estate:", error);
@@ -39,13 +51,23 @@ export default function EstateCard({ data }: IProps) {
     const estateUrl = `${ESTATE_API}${data.estateSsn}`;
     try {
       setLoadingRemoveRoles(true);
-      await fetch(estateUrl, {
+      const response = await fetch(estateUrl, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ estateSsn: data.estateSsn, status: "FEILFORT" }),
       });
+      if (response.status === 401) {
+        addToast(
+          "Autentiseringstoken har utløpt. Vennligst logg inn igjen.",
+          "danger"
+        );
+        return;
+      }
+      if (!response.ok) {
+        addToast("Noe gikk galt. Prøv igjen", "danger");
+      }
       addToast("Rollene ble fjernet.", "success");
     } catch (error) {
       console.error("Error removing roles:", error);
@@ -88,7 +110,7 @@ export default function EstateCard({ data }: IProps) {
         >
           {loadingRemoveRoles ? (
             <>
-              <Spinner variant="interaction" title="laster" size="sm" />
+              <Spinner title="laster" size="sm" />
               Laster...
             </>
           ) : (
@@ -107,7 +129,7 @@ export default function EstateCard({ data }: IProps) {
         >
           {loadingResetEstate ? (
             <>
-              <Spinner variant="interaction" title="laster" size="xs" />
+              <Spinner title="laster" size="xs" />
               Laster...
             </>
           ) : (

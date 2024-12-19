@@ -1,6 +1,3 @@
-using Altinn.ApiClients.Maskinporten.Config;
-using Altinn.ApiClients.Maskinporten.Extensions;
-using Altinn.ApiClients.Maskinporten.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using oed_testdata.Server.CloudEvents;
@@ -11,6 +8,7 @@ using oed_testdata.Server.Infrastructure.OedEvents;
 using oed_testdata.Server.Infrastructure.TestdataStore;
 using oed_testdata.Server.Oed;
 using oed_testdata.Server.Services;
+using oed_testdata.Server.Testdata.Bank;
 using oed_testdata.Server.Testdata.Estate;
 using Scalar.AspNetCore;
 
@@ -77,6 +75,7 @@ if (app.Environment.IsDevelopment())
 
 app.MapBasicAuthenticationEndpoints();
 app.MapEstateEndpoints();
+app.MapBankEndpoints();
 app.MapOedInstanceEndpoints();
 app.MapCloudEventEndpoints();
 

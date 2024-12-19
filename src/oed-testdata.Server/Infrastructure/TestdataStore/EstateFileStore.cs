@@ -9,7 +9,7 @@ public class EstateData
     public required DaData Data { get; init; }
 }
 
-public class TestdataFileStore : ITestdataStore
+public class EstateFileStore : IEstateStore
 {
     private const string EstatePath = "./Testdata/Json/Estate";
 

@@ -30,7 +30,7 @@ public static class CloudEventEndpoints
 
     private static async Task<IResult> ReceiveCloudEvent(
         CloudEventWrapper cloudEventWrapper,
-        ITestdataStore store,
+        IEstateStore store,
         IAltinnClient altinnClient,
         IMaskinportenClient maskinportenClient,
         IOedClient oedClient,

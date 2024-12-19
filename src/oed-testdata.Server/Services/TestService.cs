@@ -18,7 +18,7 @@ namespace oed_testdata.Server.Services
     public class TestService(
         IAltinnClient altinnClient,
         IOedClient oedClient,
-        ITestdataStore store,
+        IEstateStore store,
         IHttpClientFactory httpClientFactory,
         IMaskinportenClient maskinportenClient)
         : ITestService

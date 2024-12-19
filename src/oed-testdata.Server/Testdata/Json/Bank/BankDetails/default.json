@@ -1,0 +1,123 @@
+{
+  "bankAccounts": [
+    {
+      "bankName": "DNB",
+      "isImplemented": true,
+      "hasErrors": false,
+      "accounts": [
+        {
+          "accountNumber": "12278825327",
+          "accountDetail": {
+            "status": "enabled",
+            "servicer": {
+              "identifier": {
+                "countryOfResidence": "NO",
+                "value": "984851006",
+                "type": "nationalIdentityNumber"
+              },
+              "name": "DNB"
+            },
+            "accountIdentifier": "12278825327",
+            "accountReference": "XFeOqI2RhZ37nCUPYs7R5x9v8QGZT1Rpq5Ognmw7f6jn1Nm-hUxW5dXgjpYBdDthL8wlzLlIAkRbmmaAyfVlABVWyXRv1D2NUOoYPdfz_SzgjHo_R10=",
+            "type": "savingsAccount",
+            "currency": "NOK",
+            "name": "Vennlig Nattkrem D\u00f8dsbo",
+            "balances": [
+              {
+                "creditLineIncluded": true,
+                "amount": 1400,
+                "creditDebitIndicator": "credit",
+                "registered": "2024-11-27T23:54:17+00:00",
+                "type": "bookedBalance",
+                "creditLineAmount": 0,
+                "creditLineCurrency": "NOK",
+                "currency": "NOK"
+              },
+              {
+                "creditLineIncluded": true,
+                "amount": 1400,
+                "creditDebitIndicator": "credit",
+                "registered": "2024-11-27T23:54:17+00:00",
+                "type": "availableBalance",
+                "creditLineAmount": 0,
+                "creditLineCurrency": "NOK",
+                "currency": "NOK"
+              }
+            ],
+            "primaryOwner": {
+              "permission": "rightToUseAlone",
+              "identifier": {
+                "value": "31853649603",
+                "type": "nationalIdentityNumber"
+              },
+              "name": "Vennlig Nattkrem D\u00f8dsbo",
+              "startDate": "2024-05-06",
+              "endDate": "9999-12-31"
+            },
+            "startDate": "2024-05-06",
+            "endDate": "9999-12-31"
+          },
+          "transactions": null,
+          "accountAvailableBalance": 1400,
+          "accountBookedBalance": 1400
+        },
+        {
+          "accountNumber": "12278825335",
+          "accountDetail": {
+            "status": "enabled",
+            "servicer": {
+              "identifier": {
+                "countryOfResidence": "NO",
+                "value": "984851006",
+                "type": "nationalIdentityNumber"
+              },
+              "name": "DNB"
+            },
+            "accountIdentifier": "12278825335",
+            "accountReference": "KpSRK1p88tZQnpy2VdceB09mNjeK7xj1D2S6L-sE8PS7Fsv6krErBkFUXBq3ZhAxYlBZOg9HARU__q3Cs4uLXCaBN1IU1pJm5J-BeKjpjOTiDMg1fJg=",
+            "type": "salaryAccount",
+            "currency": "NOK",
+            "name": "Vennlig Nattkrem D\u00f8dsbo",
+            "balances": [
+              {
+                "creditLineIncluded": true,
+                "amount": 1400,
+                "creditDebitIndicator": "credit",
+                "registered": "2024-11-27T23:54:17+00:00",
+                "type": "bookedBalance",
+                "creditLineAmount": 0,
+                "creditLineCurrency": "NOK",
+                "currency": "NOK"
+              },
+              {
+                "creditLineIncluded": true,
+                "amount": 1400,
+                "creditDebitIndicator": "credit",
+                "registered": "2024-11-27T23:54:17+00:00",
+                "type": "availableBalance",
+                "creditLineAmount": 0,
+                "creditLineCurrency": "NOK",
+                "currency": "NOK"
+              }
+            ],
+            "primaryOwner": {
+              "permission": "rightToUseAlone",
+              "identifier": {
+                "value": "31853649603",
+                "type": "nationalIdentityNumber"
+              },
+              "name": "Vennlig Nattkrem D\u00f8dsbo",
+              "startDate": "2024-05-06",
+              "endDate": "9999-12-31"
+            },
+            "startDate": "2024-05-06",
+            "endDate": "9999-12-31"
+          },
+          "transactions": null,
+          "accountAvailableBalance": 1400,
+          "accountBookedBalance": 1400
+        }
+      ]
+    }
+  ]
+}

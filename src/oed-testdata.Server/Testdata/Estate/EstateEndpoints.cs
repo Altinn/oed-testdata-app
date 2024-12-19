@@ -30,7 +30,7 @@ namespace oed_testdata.Server.Testdata.Estate
 
         private static async Task<Ok<IEnumerable<EstateDto>>> GetAll(
             [FromHeader(Name = "X-Feature-IncludeHiddenEstates")]bool? showHidden,
-            ITestdataStore store)
+            IEstateStore store)
         {
             var data = await store.ListAll();
             var filtereData = showHidden.HasValue && showHidden.Value
@@ -40,14 +40,14 @@ namespace oed_testdata.Server.Testdata.Estate
             return TypedResults.Ok(filtereData.Select(EstateMapper.Map));
         }
 
-        private static async Task<Ok<EstateDto>> GetSingleByEstateSsn(ITestdataStore store, string estateSsn)
+        private static async Task<Ok<EstateDto>> GetSingleByEstateSsn(IEstateStore store, string estateSsn)
         {
             var data = await store.GetByEstateSsn(estateSsn);
             return TypedResults.Ok(EstateMapper.Map(data));
         }
 
         private static async Task<IResult> CreateOrRecreateEstate(
-            ITestdataStore store, 
+            IEstateStore store, 
             ILoggerFactory loggerFactory, 
             IOedClient oedClient,
             IAltinnClient altinnClient,
@@ -102,7 +102,7 @@ namespace oed_testdata.Server.Testdata.Estate
         }
 
         private static async Task<IResult> PatchEstate(
-            ITestdataStore store,
+            IEstateStore store,
             ILoggerFactory loggerFactory,
             IOedClient oedClient,
             [FromRoute] string estateSsn,

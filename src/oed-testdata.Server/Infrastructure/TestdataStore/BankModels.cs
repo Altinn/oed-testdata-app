@@ -10,7 +10,7 @@ public class BankCustomerRelation
     [JsonPropertyName("name")] public string? Name { get; set; }
     [JsonPropertyName("url")] public object? Url { get; set; }
     [JsonPropertyName("version")] public string? Version { get; set; }
-    [JsonPropertyName("dnv")] public string? Dnv { get; set; }
+    [JsonPropertyName("env")] public string? Env { get; set; }
 }
 
 

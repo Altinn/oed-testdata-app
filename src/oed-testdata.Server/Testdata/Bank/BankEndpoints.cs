@@ -10,14 +10,53 @@ public static class BankEndpoints
             .MapGroup("/api/testdata/banks/{instanceOwnerPartyId:int}/{instanceGuid:guid}")
             .MapEndpoints()
             .AllowAnonymous();
+
+        app
+            .MapGroup("/api/testdata/externalapi/bank/{instanceOwnerPartyId:int}/{instanceGuid:guid}")
+            .MapGet("/", GetAllInOne)
+            .AllowAnonymous();
+
+        app
+            .MapGroup("/api/testdata/externalapi/banktransactions/{instanceOwnerPartyId:int}/{instanceGuid:guid}")
+            .MapGet("/", GetAllInOneTransactions)
+            .AllowAnonymous();
+
     }
-     
+
     private static RouteGroupBuilder MapEndpoints(this RouteGroupBuilder group)
     {
         group.MapGet("/", GetBankCustomerRelations);
         group.MapGet("/{bankOrgNo}", GetBankDetails);
         group.MapGet("/{bankOrgNo}/{accountRefNo}", GetAccountTransactions);
         return group;
+    }
+
+
+    private static async Task<IResult> GetAllInOne(
+        int instanceOwnerPartyId,
+        HttpContext httpContext,
+        IBankStore bankStore,
+        ILoggerFactory loggerFactory)
+    {
+        var logger = loggerFactory.CreateLogger(typeof(BankEndpoints));
+        logger.LogInformation("Handling call for {path}", httpContext.Request.Path.Value);
+
+        var resp = await bankStore.GetAllInOne(instanceOwnerPartyId);
+        return Results.Ok(resp);
+    }
+
+    private static async Task<IResult> GetAllInOneTransactions(
+        int instanceOwnerPartyId,
+        HttpContext httpContext,
+        IBankStore bankStore,
+        ILoggerFactory loggerFactory)
+    {
+        var logger = loggerFactory.CreateLogger(typeof(BankEndpoints));
+        logger.LogInformation("Handling call for {path}", httpContext.Request.Path.Value);
+
+        var resp = await bankStore.GetAccountTransactionsFile();
+        return Results.File(resp, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Transaksjonshistorikk.xlsx");
+
     }
 
     private static async Task<IResult> GetBankCustomerRelations(
@@ -59,7 +98,7 @@ public static class BankEndpoints
         var logger = loggerFactory.CreateLogger(typeof(BankEndpoints));
         logger.LogInformation("Handling call for {path}", httpContext.Request.Path.Value);
 
-        var resp = await bankStore.GetAccountTransactionsFile(instanceOwnerPartyId, bankOrgNo, accountRefNo);
+        var resp = await bankStore.GetAccountTransactionsFile();
         return Results.File(resp, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Transaksjonshistorikk.xlsx");
     }
 

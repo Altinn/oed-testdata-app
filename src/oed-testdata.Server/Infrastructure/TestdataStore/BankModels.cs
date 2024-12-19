@@ -32,8 +32,8 @@ public class Account
     public string accountNumber { get; set; }
     public Accountdetail accountDetail { get; set; }
     public object transactions { get; set; }
-    public int accountAvailableBalance { get; set; }
-    public int accountBookedBalance { get; set; }
+    public decimal accountAvailableBalance { get; set; }
+    public decimal accountBookedBalance { get; set; }
 }
 
 public class Accountdetail
@@ -82,11 +82,11 @@ public class Identifier1
 public class Balance
 {
     public bool creditLineIncluded { get; set; }
-    public int amount { get; set; }
+    public decimal amount { get; set; }
     public string creditDebitIndicator { get; set; }
     public DateTime registered { get; set; }
     public string type { get; set; }
-    public int creditLineAmount { get; set; }
+    public decimal creditLineAmount { get; set; }
     public string creditLineCurrency { get; set; }
     public string currency { get; set; }
 }

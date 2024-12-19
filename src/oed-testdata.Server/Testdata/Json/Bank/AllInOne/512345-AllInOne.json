@@ -1,0 +1,260 @@
+{
+  "bankAccounts": [
+    {
+      "bankName": "SPAREBANK 1 \u00D8STLANDET",
+      "isImplemented": true,
+      "hasErrors": false,
+      "accounts": [
+        {
+          "accountNumber": "18020412956",
+          "accountDetail": {
+            "status": "enabled",
+            "servicer": {},
+            "accountIdentifier": "18020412956",
+            "accountReference": "ZACD-9GQqZ08ZeY54D19zg==:-WOyKGGx6b9ZpIsCf2gt0XteUwv66LlvoZbSbxx57cXJWQkbDNJN5mLUXj75jsHi",
+            "type": "salaryAccount",
+            "balances": [
+              {
+                "creditLineIncluded": false,
+                "amount": 19278.71,
+                "creditDebitIndicator": "credit",
+                "registered": "0001-01-01T00:00:00+00:00",
+                "type": "bookedBalance",
+                "creditLineAmount": 0.0,
+                "currency": "NOK"
+              },
+              {
+                "creditLineIncluded": false,
+                "amount": 19278.71,
+                "creditDebitIndicator": "credit",
+                "registered": "0001-01-01T00:00:00+00:00",
+                "type": "availableBalance",
+                "creditLineAmount": 0.0,
+                "currency": "NOK"
+              }
+            ],
+            "startDate": "0001-01-01",
+            "endDate": "0001-01-01"
+          },
+          "transactions": null,
+          "accountAvailableBalance": 19278.71,
+          "accountBookedBalance": 19278.71
+        }
+      ]
+    },
+    {
+      "bankName": "SPAREBANK 1 RINGERIKE HADELAND",
+      "isImplemented": true,
+      "hasErrors": false,
+      "accounts": []
+    },
+    {
+      "bankName": "SPAREBANK 1 SMN",
+      "isImplemented": true,
+      "hasErrors": false,
+      "accounts": [
+        {
+          "accountNumber": "42010408363",
+          "accountDetail": {
+            "status": "disabled",
+            "servicer": {},
+            "accountIdentifier": "42010408363",
+            "accountReference": "-P1e7OLUt1nL9x1Yobijzw==:YbzZnHbqK2rwE-ZosT6mrT_meyKj2mdpfevtxXJ5T5d4CDkGS5M3fFIvcLZf65CJ",
+            "type": "salaryAccount",
+            "balances": [
+              {
+                "creditLineIncluded": false,
+                "amount": 12638.00,
+                "creditDebitIndicator": "credit",
+                "registered": "0001-01-01T00:00:00+00:00",
+                "type": "bookedBalance",
+                "creditLineAmount": 0.0,
+                "currency": "NOK"
+              },
+              {
+                "creditLineIncluded": false,
+                "amount": 12638.00,
+                "creditDebitIndicator": "credit",
+                "registered": "0001-01-01T00:00:00+00:00",
+                "type": "availableBalance",
+                "creditLineAmount": 0.0,
+                "currency": "NOK"
+              }
+            ],
+            "startDate": "0001-01-01",
+            "endDate": "0001-01-01"
+          },
+          "transactions": null,
+          "accountAvailableBalance": 12638.00,
+          "accountBookedBalance": 12638.00
+        },
+        {
+          "accountNumber": "42010410457",
+          "accountDetail": {
+            "status": "disabled",
+            "servicer": {},
+            "accountIdentifier": "42010410457",
+            "accountReference": "p5Yu43T6XDAi3R1X54OTJw==:nP6t9EfNaVWlqslliYNhG3p-IdVamrx6suDcwwuLbtDuf4HQr2CtfHm9iYv0KdeH",
+            "type": "savingsAccount",
+            "balances": [
+              {
+                "creditLineIncluded": false,
+                "amount": 638455.47,
+                "creditDebitIndicator": "credit",
+                "registered": "0001-01-01T00:00:00+00:00",
+                "type": "bookedBalance",
+                "creditLineAmount": 0.0,
+                "currency": "NOK"
+              },
+              {
+                "creditLineIncluded": false,
+                "amount": 638455.47,
+                "creditDebitIndicator": "credit",
+                "registered": "0001-01-01T00:00:00+00:00",
+                "type": "availableBalance",
+                "creditLineAmount": 0.0,
+                "currency": "NOK"
+              }
+            ],
+            "startDate": "0001-01-01",
+            "endDate": "0001-01-01"
+          },
+          "transactions": null,
+          "accountAvailableBalance": 638455.47,
+          "accountBookedBalance": 638455.47
+        }
+      ]
+    },
+    {
+      "bankName": "SPAREBANK 1 NORD-NORGE",
+      "isImplemented": true,
+      "hasErrors": false,
+      "accounts": []
+    },
+    {
+      "bankName": "DNB",
+      "isImplemented": true,
+      "hasErrors": false,
+      "accounts": [
+        {
+          "accountNumber": "12278825327",
+          "accountDetail": {
+            "status": "enabled",
+            "servicer": {
+              "identifier": {
+                "countryOfResidence": "NO",
+                "value": "984851006",
+                "type": "nationalIdentityNumber"
+              },
+              "name": "DNB"
+            },
+            "accountIdentifier": "12278825327",
+            "accountReference": "mNx4sW0pytf0u35lC_5k1Q3KZFqXKT41MXimd_9SqePg4jP6cuGqsvAXr7HiPf6LpQ_O8D3R_qna6w02fOsAReB6ykFBQJcKEOYVPRlvwPHC06to72A=",
+            "type": "savingsAccount",
+            "currency": "NOK",
+            "name": "Vennlig Nattkrem D\u00f8dsbo",
+            "balances": [
+              {
+                "creditLineIncluded": true,
+                "amount": 1400.0,
+                "creditDebitIndicator": "credit",
+                "registered": "2024-11-27T23:54:17+00:00",
+                "type": "bookedBalance",
+                "creditLineAmount": 0.0,
+                "creditLineCurrency": "NOK",
+                "currency": "NOK"
+              },
+              {
+                "creditLineIncluded": true,
+                "amount": 1400.0,
+                "creditDebitIndicator": "credit",
+                "registered": "2024-11-27T23:54:17+00:00",
+                "type": "availableBalance",
+                "creditLineAmount": 0.0,
+                "creditLineCurrency": "NOK",
+                "currency": "NOK"
+              }
+            ],
+            "primaryOwner": {
+              "permission": "rightToUseAlone",
+              "identifier": {
+                "value": "31853649603",
+                "type": "nationalIdentityNumber"
+              },
+              "name": "Vennlig Nattkrem D\u00f8dsbo",
+              "startDate": "2024-05-06",
+              "endDate": "9999-12-31"
+            },
+            "startDate": "2024-05-06",
+            "endDate": "9999-12-31"
+          },
+          "transactions": null,
+          "accountAvailableBalance": 1400.0,
+          "accountBookedBalance": 1400.0
+        },
+        {
+          "accountNumber": "12278825335",
+          "accountDetail": {
+            "status": "enabled",
+            "servicer": {
+              "identifier": {
+                "countryOfResidence": "NO",
+                "value": "984851006",
+                "type": "nationalIdentityNumber"
+              },
+              "name": "DNB"
+            },
+            "accountIdentifier": "12278825335",
+            "accountReference": "-4nJ9wJejuM0uLIkZq0P3euqhIKzr2rs7VE0eCEX5LJXMRhbC_p5RL8AEnCEmaY-rgRLHH3ONrV8GSZShxKIO_1inuh4D0H-vn8jGviimFyKNBb8YIU=",
+            "type": "salaryAccount",
+            "currency": "NOK",
+            "name": "Vennlig Nattkrem D\u00f8dsbo",
+            "balances": [
+              {
+                "creditLineIncluded": true,
+                "amount": 1400.0,
+                "creditDebitIndicator": "credit",
+                "registered": "2024-11-27T23:54:17+00:00",
+                "type": "bookedBalance",
+                "creditLineAmount": 0.0,
+                "creditLineCurrency": "NOK",
+                "currency": "NOK"
+              },
+              {
+                "creditLineIncluded": true,
+                "amount": 1400.0,
+                "creditDebitIndicator": "credit",
+                "registered": "2024-11-27T23:54:17+00:00",
+                "type": "availableBalance",
+                "creditLineAmount": 0.0,
+                "creditLineCurrency": "NOK",
+                "currency": "NOK"
+              }
+            ],
+            "primaryOwner": {
+              "permission": "rightToUseAlone",
+              "identifier": {
+                "value": "31853649603",
+                "type": "nationalIdentityNumber"
+              },
+              "name": "Vennlig Nattkrem D\u00f8dsbo",
+              "startDate": "2024-05-06",
+              "endDate": "9999-12-31"
+            },
+            "startDate": "2024-05-06",
+            "endDate": "9999-12-31"
+          },
+          "transactions": null,
+          "accountAvailableBalance": 1400.0,
+          "accountBookedBalance": 1400.0
+        }
+      ]
+    },
+    {
+      "bankName": "Nordea Bank Abp, filial i Norge",
+      "isImplemented": true,
+      "hasErrors": true,
+      "accounts": []
+    }
+  ]
+}

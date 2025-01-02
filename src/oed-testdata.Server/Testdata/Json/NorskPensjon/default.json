@@ -1,0 +1,12 @@
+{
+  "insurancesPolicies": [
+    {
+      "disclosureDate": "2020-12-31",
+      "url": "https://www.storebrand.no/privat/pensjon",
+      "productType": "Pensjonsforsikring",
+      "pensionScheme": "Storebrand",
+      "reference": "abc123",
+      "description": "Pensjonsforsikring"
+    }
+  ]
+}

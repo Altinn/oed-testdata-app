@@ -2,6 +2,7 @@
 using oed_testdata.Server.Testdata.Ektepakt;
 using oed_testdata.Server.Testdata.Estate;
 using oed_testdata.Server.Testdata.Kartverket;
+using oed_testdata.Server.Testdata.NorskPensjon;
 using oed_testdata.Server.Testdata.Svv;
 
 namespace oed_testdata.Server.Testdata
@@ -15,6 +16,7 @@ namespace oed_testdata.Server.Testdata
             app.MapSvvEndpoints();
             app.MapKartverketEndpoints();
             app.MapEktepaktEndpoints();
+            app.MapNorskPensjonEndpoints();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using oed_testdata.Server.Testdata.Bank;
+using oed_testdata.Server.Testdata.Ektepakt;
 using oed_testdata.Server.Testdata.Estate;
 using oed_testdata.Server.Testdata.Kartverket;
 using oed_testdata.Server.Testdata.Svv;
@@ -13,6 +14,7 @@ namespace oed_testdata.Server.Testdata
             app.MapBankEndpoints();
             app.MapSvvEndpoints();
             app.MapKartverketEndpoints();
+            app.MapEktepaktEndpoints();
         }
     }
 }

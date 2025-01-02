@@ -1,4 +1,5 @@
 ﻿using oed_testdata.Server.Infrastructure.TestdataStore.Bank;
+using oed_testdata.Server.Infrastructure.TestdataStore.Ektepakt;
 using oed_testdata.Server.Infrastructure.TestdataStore.Estate;
 using oed_testdata.Server.Infrastructure.TestdataStore.Kartverket;
 using oed_testdata.Server.Infrastructure.TestdataStore.Svv;
@@ -13,6 +14,7 @@ public static class ServiceCollectionExtensions
             .AddTransient<IEstateStore, EstateFileStore>()
             .AddTransient<IBankStore, BankFileStore>()
             .AddTransient<ISvvStore, SvvFileStore>()
-            .AddTransient<IKartverketStore, KartverketFileStore>();
+            .AddTransient<IKartverketStore, KartverketFileStore>()
+            .AddTransient<IEktepaktStore, EktepaktFileStore>();
     }
 }

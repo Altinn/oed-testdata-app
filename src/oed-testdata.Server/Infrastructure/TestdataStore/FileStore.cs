@@ -4,6 +4,12 @@ namespace oed_testdata.Server.Infrastructure.TestdataStore;
 
 public abstract class FileStore
 {
+    private static readonly JsonSerializerOptions SerializerOptions = new JsonSerializerOptions
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        WriteIndented = true
+    };
+
     protected async Task<TResponse> GetDefault<TResponse>(string path) where TResponse : class, new()
     {
         EnsureDirectory(path);
@@ -13,7 +19,7 @@ public abstract class FileStore
             return new TResponse();
 
         await using var fileStream = File.OpenRead(file);
-        var data = await JsonSerializer.DeserializeAsync<TResponse>(fileStream);
+        var data = await JsonSerializer.DeserializeAsync<TResponse>(fileStream, SerializerOptions);
 
         return data ?? new TResponse();
     }
@@ -28,7 +34,7 @@ public abstract class FileStore
         if (file is null) return null;
 
         await using var fileStream = File.OpenRead(file);
-        var data = await JsonSerializer.DeserializeAsync<TResponse>(fileStream);
+        var data = await JsonSerializer.DeserializeAsync<TResponse>(fileStream, SerializerOptions);
 
         return data ?? new TResponse();
     }

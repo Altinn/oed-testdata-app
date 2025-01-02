@@ -1,4 +1,5 @@
-﻿using oed_testdata.Server.Infrastructure.TestdataStore.Ektepakt;
+﻿using oed_testdata.Server.Infrastructure.TestdataStore;
+using oed_testdata.Server.Infrastructure.TestdataStore.Ektepakt;
 
 namespace oed_testdata.Server.Testdata.Ektepakt;
 
@@ -21,13 +22,13 @@ public static class EktepaktEndpoints
     private static async Task<IResult> GetEktepakter(
         int instanceOwnerPartyId,
         HttpContext httpContext,
-        IEktepaktStore store,
+        ITestdataStore store,
         ILoggerFactory loggerFactory)
     {
         var logger = loggerFactory.CreateLogger(typeof(EktepaktEndpoints));
         logger.LogInformation("Handling call for {path}", httpContext.Request.Path.Value);
 
-        var resp = await store.GetEktepakter(instanceOwnerPartyId);
+        var resp = await store.GetAsync<EktepaktResponse>("./Testdata/Json/Ektepakt", instanceOwnerPartyId);
         return Results.Ok(resp);
     }
 }

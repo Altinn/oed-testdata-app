@@ -1,4 +1,5 @@
-﻿using oed_testdata.Server.Infrastructure.TestdataStore.Kartverket;
+﻿using oed_testdata.Server.Infrastructure.TestdataStore;
+using oed_testdata.Server.Infrastructure.TestdataStore.Kartverket;
 
 namespace oed_testdata.Server.Testdata.Kartverket;
 
@@ -21,13 +22,13 @@ public static class KartverketEndpoints
     private static async Task<IResult> GetProperties(
         int instanceOwnerPartyId,
         HttpContext httpContext,
-        IKartverketStore store,
+        ITestdataStore store,
         ILoggerFactory loggerFactory)
     {
         var logger = loggerFactory.CreateLogger(typeof(KartverketEndpoints));
         logger.LogInformation("Handling call for {path}", httpContext.Request.Path.Value);
 
-        var resp = await store.GetProperties(instanceOwnerPartyId);
+        var resp = await store.GetAsync<KartverketResponse>("./Testdata/Json/Kartverket", instanceOwnerPartyId);
         return Results.Ok(resp);
     }
 }

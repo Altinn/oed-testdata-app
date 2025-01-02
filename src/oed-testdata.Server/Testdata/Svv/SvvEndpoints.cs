@@ -1,4 +1,5 @@
-﻿using oed_testdata.Server.Infrastructure.TestdataStore.Svv;
+﻿using oed_testdata.Server.Infrastructure.TestdataStore;
+using oed_testdata.Server.Infrastructure.TestdataStore.Svv;
 
 namespace oed_testdata.Server.Testdata.Svv;
 
@@ -21,13 +22,13 @@ public static class SvvEndpoints
     private static async Task<IResult> GetVehicles(
         int instanceOwnerPartyId,
         HttpContext httpContext,
-        ISvvStore svvStore,
+        ITestdataStore store,
         ILoggerFactory loggerFactory)
     {
         var logger = loggerFactory.CreateLogger(typeof(SvvEndpoints));
         logger.LogInformation("Handling call for {path}", httpContext.Request.Path.Value);
 
-        var resp = await svvStore.GetVehicles(instanceOwnerPartyId);
+        var resp = await store.GetAsync<SvvResponse>("./Testdata/Json/Svv", instanceOwnerPartyId);
         return Results.Ok(resp);
     }
 }

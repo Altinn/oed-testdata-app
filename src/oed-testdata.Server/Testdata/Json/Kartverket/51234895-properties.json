@@ -1,0 +1,35 @@
+{
+  "propertyRights": {
+    "properties": [
+      {
+        "address": "Pilestredet Park 4-H0102",
+        "city": "Oslo",
+        "postalCode": "0176",
+        "type": "Eiendomsrett",
+        "municipality": "Oslo",
+        "municipalityNumber": "0301",
+        "holdingNumber": "208",
+        "subholdingNumber": "951",
+        "leaseNumber": "0",
+        "sectionNumber": "1",
+        "fractionOwnership": "1/1",
+        "isAgriculture": false
+      },
+      {
+        "address": "Pilestredet Park 4-H0103",
+        "city": "Oslo",
+        "postalCode": "0176",
+        "type": "Eiendomsrett",
+        "municipality": "Oslo",
+        "municipalityNumber": "0301",
+        "holdingNumber": "208",
+        "subholdingNumber": "952",
+        "leaseNumber": "0",
+        "sectionNumber": "2",
+        "fractionOwnership": "1/1",
+        "isAgriculture": false
+      }
+    ],
+    "propertiesWithRights": []
+  }
+}

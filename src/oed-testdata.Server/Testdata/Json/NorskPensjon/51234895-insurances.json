@@ -1,0 +1,20 @@
+{
+  "insurancesPolicies": [
+    {
+      "disclosureDate": "2027-12-31",
+      "url": "https://www.storebrand.no/privat/pensjon",
+      "productType": "Pensjonforsikring",
+      "pensionScheme": "Storebrand",
+      "reference": "abc123",
+      "description": "Pensjonforsikring"
+    },
+    {
+      "disclosureDate": "2027-12-31",
+      "url": "https://www.dnb.no",
+      "productType": "Pensjonforsikring",
+      "pensionScheme": "DNB",
+      "reference": "xyz987",
+      "description": "Pensjonforsikring"
+    }
+  ]
+}

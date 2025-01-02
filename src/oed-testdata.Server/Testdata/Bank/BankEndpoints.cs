@@ -1,4 +1,6 @@
-﻿using oed_testdata.Server.Infrastructure.TestdataStore.Bank;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using oed_testdata.Server.Infrastructure.TestdataStore.Bank;
 
 namespace oed_testdata.Server.Testdata.Bank;
 
@@ -27,10 +29,10 @@ public static class BankEndpoints
     {
         group.MapGet("/", GetBankCustomerRelations);
         group.MapGet("/{bankOrgNo}", GetBankDetails);
-        group.MapGet("/{bankOrgNo}/{accountRefNo}", GetAccountTransactions);
+        group.MapGet("/{bankOrgNo}/transactions", GetBankTransactions);
+        group.MapGet("/{bankOrgNo}/transactions/{accountRefNo}", GetAccountTransactions);
         return group;
     }
-
 
     private static async Task<IResult> GetAllInOne(
         int instanceOwnerPartyId,
@@ -102,4 +104,17 @@ public static class BankEndpoints
         return Results.File(resp, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Transaksjonshistorikk.xlsx");
     }
 
+    private static async Task<IResult> GetBankTransactions(
+        int instanceOwnerPartyId,
+        string bankOrgNo,
+        HttpContext httpContext,
+        IBankStore bankStore,
+        ILoggerFactory loggerFactory)
+    {
+        var logger = loggerFactory.CreateLogger(typeof(BankEndpoints));
+        logger.LogInformation("Handling call for {path}", httpContext.Request.Path.Value);
+
+        var resp = await bankStore.GetAccountTransactionsFile();
+        return Results.File(resp, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Transaksjonshistorikk.xlsx");
+    }
 }

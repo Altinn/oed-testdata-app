@@ -1,4 +1,4 @@
-﻿namespace oed_testdata.Server.Infrastructure.TestdataStore;
+﻿namespace oed_testdata.Server.Infrastructure.TestdataStore.Estate;
 
 public interface IEstateStore
 {

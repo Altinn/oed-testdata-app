@@ -10,6 +10,7 @@ using oed_testdata.Server.Oed;
 using oed_testdata.Server.Services;
 using oed_testdata.Server.Testdata.Bank;
 using oed_testdata.Server.Testdata.Estate;
+using oed_testdata.Server.Testdata.Svv;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -76,6 +77,7 @@ if (app.Environment.IsDevelopment())
 app.MapBasicAuthenticationEndpoints();
 app.MapEstateEndpoints();
 app.MapBankEndpoints();
+app.MapSvvEndpoints();
 app.MapOedInstanceEndpoints();
 app.MapCloudEventEndpoints();
 

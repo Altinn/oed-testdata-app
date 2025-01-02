@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace oed_testdata.Server.Infrastructure.TestdataStore;
+namespace oed_testdata.Server.Infrastructure.TestdataStore.Bank;
 
 public class BankFileStore(ILogger<BankFileStore> logger) : IBankStore
 {
@@ -8,7 +8,7 @@ public class BankFileStore(ILogger<BankFileStore> logger) : IBankStore
     private const string BankDetailsPath = "./Testdata/Json/Bank/BankDetails";
     private const string TransactionsPath = "./Testdata/Json/Bank/Transactions";
     private const string AllInOnePath = "./Testdata/Json/Bank/AllInOne";
-    
+
     public async Task<BankResponse> GetAllInOne(int partyId)
     {
         EnsureDirectory(AllInOnePath);
@@ -28,7 +28,7 @@ public class BankFileStore(ILogger<BankFileStore> logger) : IBankStore
     public async Task<IEnumerable<BankCustomerRelation>> GetCustomerRelations(int partyId)
     {
         EnsureDirectory(CustomerRelationsPath);
-        
+
         var response = await GetSpecificCustomerRelations(partyId);
         if (response is not null)
         {

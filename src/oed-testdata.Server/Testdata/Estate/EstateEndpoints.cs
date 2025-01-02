@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using oed_testdata.Server.Infrastructure.Altinn;
 using oed_testdata.Server.Infrastructure.OedEvents;
-using oed_testdata.Server.Infrastructure.TestdataStore;
+using oed_testdata.Server.Infrastructure.TestdataStore.Estate;
 
 namespace oed_testdata.Server.Testdata.Estate
 {

@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace oed_testdata.Server.Infrastructure.TestdataStore;
+namespace oed_testdata.Server.Infrastructure.TestdataStore.Estate;
 
 public class EstateData
 {
@@ -21,7 +21,7 @@ public class EstateFileStore : IEstateStore
         foreach (var file in Directory.EnumerateFiles(EstatePath))
         {
             await using var filestream = File.OpenRead(file);
-            
+
             var daData = await JsonSerializer.DeserializeAsync<DaData>(filestream);
             daData!.UpdateTimestamps(DateTimeOffset.UtcNow);
 
@@ -42,8 +42,8 @@ public class EstateFileStore : IEstateStore
     {
         var filename = Path.GetFileNameWithoutExtension(filepath);
         var parts = filename.Split("-");
-        
-        if (parts.Length != 2 || string.IsNullOrWhiteSpace(parts[1])) 
+
+        if (parts.Length != 2 || string.IsNullOrWhiteSpace(parts[1]))
             return "";
 
         var estateName = parts[1].Replace("_", " ");

@@ -4,7 +4,7 @@ using oed_testdata.Server.Infrastructure.Altinn;
 using oed_testdata.Server.Infrastructure.Maskinporten;
 using oed_testdata.Server.Infrastructure.Maskinporten.Models;
 using oed_testdata.Server.Infrastructure.OedEvents;
-using oed_testdata.Server.Infrastructure.TestdataStore;
+using oed_testdata.Server.Infrastructure.TestdataStore.Estate;
 using oed_testdata.Server.Models;
 using static System.Net.WebRequestMethods;
 

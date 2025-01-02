@@ -1,4 +1,8 @@
-﻿namespace oed_testdata.Server.Infrastructure.TestdataStore;
+﻿using oed_testdata.Server.Infrastructure.TestdataStore.Bank;
+using oed_testdata.Server.Infrastructure.TestdataStore.Estate;
+using oed_testdata.Server.Infrastructure.TestdataStore.Svv;
+
+namespace oed_testdata.Server.Infrastructure.TestdataStore;
 
 public static class ServiceCollectionExtensions
 {
@@ -6,6 +10,7 @@ public static class ServiceCollectionExtensions
     {
         return services
             .AddTransient<IEstateStore, EstateFileStore>()
-            .AddTransient<IBankStore, BankFileStore>();
+            .AddTransient<IBankStore, BankFileStore>()
+            .AddTransient<ISvvStore, SvvFileStore>();
     }
 }

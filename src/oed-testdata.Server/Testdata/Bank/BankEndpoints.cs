@@ -1,4 +1,4 @@
-﻿using oed_testdata.Server.Infrastructure.TestdataStore;
+﻿using oed_testdata.Server.Infrastructure.TestdataStore.Bank;
 
 namespace oed_testdata.Server.Testdata.Bank;
 

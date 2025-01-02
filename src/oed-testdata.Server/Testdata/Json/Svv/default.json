@@ -1,0 +1,17 @@
+{
+  "vehicles": [
+    {
+      "regNr": "EL12345",
+      "brand": "Porsche",
+      "groupName": "Personbil",
+      "groupValue": "M1",
+      "model": "Taycan",
+      "owner": "TULLETE NISSEFAR",
+      "latestEUApproval": "2024-12-18",
+      "deadlineEUApproval": "2027-01-01",
+      "coOwner": "TULLETE NISSEMOR",
+      "registrationDate": "2021-01-01",
+      "status": "REGISTRERT"
+    }
+  ]
+}

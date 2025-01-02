@@ -2,7 +2,7 @@
 
 namespace oed_testdata.Server.Infrastructure.TestdataStore.Bank;
 
-public class BankFileStore(ILogger<BankFileStore> logger) : IBankStore
+public class BankFileStore(ILogger<BankFileStore> logger) : FileStore, IBankStore
 {
     private const string CustomerRelationsPath = "./Testdata/Json/Bank/CustomerRelations";
     private const string BankDetailsPath = "./Testdata/Json/Bank/BankDetails";
@@ -11,9 +11,7 @@ public class BankFileStore(ILogger<BankFileStore> logger) : IBankStore
 
     public async Task<BankResponse> GetAllInOne(int partyId)
     {
-        EnsureDirectory(AllInOnePath);
-
-        var response = await GetSpecificAllInOne(partyId);
+        var response = await GetForParty<BankResponse>(AllInOnePath, partyId);
         if (response is not null)
         {
             logger.LogInformation("Returning SPECIFIC all-in-one testdata for partyId [{partyId}]", partyId);
@@ -27,9 +25,7 @@ public class BankFileStore(ILogger<BankFileStore> logger) : IBankStore
 
     public async Task<IEnumerable<BankCustomerRelation>> GetCustomerRelations(int partyId)
     {
-        EnsureDirectory(CustomerRelationsPath);
-
-        var response = await GetSpecificCustomerRelations(partyId);
+        var response = await GetForParty<List<BankCustomerRelation>>(CustomerRelationsPath, partyId);
         if (response is not null)
         {
             logger.LogInformation("Returning SPECIFIC customer relations testdata for partyId [{partyId}]", partyId);
@@ -64,51 +60,7 @@ public class BankFileStore(ILogger<BankFileStore> logger) : IBankStore
             return [];
 
         var fileBytes = await File.ReadAllBytesAsync(file);
-        return fileBytes ?? [];
-    }
-
-    private static async Task<BankResponse?> GetSpecificAllInOne(int partyId)
-    {
-        EnsureDirectory(AllInOnePath);
-
-        var files = Directory.EnumerateFiles(AllInOnePath);
-        var file = files.SingleOrDefault(f => f.Contains(partyId.ToString()));
-
-        if (file is null) return null;
-
-        await using var fileStream = File.OpenRead(file);
-        var data = await JsonSerializer.DeserializeAsync<BankResponse>(fileStream);
-
-        return data;
-    }
-
-    private static async Task<TResponse> GetDefault<TResponse>(string path) where TResponse : class, new()
-    {
-        EnsureDirectory(path);
-
-        var file = Path.Combine(path, "default.json");
-        if (!File.Exists(file))
-            return new TResponse();
-
-        await using var fileStream = File.OpenRead(file);
-        var data = await JsonSerializer.DeserializeAsync<TResponse>(fileStream);
-
-        return data ?? new TResponse();
-    }
-
-    private static async Task<IEnumerable<BankCustomerRelation>?> GetSpecificCustomerRelations(int partyId)
-    {
-        EnsureDirectory(CustomerRelationsPath);
-
-        var files = Directory.EnumerateFiles(CustomerRelationsPath);
-        var file = files.SingleOrDefault(f => f.Contains(partyId.ToString()));
-
-        if (file is null) return null;
-
-        await using var fileStream = File.OpenRead(file);
-        var data = await JsonSerializer.DeserializeAsync<List<BankCustomerRelation>>(fileStream);
-
-        return data;
+        return fileBytes;
     }
 
     private static async Task<BankResponse?> GetSpecificBankDetails(int partyId, string bankOrgNo)
@@ -123,11 +75,5 @@ public class BankFileStore(ILogger<BankFileStore> logger) : IBankStore
         var data = await JsonSerializer.DeserializeAsync<BankResponse>(fileStream);
 
         return data;
-    }
-
-    private static void EnsureDirectory(string path)
-    {
-        if (!Directory.Exists(path))
-            throw new Exception("No path");
     }
 }

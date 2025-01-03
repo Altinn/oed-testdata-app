@@ -30,7 +30,7 @@ public static class BankEndpoints
         group.MapGet("/", GetBankCustomerRelations);
         group.MapGet("/{bankOrgNo}", GetBankDetails);
         group.MapGet("/{bankOrgNo}/transactions", GetBankTransactions);
-        group.MapGet("/{bankOrgNo}/transactions/{accountRefNo}", GetAccountTransactions);
+        group.MapPost("/{bankOrgNo}/transactions/{accountRefNo}", GetAccountTransactions);
         return group;
     }
 

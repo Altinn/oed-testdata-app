@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-using oed_testdata.Server.Infrastructure.TestdataStore.Bank;
+﻿using oed_testdata.Server.Infrastructure.TestdataStore.Bank;
 
 namespace oed_testdata.Server.Testdata.Bank;
 
@@ -12,17 +10,6 @@ public static class BankEndpoints
             .MapGroup("/api/testdata/banks/{instanceOwnerPartyId:int}/{instanceGuid:guid}")
             .MapEndpoints()
             .AllowAnonymous();
-
-        app
-            .MapGroup("/api/testdata/externalapi/bank/{instanceOwnerPartyId:int}/{instanceGuid:guid}")
-            .MapGet("/", GetAllInOne)
-            .AllowAnonymous();
-
-        app
-            .MapGroup("/api/testdata/externalapi/banktransactions/{instanceOwnerPartyId:int}/{instanceGuid:guid}")
-            .MapGet("/", GetAllInOneTransactions)
-            .AllowAnonymous();
-
     }
 
     private static RouteGroupBuilder MapEndpoints(this RouteGroupBuilder group)
@@ -32,33 +19,6 @@ public static class BankEndpoints
         group.MapGet("/{bankOrgNo}/transactions", GetBankTransactions);
         group.MapPost("/{bankOrgNo}/transactions/{accountRefNo}", GetAccountTransactions);
         return group;
-    }
-
-    private static async Task<IResult> GetAllInOne(
-        int instanceOwnerPartyId,
-        HttpContext httpContext,
-        IBankStore bankStore,
-        ILoggerFactory loggerFactory)
-    {
-        var logger = loggerFactory.CreateLogger(typeof(BankEndpoints));
-        logger.LogInformation("Handling call for {path}", httpContext.Request.Path.Value);
-
-        var resp = await bankStore.GetAllInOne(instanceOwnerPartyId);
-        return Results.Ok(resp);
-    }
-
-    private static async Task<IResult> GetAllInOneTransactions(
-        int instanceOwnerPartyId,
-        HttpContext httpContext,
-        IBankStore bankStore,
-        ILoggerFactory loggerFactory)
-    {
-        var logger = loggerFactory.CreateLogger(typeof(BankEndpoints));
-        logger.LogInformation("Handling call for {path}", httpContext.Request.Path.Value);
-
-        var resp = await bankStore.GetAccountTransactionsFile();
-        return Results.File(resp, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Transaksjonshistorikk.xlsx");
-
     }
 
     private static async Task<IResult> GetBankCustomerRelations(
@@ -73,8 +33,7 @@ public static class BankEndpoints
         var resp = await bankStore.GetCustomerRelations(instanceOwnerPartyId);
         return Results.Ok(resp);
     }
-
-
+    
     private static async Task<IResult> GetBankDetails(
         int instanceOwnerPartyId,
         string bankOrgNo,

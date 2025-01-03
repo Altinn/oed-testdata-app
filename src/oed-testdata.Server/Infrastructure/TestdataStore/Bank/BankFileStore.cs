@@ -7,21 +7,6 @@ public class BankFileStore(ILogger<BankFileStore> logger) : FileStore, IBankStor
     private const string CustomerRelationsPath = "./Testdata/Json/Bank/CustomerRelations";
     private const string BankDetailsPath = "./Testdata/Json/Bank/BankDetails";
     private const string TransactionsPath = "./Testdata/Json/Bank/Transactions";
-    private const string AllInOnePath = "./Testdata/Json/Bank/AllInOne";
-
-    public async Task<BankResponse> GetAllInOne(int partyId)
-    {
-        var response = await GetForParty<BankResponse>(AllInOnePath, partyId);
-        if (response is not null)
-        {
-            logger.LogInformation("Returning SPECIFIC all-in-one testdata for partyId [{partyId}]", partyId);
-            return response;
-        }
-
-        logger.LogInformation("Returning DEFAULT all-in-one testdata for partyId [{partyId}]", partyId);
-        return await GetDefault<BankResponse>(AllInOnePath);
-
-    }
 
     public async Task<IEnumerable<BankCustomerRelation>> GetCustomerRelations(int partyId)
     {

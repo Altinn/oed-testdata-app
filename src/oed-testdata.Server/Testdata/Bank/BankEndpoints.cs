@@ -7,7 +7,7 @@ public static class BankEndpoints
     public static void MapBankEndpoints(this WebApplication app)
     {
         app
-            .MapGroup("/api/testdata/banks/{instanceOwnerPartyId:int}/{instanceGuid:guid}")
+            .MapGroup("/api/testdata/externalapi/bank/{instanceOwnerPartyId:int}/{instanceGuid:guid}")
             .MapEndpoints()
             .AllowAnonymous();
     }

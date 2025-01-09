@@ -1,0 +1,30 @@
+{
+  "vehicles": [
+    {
+      "regNr": "EL12345",
+      "brand": "Porsche",
+      "groupName": "Personbil",
+      "groupValue": "M1",
+      "model": "Taycan",
+      "owner": "Aktuell Make",
+      "latestEUApproval": "2024-12-18",
+      "deadlineEUApproval": "2027-01-01",
+      "coOwner": "Fjellkjede Possessiv",
+      "registrationDate": "2021-01-01",
+      "status": "REGISTRERT"
+    },
+    {
+      "regNr": "BD73710",
+      "brand": "Volvo",
+      "groupName": "Personbil",
+      "groupValue": "M1",
+      "model": "240",
+      "owner": "Aktuell Make",
+      "latestEUApproval": "2023-06-22",
+      "deadlineEUApproval": "2024-04-01",
+      "coOwner": null,
+      "registrationDate": "1975-04-01",
+      "status": "REGISTRERT"
+    }
+  ]
+}

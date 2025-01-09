@@ -1,0 +1,84 @@
+{
+  "insurancesPolicies": [
+    {
+      "disclosureDate": "2023-11-20T00:00:00+00:00",
+      "url": "http://norskpensjon.test/oed",
+      "productType": "Pensjonsbevis",
+      "pensionScheme": "Kantega Pensjonskasse",
+      "reference": "142d-4c8e",
+      "description": "Kontakt selskapet for å få informasjon om avtalen."
+    },
+    {
+      "disclosureDate": "2023-11-20T00:00:00+00:00",
+      "url": "http://norskpensjon.test/oed",
+      "productType": "INDIVIDUELL PENSJONSSPARING",
+      "pensionScheme": "Kantega Pensjonskasse",
+      "reference": "ae2b-4ebe",
+      "description": "Hvis avtalen har en pensjonskapital, skal denne utbetales i følgende rekkefølge: barn under 21 år, ektefelle/samboer. Hvis ingen har rett til etterlattepensjon, blir kapitalen utbetalt dødsboet."
+    },
+    {
+      "disclosureDate": "2023-11-20T00:00:00+00:00",
+      "url": "http://norskpensjon.test/oed",
+      "productType": "INNSKUDDSBASERT KOLLEKTIV PENSJON",
+      "pensionScheme": "Kantega Pensjonskasse",
+      "reference": "5db9-4aac",
+      "description": "Hvis avtalen har en pensjonskapital, skal denne utbetales i følgende rekkefølge: barn under 21 år, ektefelle/samboer eller tidligere ektefelle. Hvis ingen har rett til etterlattepensjon, blir kapitalen utbetalt til dødsboet."
+    },
+    {
+      "disclosureDate": "2023-11-20T00:00:00+00:00",
+      "url": "http://dnb.no",
+      "productType": "INNSKUDDSBASERT KOLLEKTIV PENSJON",
+      "pensionScheme": "DNB",
+      "reference": "abc-1234",
+      "description": "Dette er testdata fra oed testdata-app"
+    },
+    {
+      "disclosureDate": "2023-11-20T00:00:00+00:00",
+      "url": "http://dnb.no",
+      "productType": "INDIVIDUELL PENSJONSSPARING",
+      "pensionScheme": "DNB",
+      "reference": "abc-1235",
+      "description": "Dette er testdata fra oed testdata-app"
+    },
+    {
+      "disclosureDate": "2023-11-20T00:00:00+00:00",
+      "url": "http://dnb.no",
+      "productType": "INNSKUDDSBASERT KOLLEKTIV PENSJON",
+      "pensionScheme": "Storebrand",
+      "reference": "abe-1234",
+      "description": "Dette er testdata fra oed testdata-app"
+    },
+    {
+      "disclosureDate": "2023-11-20T00:00:00+00:00",
+      "url": "http://dnb.no",
+      "productType": "INDIVIDUELL PENSJONSSPARING",
+      "pensionScheme": "Storebrand",
+      "reference": "abe-1235",
+      "description": "Dette er testdata fra oed testdata-app"
+    }
+  ]
+}
+
+
+
+
+{
+  "insurancesPolicies": [
+    {
+      "disclosureDate": "2027-12-31",
+      "url": "https://www.storebrand.no/privat/pensjon",
+      "productType": "Pensjonforsikring",
+      "pensionScheme": "Storebrand",
+      "reference": "abc123",
+      "description": "Pensjonforsikring"
+    },
+    {
+      "disclosureDate": "2027-12-31",
+      "url": "https://www.dnb.no",
+      "productType": "Pensjonforsikring",
+      "pensionScheme": "DNB",
+      "reference": "xyz987",
+      "description": "Pensjonforsikring"
+    }
+  ]
+}

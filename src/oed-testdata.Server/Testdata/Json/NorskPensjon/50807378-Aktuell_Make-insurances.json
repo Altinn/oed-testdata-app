@@ -42,7 +42,7 @@
     },
     {
       "disclosureDate": "2023-11-20T00:00:00+00:00",
-      "url": "http://dnb.no",
+      "url": "http://storebrand.no",
       "productType": "INNSKUDDSBASERT KOLLEKTIV PENSJON",
       "pensionScheme": "Storebrand",
       "reference": "abe-1234",
@@ -50,35 +50,11 @@
     },
     {
       "disclosureDate": "2023-11-20T00:00:00+00:00",
-      "url": "http://dnb.no",
+      "url": "http://storebrand.no",
       "productType": "INDIVIDUELL PENSJONSSPARING",
       "pensionScheme": "Storebrand",
       "reference": "abe-1235",
       "description": "Dette er testdata fra oed testdata-app"
-    }
-  ]
-}
-
-
-
-
-{
-  "insurancesPolicies": [
-    {
-      "disclosureDate": "2027-12-31",
-      "url": "https://www.storebrand.no/privat/pensjon",
-      "productType": "Pensjonforsikring",
-      "pensionScheme": "Storebrand",
-      "reference": "abc123",
-      "description": "Pensjonforsikring"
-    },
-    {
-      "disclosureDate": "2027-12-31",
-      "url": "https://www.dnb.no",
-      "productType": "Pensjonforsikring",
-      "pensionScheme": "DNB",
-      "reference": "xyz987",
-      "description": "Pensjonforsikring"
     }
   ]
 }

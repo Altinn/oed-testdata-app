@@ -8,7 +8,7 @@
             "16873948381",          // DRJ - UPERSONLIG_SYRE
             "21885399468",          // KM - STRAFFET_PINSETT
             "05819496309",          // LOK - VEIK_TELEFONKATALOG    (Både den døde og alle relasjoner har adressebeskyttelse)
-            "21899097235",          // LOK - ELASTISK_KOKEPLATE     (Inneholder en arving (barn) som er under 18 år)
+            //"21899097235",          // LOK - ELASTISK_KOKEPLATE     (Inneholder en arving (barn) som er under 18 år)
         ];
     }
 }

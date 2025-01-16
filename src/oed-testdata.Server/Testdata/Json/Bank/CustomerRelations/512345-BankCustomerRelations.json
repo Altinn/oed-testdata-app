@@ -1,44 +1,34 @@
-[
-  {
-    "orgNo": "920426530",
-    "name": "SPAREBANK 1 \u00D8STLANDET",
-    "url": null,
-    "version": "v2",
-    "env": "test"
-  },
-  {
-    "orgNo": "937889275",
-    "name": "SPAREBANK 1 RINGERIKE HADELAND",
-    "url": null,
-    "version": "v2",
-    "env": "test"
-  },
-  {
-    "orgNo": "937901003",
-    "name": "SPAREBANK 1 SMN",
-    "url": null,
-    "version": "v2",
-    "env": "test"
-  },
-  {
-    "orgNo": "952706365",
-    "name": "SPAREBANK 1 NORD-NORGE",
-    "url": null,
-    "version": "v2",
-    "env": "test"
-  },
-  {
-    "orgNo": "984851006",
-    "name": "DNB",
-    "url": null,
-    "version": "v2",
-    "env": "test"
-  },
-  {
-    "orgNo": "920058817",
-    "name": "Nordea Bank Abp, filial i Norge",
-    "url": null,
-    "version": "v2",
-    "env": "test"
-  }
-]
+{
+  "banks": [
+    {
+      "organizationNumber": "920426530",
+      "bankName": "SPAREBANK 1 \u00D8STLANDET",
+      "isImplemented": true
+    },
+    {
+      "organizationNumber": "937889275",
+      "bankName": "SPAREBANK 1 RINGERIKE HADELAND",
+      "isImplemented": true
+    },
+    {
+      "organizationNumber": "937901003",
+      "bankName": "SPAREBANK 1 SMN",
+      "isImplemented": true
+    },
+    {
+      "organizationNumber": "952706365",
+      "bankName": "SPAREBANK 1 NORD-NORGE",
+      "isImplemented": true
+    },
+    {
+      "organizationNumber": "984851006",
+      "bankName": "DNB",
+      "isImplemented": true
+    },
+    {
+      "organizationNumber": "920058817",
+      "bankName": "Nordea Bank Abp, filial i Norge",
+      "isImplemented": true
+    }
+  ]
+}

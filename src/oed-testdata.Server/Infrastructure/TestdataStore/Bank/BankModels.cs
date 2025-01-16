@@ -4,15 +4,17 @@
 
 namespace oed_testdata.Server.Infrastructure.TestdataStore.Bank;
 
-public class BankCustomerRelation
+public class BankRelations
 {
-    [JsonPropertyName("orgNo")] public string? OrgNo { get; set; }
-    [JsonPropertyName("name")] public string? Name { get; set; }
-    [JsonPropertyName("url")] public object? Url { get; set; }
-    [JsonPropertyName("version")] public string? Version { get; set; }
-    [JsonPropertyName("env")] public string? Env { get; set; }
+    public List<BankRelation> Banks { get; set; } = [];
 }
 
+public class BankRelation
+{
+    public string BankName { get; set; }
+    public bool IsImplemented { get; set; }
+    public string OrganizationNumber { get; set; }
+}
 
 public class BankResponse
 {

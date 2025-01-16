@@ -30,7 +30,7 @@ public static class BankEndpoints
         var logger = loggerFactory.CreateLogger(typeof(BankEndpoints));
         logger.LogInformation("Handling call for {path}", httpContext.Request.Path.Value);
 
-        var resp = await bankStore.GetCustomerRelations(instanceOwnerPartyId);
+        var resp = await bankStore.GetBankRelations(instanceOwnerPartyId);
         return Results.Ok(resp);
     }
     

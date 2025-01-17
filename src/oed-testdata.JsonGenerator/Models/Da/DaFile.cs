@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace oed_testdata.JsonGenerator.Models.Da;
 
@@ -27,6 +28,30 @@ internal static class PartRoleConverter
     }
 }
 
+
+internal static class MetadataFile
+{
+    public static async Task SerializeAndWrite(EstateMetadata metadata, string estateSsn, string? outputPath = null)
+    {
+        var filename = $"{estateSsn}-metadata.json";
+        var filepath = !string.IsNullOrWhiteSpace(outputPath) ? Path.Combine(outputPath, filename) : filename;
+
+        await using var filestream = File.Open(filepath, FileMode.Create, FileAccess.Write);
+        await JsonSerializer.SerializeAsync(filestream, metadata, JsonSerializerOptions.Web);
+        await filestream.FlushAsync();
+    }
+}
+
+public class EstateMetadata
+{
+    public EstateMetadataPerson[] Persons { get; set; } = [];
+}
+
+public class EstateMetadataPerson
+{
+    public required string Nin { get; set; }
+    public required string Name { get; set; }
+}
 
 internal static class DaFile
 {

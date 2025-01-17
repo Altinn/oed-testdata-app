@@ -2,6 +2,7 @@
 
 using oed_testdata.JsonGenerator.Models.Da;
 using oed_testdata.JsonGenerator.Models.Tenor;
+using System.Text.Json;
 
 var cliArgs = Environment.GetCommandLineArgs();
 if (cliArgs.Length is < 2 or > 3)
@@ -14,9 +15,9 @@ var tenorFile = cliArgs[1];
 try
 {
     var tenorPerson = await TenorPersonFile.ValidateAndDeserialize(tenorFile);
-    var daFile = DaFile.New(tenorPerson.id, Guid.NewGuid());
+    var daData = DaFile.New(tenorPerson.id, Guid.NewGuid());
 
-    var daCase = daFile.DaCaseList.Single();
+    var daCase = daData.DaCaseList.Single();
     daCase.Parter = tenorPerson.tenorRelasjoner.freg
         .Select(freg =>
             new Parter
@@ -29,7 +30,20 @@ try
             })
         .ToArray();
 
-    await DaFile.SerializeAndWrite(daFile, tenorPerson.visningnavn);
+    var metadata = new EstateMetadata
+    {
+        Persons = tenorPerson.tenorRelasjoner.freg
+            .Select(freg =>
+                new EstateMetadataPerson
+                {
+                    Nin = freg.id,
+                    Name = $"{freg.fornavn} {freg.etternavn}"
+                })
+            .ToArray()
+    };
+
+    await DaFile.SerializeAndWrite(daData, tenorPerson.visningnavn);
+    await MetadataFile.SerializeAndWrite(metadata, tenorPerson.id);
 }
 catch (ArgumentException ae)
 {

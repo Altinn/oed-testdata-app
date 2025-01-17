@@ -89,7 +89,7 @@ public class EstateFileStore : IEstateStore
         EnsureDirectory();
 
         var files = Directory.EnumerateFiles(EstatePath);
-        var file = files.SingleOrDefault(f => f.Contains(estateSsn));
+        var file = files.SingleOrDefault(f => !f.EndsWith(MetdataPostfix) && f.Contains(estateSsn));
 
         if (file is null) return null;
 

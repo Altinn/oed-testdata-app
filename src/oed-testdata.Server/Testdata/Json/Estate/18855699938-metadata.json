@@ -1,16 +1,1 @@
-{
-  "persons": [
-    {
-      "nin": "18855699938",
-      "name": "Ryddig Barneskole"
-    },
-    {
-      "nin": "24848299983",
-      "name": "Kalle Kanin"
-    },
-    {
-      "nin": "20856099858",
-      "name": "Jessica Rabbit"
-    }
-  ]
-}
+{"persons":[{"nin":"24848299983","name":"BLID STOKK"},{"nin":"20856099858","name":"TROSSIG HAI"}]}

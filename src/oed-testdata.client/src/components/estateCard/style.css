@@ -20,14 +20,25 @@
 
     li {
       display: flex;
+      flex-direction: column;
+      /* display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 1rem;
+      gap: 1rem; */
       padding: 0.5rem 1rem;
       background-color: var(--fds-semantic-surface-neutral-subtle);
       margin-bottom: 1rem;
+
+      div {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
     }
   }
 

@@ -90,11 +90,17 @@ export default function EstateCard({ data }: IProps) {
         </Heading>
         <ul>
           {data.heirs.map((heir) => {
+            const metadata = data?.metadata?.persons?.find(p => p.nin === heir.ssn);
             const relation = heir.relation?.split(":").pop();
             return (
-              <li key={heir.ssn}>
-                <Label>{relation}</Label>
-                <CopyToClipboard value={heir.ssn} />
+              <li key={heir.ssn}>                
+                <div className=".row">
+                  <Label weight="semibold">{metadata?.name || '<ukjent>'}</Label>
+                  <CopyToClipboard value={heir.ssn} />
+                </div>
+                <div>
+                  <Label size="small">{relation}</Label>
+                </div>
               </li>
             );
           })}

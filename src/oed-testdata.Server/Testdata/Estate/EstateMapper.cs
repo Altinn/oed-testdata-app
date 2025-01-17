@@ -10,6 +10,14 @@ public static class EstateMapper
         {
             EstateSsn = estateData.EstateSsn,
             EstateName = estateData.EstateName,
+            Metadata = new EstateMetadataDto
+            {
+                Persons = estateData.Metadata.Persons.Select(p => new EstateMetadataPersonDto
+                {
+                    Nin = p.Nin,
+                    Name = p.Name
+                })
+            },
             Heirs = estateData.Data.DaCaseList.Single().Parter.Select(p => new Heir
             {
                 Ssn = p.Nin,

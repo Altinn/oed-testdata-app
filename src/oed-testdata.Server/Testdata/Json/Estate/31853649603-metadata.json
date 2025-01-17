@@ -1,1 +1,16 @@
-{"persons":[{"nin":"15897397207","name":"BEMERKELSESVERDIG FRIHET"},{"nin":"27926897301","name":"VAKLENDE ALDERSTRYGD"}]}
+{
+  "persons": [
+    {
+      "nin": "13879799370",
+      "name": "GØYAL ISBJØRN"
+    },
+    {
+      "nin": "15897397207",
+      "name": "BEMERKELSESVERDIG FRIHET"
+    },
+    {
+      "nin": "27926897301",
+      "name": "VAKLENDE ALDERSTRYGD"
+    }
+  ]
+}

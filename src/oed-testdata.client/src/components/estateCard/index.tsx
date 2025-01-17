@@ -94,7 +94,7 @@ export default function EstateCard({ data }: IProps) {
             const relation = heir.relation?.split(":").pop();
             return (
               <li key={heir.ssn}>                
-                <div className=".row">
+                <div>
                   <Label weight="semibold">{metadata?.name || '<ukjent>'}</Label>
                   <CopyToClipboard value={heir.ssn} />
                 </div>

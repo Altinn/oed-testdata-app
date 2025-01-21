@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, Heading, Label, Spinner } from "@digdir/designsystemet-react";
 import "./style.css";
 import CopyToClipboard from "../copyToClipboard";
-import { ArrowCirclepathIcon, PadlockUnlockedIcon } from "@navikt/aksel-icons";
+import { ArrowCirclepathIcon, PadlockUnlockedIcon, GavelSoundBlockIcon } from "@navikt/aksel-icons";
 import { Estate } from "../../interfaces/IEstate";
 import { ESTATE_API } from "../../utils/constants";
 import { useToast } from "../../context/toastContext";
@@ -14,6 +14,7 @@ interface IProps {
 export default function EstateCard({ data }: IProps) {
   const [loadingResetEstate, setLoadingResetEstate] = useState(false);
   const [loadingRemoveRoles, setLoadingRemoveRoles] = useState(false);
+  const [loadingIssueProbate, setLoadingIssueProbate] = useState(false);
   const { addToast } = useToast();
 
   const handleResetEstate = async () => {
@@ -77,6 +78,44 @@ export default function EstateCard({ data }: IProps) {
     }
   };
 
+  const handleIssueProbate = async () => {
+    const estateUrl = `${ESTATE_API}${data.estateSsn}`;
+    if (confirm(
+        "Er du sikker på at du vil utestede skifteattest til dette boet?\n\n" +
+        "Denne funksjonen er KUN ment å simulere utsendelse av skifteattest fra DA uten at det på forhånd er sendt inn en skifteerklæring via Digitalt Dødsbo." +
+        "Dersom man heller ønsker en skifteattest som tar hensyn til valg tatt i skifteerklæringen skal dette gjøres ved å sende inn skifteerklæringen.\n\n" +
+        "Skifteattesten vil bli utstedt til den første arvingen i boet som et privat skifte i henhold til arvelovens §99") == false) {
+      return;
+    }
+
+    try {
+      setLoadingIssueProbate(true);
+      const response = await fetch(estateUrl, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ estateSsn: data.estateSsn, resultatType: "PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99" }),
+      });
+      if (response.status === 401) {
+        addToast(
+          "Autentiseringstoken har utløpt. Vennligst logg inn igjen.",
+          "danger"
+        );
+        return;
+      }
+      if (!response.ok) {
+        addToast("Noe gikk galt. Prøv igjen", "danger");
+      }
+      addToast("Skifteattest ble utstedt.", "success");
+    } catch (error) {
+      console.error("Error issuing probate:", error);
+      addToast("Noe gikk galt. Prøv igjen.", "danger");
+    } finally {
+      setLoadingIssueProbate(false);
+    }
+  };
+
   return (
     <article className="card">
       <Heading level={2} size="md" spacing className="card__heading">
@@ -123,6 +162,24 @@ export default function EstateCard({ data }: IProps) {
             <>
               <PadlockUnlockedIcon title="fjern roller" fontSize="1.5rem" />
               Fjern roller
+            </>
+          )}
+        </Button>
+        <Button
+          variant="secondary"
+          onClick={handleIssueProbate}
+          disabled={loadingIssueProbate}
+          aria-disabled={loadingIssueProbate}
+        >
+          {loadingIssueProbate ? (
+            <>
+              <Spinner title="laster" size="sm" />
+              Laster...
+            </>
+          ) : (
+            <>
+              <GavelSoundBlockIcon title="utestede skifteattest" fontSize="1.5rem" />
+              Skifteattest
             </>
           )}
         </Button>

@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
+using Altinn.App.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using oed_testdata.Server.Infrastructure.Altinn;
@@ -121,10 +122,24 @@ namespace oed_testdata.Server.Testdata.Estate
             {
                 var estate = await store.GetByEstateSsn(request.EstateSsn);
                 var data = estate.Data;
+                var daCase = data.DaCaseList.Single();
 
                 if (request.Status is not null)
                 {
-                    data.DaCaseList.Single().Status = request.Status.ToString()!;
+                    daCase.Status = request.Status.ToString()!;
+                }
+
+                if (request.ResultatType is not null)
+                {
+                    daCase.ResultatType = request.ResultatType;
+                    daCase.Skifteattest = new Skifteattest
+                    {
+                        Resultat = request.ResultatType,
+                        Arvinger = daCase.Parter
+                            .Select(p => p.Nin)
+                            .ToArray(),
+                        ArvingerSomPaatarSegGjeldsansvar = [daCase.Parter.First().Nin]
+                    };
                 }
 
                 data.UpdateTimestamps(DateTimeOffset.Now);
@@ -161,5 +176,7 @@ namespace oed_testdata.Server.Testdata.Estate
 
         [JsonConverter(typeof(JsonStringEnumConverter<EstateStatus>))]
         public EstateStatus? Status { get; init; }
+
+        public string? ResultatType { get; set; }
     }
 }

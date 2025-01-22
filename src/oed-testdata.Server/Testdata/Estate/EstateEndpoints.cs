@@ -131,6 +131,7 @@ namespace oed_testdata.Server.Testdata.Estate
 
                 if (request.ResultatType is not null)
                 {
+                    daCase.Status = "FERDIGBEHANDLET";
                     daCase.ResultatType = request.ResultatType;
                     daCase.Skifteattest = new Skifteattest
                     {

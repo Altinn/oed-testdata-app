@@ -80,6 +80,7 @@ public static class CloudEventEndpoints
         }
 
         // Issue probate based on data from the declaration
+        daCase.Status = "FERDIGBEHANDLET";
         daCase.ResultatType = "PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99";
         daCase.Skifteattest = new Skifteattest
         {

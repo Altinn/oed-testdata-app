@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Heading, Label, Spinner } from "@digdir/designsystemet-react";
+import { Button, Heading, Label, Spinner, DropdownMenu } from "@digdir/designsystemet-react";
 import "./style.css";
 import CopyToClipboard from "../copyToClipboard";
 import { ArrowCirclepathIcon, PadlockUnlockedIcon, GavelSoundBlockIcon } from "@navikt/aksel-icons";
@@ -15,6 +15,7 @@ export default function EstateCard({ data }: IProps) {
   const [loadingResetEstate, setLoadingResetEstate] = useState(false);
   const [loadingRemoveRoles, setLoadingRemoveRoles] = useState(false);
   const [loadingIssueProbate, setLoadingIssueProbate] = useState(false);
+  const [probateDropdownOpen, setProbateDropdownOpen] = useState(false);
   const { addToast } = useToast();
 
   const handleResetEstate = async () => {
@@ -78,24 +79,25 @@ export default function EstateCard({ data }: IProps) {
     }
   };
 
-  const handleIssueProbate = async () => {
+  const handleIssueProbate = async (type: string) => {
     const estateUrl = `${ESTATE_API}${data.estateSsn}`;
     if (confirm(
         "Er du sikker på at du vil utestede skifteattest til dette boet?\n\n" +
-        "Denne funksjonen er KUN ment å simulere utsendelse av skifteattest fra DA uten at det på forhånd er sendt inn en skifteerklæring via Digitalt Dødsbo." +
-        "Dersom man heller ønsker en skifteattest som tar hensyn til valg tatt i skifteerklæringen skal dette gjøres ved å sende inn skifteerklæringen.\n\n" +
-        "Skifteattesten vil bli utstedt til den første arvingen i boet som et privat skifte i henhold til arvelovens §99") == false) {
+        "Denne funksjonen er KUN ment å simulere utsendelse av skifteattest fra DA uten at det på forhånd er sendt inn en skifteerklæring via Digitalt Dødsbo.\n\n" +
+        "NB! Skifteattesten vil KUN bli utstedt til den første arvingen i boet.\n\n" +
+        "Dersom man heller ønsker en skifteattest som tar hensyn til valg tatt i skifteerklæringen skal dette gjøres ved å sende inn skifteerklæringen.") == false) {
       return;
     }
 
     try {
       setLoadingIssueProbate(true);
+      setProbateDropdownOpen(false);
       const response = await fetch(estateUrl, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ estateSsn: data.estateSsn, resultatType: "PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99" }),
+        body: JSON.stringify({ estateSsn: data.estateSsn, resultatType: type }),
       });
       if (response.status === 401) {
         addToast(
@@ -165,24 +167,40 @@ export default function EstateCard({ data }: IProps) {
             </>
           )}
         </Button>
-        <Button
-          variant="secondary"
-          onClick={handleIssueProbate}
-          disabled={loadingIssueProbate}
-          aria-disabled={loadingIssueProbate}
-        >
-          {loadingIssueProbate ? (
-            <>
+        <DropdownMenu open={probateDropdownOpen} onClose={() => setProbateDropdownOpen(false)}>
+          <DropdownMenu.Trigger 
+            variant="secondary" 
+            disabled={loadingIssueProbate} 
+            onClick={() => setProbateDropdownOpen(!probateDropdownOpen)}
+          >
+            {loadingIssueProbate ? (
               <Spinner title="laster" size="sm" />
-              Laster...
-            </>
-          ) : (
-            <>
+            ) : (
               <GavelSoundBlockIcon title="utestede skifteattest" fontSize="1.5rem" />
-              Skifteattest
-            </>
-          )}
-        </Button>
+            )}
+            Skifteattest
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Content>
+            <DropdownMenu.Group>
+              <DropdownMenu.Item onClick={() => handleIssueProbate('PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99')}>
+                <GavelSoundBlockIcon />
+                Privat skifte
+              </DropdownMenu.Item>
+              <DropdownMenu.Item onClick={() => handleIssueProbate('OFFENTLIG_SKIFTE_ETTER_BEGJARING')}>
+                <GavelSoundBlockIcon />
+                Offentlig skifte etter begjæring
+              </DropdownMenu.Item>
+              <DropdownMenu.Item onClick={() => handleIssueProbate('USKIFTE_MED_SAMTYKKE')}>
+                <GavelSoundBlockIcon />
+                Uskifte med samtykke
+              </DropdownMenu.Item>
+              <DropdownMenu.Item onClick={() => handleIssueProbate('GJENLEVENDE_EKTEFELLE_I_USKIFTE_IHT_ARVELOVEN_KAP_5')}>
+                <GavelSoundBlockIcon />
+                Gjenlevende ektefelle i uskifte
+              </DropdownMenu.Item>
+            </DropdownMenu.Group>            
+          </DropdownMenu.Content>
+        </DropdownMenu>
         <Button
           variant="secondary"
           color="danger"

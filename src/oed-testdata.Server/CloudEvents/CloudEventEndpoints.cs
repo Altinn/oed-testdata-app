@@ -73,7 +73,7 @@ public static class CloudEventEndpoints
         daCase.SakId = eventData?.DaCaseId ?? daCase.SakId;
 
         // Do we have alle the data we need to issue the probate? If not, ignore the event
-        if (declaration.Submitted is null || declaration.Heirs is null || declaration.SignatureClaims is null)
+        if (declaration.Heirs is null or {Count: 0} || declaration.SignatureClaims?.Signatures is null or  {Count: 0})
         {
             logger.LogInformation("Ignoring cloud event due to missing data for subject [{Subject}]", cloudEvent.Subject);
             return TypedResults.Ok();
@@ -88,7 +88,7 @@ public static class CloudEventEndpoints
             Arvinger = declaration.Heirs
                 .Select(h => h.Nin)
                 .ToArray(),
-            ArvingerSomPaatarSegGjeldsansvar = declaration.SignatureClaims
+            ArvingerSomPaatarSegGjeldsansvar = declaration.SignatureClaims.Signatures
                 .Where(h => h.AcceptsDebt)
                 .Select(h => h.HeirNin)
                 .ToArray()

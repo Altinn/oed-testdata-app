@@ -17,6 +17,8 @@ namespace oed_testdata.Server.Infrastructure.Maskinporten
             var path = $"https://digdir.apps.tt02.altinn.no/digdir/oed/api/declarations/{partyId}/{oedDeclarationInstanceGuid}";
             var response = await _httpClient.GetAsync(path);
 
+            response.EnsureSuccessStatusCode();
+
             await using var contentStream = await response.Content.ReadAsStreamAsync();
             var data = JsonSerializer.Deserialize<Declaration>(contentStream);
 

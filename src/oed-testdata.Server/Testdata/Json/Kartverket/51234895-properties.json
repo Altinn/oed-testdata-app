@@ -16,18 +16,18 @@
         "isAgriculture": false
       },
       {
-        "address": "Pilestredet Park 4-H0103",
-        "city": "Oslo",
-        "postalCode": "0176",
+        "address": "Hærnesvegen 372",
+        "city": "Sander",
+        "postalCode": "2116",
         "type": "Eiendomsrett",
-        "municipality": "Oslo",
-        "municipalityNumber": "0301",
-        "holdingNumber": "208",
-        "subholdingNumber": "952",
+        "municipality": "Sør-Odal",
+        "municipalityNumber": "3415",
+        "holdingNumber": "58",
+        "subholdingNumber": "4",
         "leaseNumber": "0",
-        "sectionNumber": "2",
+        "sectionNumber": "1",
         "fractionOwnership": "1/1",
-        "isAgriculture": false
+        "isAgriculture": true
       }
     ],
     "propertiesWithRights": []

@@ -1,0 +1,49 @@
+{
+  "DaEventList": [
+    [
+      {
+        "specversion": "1.0",
+        "id": "64c73906-283e-42c8-b417-4bbbc341ee1e",
+        "source": "https://domstol.no",
+        "type": "DODSFALLSAK-STATUS_OPPDATERT",
+        "datacontenttype": "application/json",
+        "time": "2025-02-05T10:40:59.8698184+01:00",
+        "data": {
+          "@id": "https://hendelsesliste.test.domstol.no/api/objects/64c73906-283e-42c8-b417-4bbbc341ee1e"
+        }
+      }
+    ]
+  ],
+  "DaCaseList": [
+    {
+      "sakId": "64c73906-283e-42c8-b417-4bbbc341ee1e",
+      "avdode": "22928597168",
+      "embete": "Oslo Tingrett",
+      "status": "MOTTATT",
+      "parter": [
+        {
+          "nin": "17816096642",
+          "role": "MOR",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
+        },
+        {
+          "nin": "09885697531",
+          "role": "FAR",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
+        }
+      ],
+      "receivedDate": "2025-02-05T10:40:59.8705292+01:00",
+      "deadlineDate": "2025-04-06T10:40:59.8705599+01:00",
+      "resultatType": null,
+      "skifteattest": null
+    }
+  ]
+}

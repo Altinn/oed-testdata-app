@@ -8,9 +8,7 @@
         "type": "DODSFALLSAK-STATUS_OPPDATERT",
         "datacontenttype": "application/json",
         "time": "2025-02-05T10:40:59.8698184+01:00",
-        "data": {
-          "@id": "https://hendelsesliste.test.domstol.no/api/objects/64c73906-283e-42c8-b417-4bbbc341ee1e"
-        }
+        "data": { "@id": "https://hendelsesliste.test.domstol.no/api/objects/64c73906-283e-42c8-b417-4bbbc341ee1e" }
       }
     ]
   ],
@@ -33,6 +31,15 @@
         {
           "nin": "09885697531",
           "role": "FAR",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
+        },
+        {
+          "nin": "31928196251",
+          "role": "AVDOEDE_EKTEFELLE_PARTNER",
           "formuesfullmakt": true,
           "signertDato": null,
           "onsketSkifteform": null,

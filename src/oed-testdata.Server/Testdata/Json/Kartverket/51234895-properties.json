@@ -30,6 +30,30 @@
         "isAgriculture": true
       }
     ],
-    "propertiesWithRights": []
+    "propertiesWithRights": [
+      {
+        "address": "Kongens gate 1",
+        "city": "Bergen",
+        "postalCode": "5003",
+        "type": "Leierett",
+        "municipality": "Bergen",
+        "municipalityNumber": "4601",
+        "holdingNumber": "164",
+        "subholdingNumber": "1275",
+        "leaseNumber": "0",
+        "sectionNumber": "0",
+        "fractionOwnership": "1/2",
+        "isAgriculture": false,
+        "rights": [
+          {
+            "documentYear": "2024",
+            "documentNumber": "123456",
+            "officeNumber": "0001",
+            "judgementNumber": "789",
+            "judgmentType": "Leiekontrakt"
+          }
+        ]
+      }
+    ]
   }
 }

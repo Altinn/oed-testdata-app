@@ -29,6 +29,11 @@
       "organizationNumber": "920058817",
       "bankName": "Nordea Bank Abp, filial i Norge",
       "isImplemented": true
+    },
+    {
+      "bankName": "Bulder Bank",
+      "isImplemented": false,
+      "organizationNumber": "832554332"
     }
   ]
 }

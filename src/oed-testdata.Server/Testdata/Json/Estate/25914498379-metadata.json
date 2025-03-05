@@ -1,12 +1,1 @@
-{
-  "persons": [
-    {
-      "nin": "24837298314",
-      "name": "FANTASIFULL SAK"
-    },
-    {
-      "nin": "22906698793",
-      "name": "PÅLITELIG NEPE"
-    }
-  ]
-}
+{"persons":[{"nin":"24837298314","name":"FANTASIFULL SAK"},{"nin":"22906698793","name":"P\u00C5LITELIG NEPE"}]}

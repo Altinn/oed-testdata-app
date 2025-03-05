@@ -1,0 +1,76 @@
+{
+  "DaEventList": [
+    [
+      {
+        "specversion": "1.0",
+        "id": "d174f107-edf9-4619-865b-e4d690dc1978",
+        "source": "https://domstol.no",
+        "type": "DODSFALLSAK-STATUS_LAGT_TIL",
+        "datacontenttype": "application/json",
+        "time": "1900-01-01T00:00:00Z",
+        "data": {
+          "@id": "https://hendelsesliste.test.domstol.no/api/objects/7c380951-36a4-41c8-b371-73d80b1972d6"
+        }
+      }
+    ]
+  ],
+  "DaCaseList": [
+    {
+      "sakId": "7c380951-36a4-41c8-b371-73d80b1972d6",
+      "avdode": "04896298475",
+      "embete": "Oslo Tingrett",
+      "status": "MOTTATT",
+      "parter": [
+        {
+          "nin": "12913049088",
+          "role": "MOR",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
+        },
+        {
+          "nin": "11912849572",
+          "role": "FAR",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
+        },
+        {
+          "nin": "05859798766",
+          "role": "BARN",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
+        },
+        {
+          "nin": "02849398280",
+          "role": "BARN",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
+        },
+        {
+          "nin": "20846598120",
+          "role": "GJENLEV_EKTEFELLE_PARTNER",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
+        }
+      ],
+      "receivedDate": "1900-01-01T00:00:00Z",
+      "deadlineDate": "1900-01-01T00:00:00Z",
+      "resultatType": null,
+      "skifteattest": null
+    }
+  ]
+}

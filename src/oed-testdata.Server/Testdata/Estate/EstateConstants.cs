@@ -11,6 +11,9 @@
             "22928597168",          // Uskifte - TRIST FJELL
             "27826499058",          // LOK - AITORISERT ALV         (Den døde har hatt mange historiske bosteder)
             //"21899097235",          // LOK - ELASTISK_KOKEPLATE     (Inneholder en arving (barn) som er under 18 år)
+            "04896298475",
+            "25914498379",
+            "14865097531"
         ];
     }
 }

@@ -133,14 +133,23 @@ namespace oed_testdata.Server.Testdata.Estate
                 {
                     daCase.Status = "FERDIGBEHANDLET";
                     daCase.ResultatType = request.ResultatType;
-                    daCase.Skifteattest = new Skifteattest
+
+                    // NB! Skifteattest vil KUN bli populert med data fra DA for privat skifte, for alle andre skifteformer vil denne være null
+                    if (request.ResultatType.StartsWith("PRIVAT_SKIFTE"))
                     {
-                        Resultat = request.ResultatType,
-                        Arvinger = daCase.Parter
-                            .Select(p => p.Nin)
-                            .ToArray(),
-                        ArvingerSomPaatarSegGjeldsansvar = [daCase.Parter.First().Nin]
-                    };
+                        daCase.Skifteattest = new Skifteattest
+                        {
+                            Resultat = request.ResultatType,
+                            Arvinger = daCase.Parter
+                                .Select(p => p.Nin)
+                                .ToArray(),
+                            ArvingerSomPaatarSegGjeldsansvar = [daCase.Parter.First().Nin]
+                        };
+                    }
+                    else
+                    {
+                        daCase.Skifteattest = null;
+                    }
                 }
 
                 data.UpdateTimestamps(DateTimeOffset.Now);

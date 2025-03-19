@@ -38,6 +38,15 @@
           "onsketSkifteform": null,
           "paatarGjeldsansvar": false,
           "godkjennerSkifteattest": false
+        },
+        {
+          "nin": "48878200554",
+          "role": "BARN",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
         }
       ],
       "receivedDate": "2024-12-04T13:04:49.7585258+01:00",

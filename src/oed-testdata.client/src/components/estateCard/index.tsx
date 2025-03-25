@@ -190,10 +190,6 @@ export default function EstateCard({ data }: IProps) {
                 <GavelSoundBlockIcon />
                 Offentlig skifte etter begjæring
               </DropdownMenu.Item>
-              <DropdownMenu.Item onClick={() => handleIssueProbate('USKIFTE_MED_SAMTYKKE')}>
-                <GavelSoundBlockIcon />
-                Uskifte med samtykke
-              </DropdownMenu.Item>
               <DropdownMenu.Item onClick={() => handleIssueProbate('GJENLEVENDE_EKTEFELLE_I_USKIFTE_IHT_ARVELOVEN_KAP_5')}>
                 <GavelSoundBlockIcon />
                 Gjenlevende ektefelle i uskifte

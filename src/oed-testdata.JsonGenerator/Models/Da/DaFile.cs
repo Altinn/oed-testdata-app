@@ -78,6 +78,7 @@ internal static class DaFile
     public static DaData Empty(Guid? id = null)
     {
         id ??= Guid.NewGuid();
+        var randomCaseNumberId = Random.Shared.NextInt64(0, 999999);
 
         return new DaData
         {
@@ -104,6 +105,7 @@ internal static class DaFile
                 new DaCase
                 {
                     SakId = id.Value.ToString(),
+                    Saksnummer = $"25-{randomCaseNumberId}DFA-TOSL/07",
                     Avdode = "",
                     Embete = "Oslo Tingrett",
                     Status = "MOTTATT",

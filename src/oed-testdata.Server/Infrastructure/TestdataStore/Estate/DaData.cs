@@ -65,6 +65,9 @@ public class DaCase
     [JsonPropertyName("sakId")]
     public required string SakId { get; set; }
 
+    [JsonPropertyName("saksnummer")]
+    public required string Saksnummer { get; set; }
+
     [JsonPropertyName("avdode")]
     public required string Avdode { get; set; }
 

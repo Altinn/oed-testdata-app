@@ -23,15 +23,6 @@
       "status": "MOTTATT",
       "parter": [
         {
-          "nin": "09911899318",
-          "role": "BARN",
-          "formuesfullmakt": true,
-          "signertDato": null,
-          "onsketSkifteform": null,
-          "paatarGjeldsansvar": false,
-          "godkjennerSkifteattest": false
-        },
-        {
           "nin": "05845896854",
           "role": "MOR",
           "formuesfullmakt": true,

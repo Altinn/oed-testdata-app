@@ -11,6 +11,7 @@ public class EstateMetadataPerson()
 public class EstateMetadata()
 {
     public List<EstateMetadataPerson> Persons { get; init; } = [];
+    public List<string> Tags { get; init; } = [];
 }
 
 public class EstateData

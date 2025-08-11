@@ -1,1 +1,24 @@
-{"persons":[{"nin":"15882749670","name":"SMIDIG METER"},{"nin":"28862549637","name":"REFLEKSIV MEDISTERDEIG"},{"nin":"07863249702","name":"KVADRATISK IDYLL"},{"nin":"21890049955","name":"TURKIS FYRSTE"}]}
+{
+  "persons": [
+    {
+      "nin": "15882749670",
+      "name": "SMIDIG METER"
+    },
+    {
+      "nin": "28862549637",
+      "name": "REFLEKSIV MEDISTERDEIG"
+    },
+    {
+      "nin": "07863249702",
+      "name": "KVADRATISK IDYLL"
+    },
+    {
+      "nin": "21890049955",
+      "name": "TURKIS FYRSTE"
+    }
+  ],
+  "tags": [
+    "Brukerstøtte",
+    "Test1", "Test2", "Test3"
+  ]
+}

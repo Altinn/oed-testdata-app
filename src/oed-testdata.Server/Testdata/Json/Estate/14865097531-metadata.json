@@ -1,1 +1,27 @@
-{"persons":[{"nin":"03858499258","name":"OPPLAGT BUKSPYTTKJERTEL"},{"nin":"08817197958","name":"TREKANTET SOVEPOSE"},{"nin":"20851349694","name":"PLUTSELIG GR\u00C5SISIK"},{"nin":"23921548141","name":"LOJAL BROR"},{"nin":"29854897436","name":"TRADISJONSBUNDEN KR\u00C5KEBOLLE"}]}
+{
+  "persons": [
+    {
+      "nin": "03858499258",
+      "name": "OPPLAGT BUKSPYTTKJERTEL"
+    },
+    {
+      "nin": "08817197958",
+      "name": "TREKANTET SOVEPOSE"
+    },
+    {
+      "nin": "20851349694",
+      "name": "PLUTSELIG GR\u00C5SISIK"
+    },
+    {
+      "nin": "23921548141",
+      "name": "LOJAL BROR"
+    },
+    {
+      "nin": "29854897436",
+      "name": "TRADISJONSBUNDEN KR\u00C5KEBOLLE"
+    }
+  ],
+  "tags": [
+    "Pentest"
+  ]
+}

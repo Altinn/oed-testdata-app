@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Heading, Label, Spinner, DropdownMenu } from "@digdir/designsystemet-react";
+import { Button, Heading, Label, Spinner, DropdownMenu, Tag } from "@digdir/designsystemet-react";
 import "./style.css";
 import CopyToClipboard from "../copyToClipboard";
 import { ArrowCirclepathIcon, PadlockUnlockedIcon, GavelSoundBlockIcon } from "@navikt/aksel-icons";
@@ -122,7 +122,14 @@ export default function EstateCard({ data }: IProps) {
     <article className="card">
       <Heading level={2} size="md" spacing className="card__heading">
         Dødsbo - {data.estateName}
-        <CopyToClipboard value={data.estateSsn} />
+        <CopyToClipboard value={data.estateSsn} />   
+
+        {data.metadata.tags?.length > 0 && 
+          <ul>
+            {data.metadata.tags?.map((tag) => <li><Tag>{tag}</Tag></li>)}
+          </ul>     
+        }
+
       </Heading>
 
       <section className="card__content">

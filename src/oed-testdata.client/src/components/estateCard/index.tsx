@@ -15,7 +15,6 @@ export default function EstateCard({ data }: IProps) {
   const [loadingResetEstate, setLoadingResetEstate] = useState(false);
   const [loadingRemoveRoles, setLoadingRemoveRoles] = useState(false);
   const [loadingIssueProbate, setLoadingIssueProbate] = useState(false);
-  const [probateDropdownOpen, setProbateDropdownOpen] = useState(false);
   const { addToast } = useToast();
 
   const handleResetEstate = async () => {
@@ -91,7 +90,6 @@ export default function EstateCard({ data }: IProps) {
 
     try {
       setLoadingIssueProbate(true);
-      setProbateDropdownOpen(false);
       const response = await fetch(estateUrl, {
         method: "PATCH",
         headers: {

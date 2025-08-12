@@ -3,7 +3,7 @@ import "./style.css";
 import { AUTH_LOGIN_API } from "../../utils/constants";
 import {
   Button,
-  ErrorMessage,
+  ValidationMessage,
   Heading,
   Textfield,
 } from "@digdir/designsystemet-react";
@@ -53,7 +53,7 @@ export default function LoginDialog() {
 
   return (
     <section id="login-dialog">
-      <Heading level={2} size="md" spacing>
+      <Heading level={2} data-size="md">
         Innlogging
       </Heading>
 
@@ -78,9 +78,9 @@ export default function LoginDialog() {
           disabled={isLoading}
         />
         {formError && (
-          <ErrorMessage>
+          <ValidationMessage>
             Feil brukernavn eller passord. Prøv igjen.
-          </ErrorMessage>
+          </ValidationMessage>
         )}
         <Button type="submit">Logg inn</Button>
       </form>

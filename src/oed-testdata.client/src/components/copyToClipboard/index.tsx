@@ -13,13 +13,13 @@ export default function CopyToClipboard({ value }: IProps) {
 
   return (
     <div className="copy-to-clipboard">
-      <Paragraph className={isNumeric ? "numeric" : ""}>{value}</Paragraph>
+      <Paragraph data-size="md" className={isNumeric ? "numeric" : ""}>{value}</Paragraph>
       <Tooltip content="kopiert" open={copied === value} placement="right" >
         <Button
           icon
           color="second"
           variant="tertiary"
-          size="small"
+          data-size="md"
           onClick={() => {
             navigator.clipboard.writeText(value);
             setCopied(value);

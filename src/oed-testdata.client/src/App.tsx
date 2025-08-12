@@ -12,7 +12,6 @@ function App() {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const isAuthenticated = localStorage.getItem("auth") === "true";
 
-
   const toggleTag = (tag: string) => {
     if (!selectedTags.includes(tag)) {
       setSelectedTags([...selectedTags, tag]);
@@ -21,11 +20,10 @@ function App() {
     }    
   }
 
-
   if (!isAuthenticated) {
     return (
       <main>
-        <Heading level={1} size="xl" spacing>
+        <Heading level={1} data-size="xl">
           Digitalt Dødsbo - Testdata
         </Heading>
 
@@ -39,21 +37,31 @@ function App() {
 
   return (
     <main>
-      <Heading level={1} size="xl" spacing>
+      <Heading level={1} data-size="xl">
         Digitalt Dødsbo - Testdata
       </Heading>
 
       {loading && (
-        <Paragraph size="md" className="flex-center">
-          <Spinner title="Laster inn data..." />
+        <Paragraph data-size="md" className="flex-center">
+          <Spinner aria-label="Laster inn data..." />
           Laster inn data...
         </Paragraph>
       )}
 
+      <ul style={{display: "flex", flexDirection: "row", gap: ".5rem" }}>
         {uniqueTags?.length > 0 && 
-        <Chip.Group>
-          {uniqueTags.map(tag => <Chip.Toggle onClick={() => toggleTag(tag)} name={tag} value={tag} selected={ selectedTags.includes(tag)   /*selectedTags.includes(tag)*/}>{tag}</Chip.Toggle>)}
-        </Chip.Group>}
+            uniqueTags.map(tag => 
+              <Chip.Checkbox
+                key={tag}
+                onClick={() => toggleTag(tag)} 
+                name={tag} 
+                value={tag} 
+                checked={selectedTags.includes(tag)}>
+                {tag}
+              </Chip.Checkbox>)
+        
+        }
+      </ul>
 
       <ul className="container__grid">
         {filteredEstates?.map((estate) => {

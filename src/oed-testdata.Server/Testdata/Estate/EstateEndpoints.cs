@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
-using Altinn.App.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using oed_testdata.Server.Infrastructure.Altinn;
@@ -29,16 +28,10 @@ namespace oed_testdata.Server.Testdata.Estate
             return group;
         }
 
-        private static async Task<Ok<IEnumerable<EstateDto>>> GetAll(
-            [FromHeader(Name = "X-Feature-IncludeHiddenEstates")]bool? showHidden,
-            IEstateStore store)
+        private static async Task<Ok<IEnumerable<EstateDto>>> GetAll(IEstateStore store)
         {
             var data = await store.ListAll();
-            var filtereData = showHidden.HasValue && showHidden.Value
-                ? data
-                : data.Where(estate => !EstateConstants.HiddenEstates.Contains(estate.EstateSsn));
-
-            return TypedResults.Ok(filtereData.Select(EstateMapper.Map));
+            return TypedResults.Ok(data.Select(EstateMapper.Map));
         }
 
         private static async Task<Ok<EstateDto>> GetSingleByEstateSsn(IEstateStore store, string estateSsn)

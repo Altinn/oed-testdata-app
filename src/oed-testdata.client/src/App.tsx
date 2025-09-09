@@ -35,6 +35,14 @@ function App() {
   const uniqueTags = [...new Set(data?.flatMap(estate => estate.metadata.tags))];
   const filteredEstates = data?.filter(estate => selectedTags.every(tag => estate.metadata.tags.includes(tag)));
 
+  if (selectedTags.length === 0) {
+    filteredEstates?.sort((a, b) => {
+      if (a.metadata.tags.length === 0) return -1;
+      if (b.metadata.tags.length === 0) return 1;
+      return 0;
+    });
+  }
+  
   return (
     <main>
       <Heading level={1} data-size="xl">

@@ -1,1 +1,27 @@
-{"persons":[{"nin":"30928897547","name":"UNDERDANIG HARMONI"},{"nin":"14928095674","name":"DYNAMISK REKORD"},{"nin":"20811649415","name":"TROSSIG LAMPETT"},{"nin":"19872048998","name":"USJENERT INDREFILET"},{"nin":"11855497427","name":"VIRKELIG TURBIN"}]}
+{
+  "persons": [
+    {
+      "nin": "30928897547",
+      "name": "UNDERDANIG HARMONI"
+    },
+    {
+      "nin": "14928095674",
+      "name": "DYNAMISK REKORD"
+    },
+    {
+      "nin": "20811649415",
+      "name": "TROSSIG LAMPETT"
+    },
+    {
+      "nin": "19872048998",
+      "name": "USJENERT INDREFILET"
+    },
+    {
+      "nin": "11855497427",
+      "name": "VIRKELIG TURBIN"
+    }
+  ],
+  "tags": [
+    "Bank"
+  ]
+}

@@ -1,1 +1,27 @@
-{"persons":[{"nin":"15870897739","name":"EPISK GRANITT"},{"nin":"10839998622","name":"DOGMATISK FRUKTHAGE"},{"nin":"05844498863","name":"NESN\u00D8DD BANJO"},{"nin":"13814497164","name":"RIKTIG METODE"},{"nin":"13837297278","name":"POSSESSIV FJELLKJEDE"}]}
+{
+  "persons": [
+    {
+      "nin": "15870897739",
+      "name": "EPISK GRANITT"
+    },
+    {
+      "nin": "10839998622",
+      "name": "DOGMATISK FRUKTHAGE"
+    },
+    {
+      "nin": "05844498863",
+      "name": "NESN\u00D8DD BANJO"
+    },
+    {
+      "nin": "13814497164",
+      "name": "RIKTIG METODE"
+    },
+    {
+      "nin": "13837297278",
+      "name": "POSSESSIV FJELLKJEDE"
+    }
+  ],
+  "tags": [
+    "Bank"
+  ]
+}

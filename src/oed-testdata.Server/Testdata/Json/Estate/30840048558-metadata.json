@@ -1,10 +1,6 @@
 {
   "persons": [
     {
-      "nin": "31852548951",
-      "name": "HYPPIG BEFOLKNING"
-    },
-    {
       "nin": "17863248809",
       "name": "INTUITIV VILLA"
     },
@@ -22,10 +18,10 @@
     },
     {
       "nin": "28850048489",
-      "name": "POPULÆR OMTALE"
+      "name": "POPULÃ†R OMTALE"
     }
   ],
   "tags": [
-    "Brukerstøtte"
+    "BrukerstÃ¸tte"
   ]
 }

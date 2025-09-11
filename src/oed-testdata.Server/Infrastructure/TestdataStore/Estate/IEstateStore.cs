@@ -4,4 +4,5 @@ public interface IEstateStore
 {
     public Task<IEnumerable<EstateData>> ListAll();
     public Task<EstateData?> GetByEstateSsn(string estateSsn);
+    public Task Create(EstateData estate);
 }

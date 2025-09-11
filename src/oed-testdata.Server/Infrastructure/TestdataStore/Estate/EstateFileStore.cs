@@ -106,6 +106,26 @@ public class EstateFileStore : IEstateStore
         };
     }
 
+    public async Task Create(EstateData estate)
+    {
+        var filename = $"{estate.EstateSsn}-{string.Join("_", estate.EstateName.Split(" "))}.json";
+        var filepath = Path.Combine("Testdata/Json/Estate", filename);
+
+        await using var filestream = File.Open(filepath, FileMode.Create, FileAccess.Write);
+        await JsonSerializer.SerializeAsync(filestream, estate.Data, JsonSerializerOptions.Default);
+        await filestream.FlushAsync();
+    }
+
+    public async Task CreateMetadata(EstateData estate)
+    {
+        var filename = $"{estate.EstateSsn}-metadata.json";
+        var filepath = Path.Combine("Testdata/Json/Estate", filename);
+
+        await using var filestream = File.Open(filepath, FileMode.Create, FileAccess.Write);
+        await JsonSerializer.SerializeAsync(filestream, estate.Metadata, JsonSerializerOptions.Web);
+        await filestream.FlushAsync();
+    }
+
     private static void EnsureDirectory()
     {
         if (!Directory.Exists(EstatePath))

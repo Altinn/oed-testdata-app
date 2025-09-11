@@ -6,6 +6,7 @@ import { useFetchData } from "./hooks/fetchData";
 import { Estate } from "./interfaces/IEstate";
 import LoginDialog from "./components/login";
 import { useState } from "react";
+import PersonSearchComp from "./components/personSearch";
 
 function App() {
   const { data, loading } = useFetchData<Estate[]>(ESTATE_API);
@@ -17,7 +18,7 @@ function App() {
       setSelectedTags([...selectedTags, tag]);
     } else {
       setSelectedTags([...selectedTags.filter(st => st != tag)])
-    }    
+    }
   }
 
   if (!isAuthenticated) {
@@ -42,7 +43,7 @@ function App() {
       return 0;
     });
   }
-  
+
   return (
     <main>
       <Heading level={1} data-size="xl">
@@ -55,19 +56,19 @@ function App() {
           Laster inn data...
         </Paragraph>
       )}
+      <PersonSearchComp />
+      <ul style={{ display: "flex", flexDirection: "row", gap: ".5rem" }}>
+        {uniqueTags?.length > 0 &&
+          uniqueTags.map(tag =>
+            <Chip.Checkbox
+              key={tag}
+              onClick={() => toggleTag(tag)}
+              name={tag}
+              value={tag}
+              checked={selectedTags.includes(tag)}>
+              {tag}
+            </Chip.Checkbox>)
 
-      <ul style={{display: "flex", flexDirection: "row", gap: ".5rem" }}>
-        {uniqueTags?.length > 0 && 
-            uniqueTags.map(tag => 
-              <Chip.Checkbox
-                key={tag}
-                onClick={() => toggleTag(tag)} 
-                name={tag} 
-                value={tag} 
-                checked={selectedTags.includes(tag)}>
-                {tag}
-              </Chip.Checkbox>)
-        
         }
       </ul>
 

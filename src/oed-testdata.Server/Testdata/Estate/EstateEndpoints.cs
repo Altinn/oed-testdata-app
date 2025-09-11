@@ -23,6 +23,7 @@ namespace oed_testdata.Server.Testdata.Estate
             group.MapGet("/", GetAll);
             group.MapGet("/{estateSsn}", GetSingleByEstateSsn);
             group.MapPost("/", CreateOrRecreateEstate);
+            group.MapPost("/add", AddNewEstate);
             group.MapPatch("/{estateSsn}", PatchEstate);
 
             return group;
@@ -41,17 +42,17 @@ namespace oed_testdata.Server.Testdata.Estate
         }
 
         private static async Task<IResult> CreateOrRecreateEstate(
-            IEstateStore store, 
-            ILoggerFactory loggerFactory, 
+            IEstateStore store,
+            ILoggerFactory loggerFactory,
             IOedClient oedClient,
             IAltinnClient altinnClient,
-            [FromBody]CreateOrUpdateEstateRequest request)
+            [FromBody] CreateOrUpdateEstateRequest request)
         {
             var logger = loggerFactory.CreateLogger(typeof(EstateEndpoints));
-            
+
             if (string.IsNullOrWhiteSpace(request.EstateSsn))
                 return TypedResults.BadRequest();
-            
+
             try
             {
                 // Get estate from testapp store (files)
@@ -104,7 +105,7 @@ namespace oed_testdata.Server.Testdata.Estate
         {
             var logger = loggerFactory.CreateLogger(typeof(EstateEndpoints));
 
-            if (string.IsNullOrWhiteSpace(estateSsn) || 
+            if (string.IsNullOrWhiteSpace(estateSsn) ||
                 string.IsNullOrWhiteSpace(request.EstateSsn) ||
                 estateSsn != request.EstateSsn)
             {
@@ -147,7 +148,7 @@ namespace oed_testdata.Server.Testdata.Estate
 
                 data.UpdateTimestamps(DateTimeOffset.Now);
                 await oedClient.PostDaEvent(data);
-                
+
                 return TypedResults.Ok(EstateMapper.Map(estate));
             }
             catch (Exception e)
@@ -157,12 +158,88 @@ namespace oed_testdata.Server.Testdata.Estate
             }
         }
 
+        private static async Task<IResult> AddNewEstate(
+            IEstateStore store,
+            ILoggerFactory loggerFactory,
+            [FromBody] AddNewEstate payload)
+        {
+            var logger = loggerFactory.CreateLogger(typeof(EstateEndpoints));
+            if (string.IsNullOrWhiteSpace(payload.EstateSsn))
+                return TypedResults.BadRequest();
+
+            var allEstates = await store.ListAll();
+            var allDeceasedNins = allEstates.Select(e => e.EstateSsn).ToList();
+            if (allDeceasedNins.Contains(payload.EstateSsn))
+            {
+                logger.LogWarning("Estate with ssn {EstateSsn} already exists", payload.EstateSsn);
+                return TypedResults.Conflict();
+            }
+
+            var daEventGuid = Guid.NewGuid();
+            var daEvent = new DaEvent
+            {
+                Id = daEventGuid.ToString(),
+                Specversion = "1.0",
+                Source = "https://domstol.no",
+                Type = "DODSFALLSAK-STATUS_OPPDATERT",
+                DataContentType = "application/json",
+                Time = DateTimeOffset.Now,
+                Data = new Data
+                {
+                    Id = $"https://hendelsesliste.test.domstol.no/api/objects/{daEventGuid}"
+                }
+            };
+            var daData = new DaData
+            {
+                DaEventList = [],
+                DaCaseList = 
+                [
+                    new DaCase
+                    {
+                        DeadlineDate = DateTimeOffset.UtcNow.AddDays(60),
+                        ReceivedDate = DateTimeOffset.UtcNow,
+                        SakId = daEventGuid.ToString(),
+                        Saksnummer = "25-000011DFA-TOSL/07",
+                        Avdode = payload.EstateSsn,
+                        Embete = "Oslo tingrett",
+                        Status = "MOTTATT",
+                        Parter = (payload.Heirs ?? []).Select(heir =>
+                            new Parter
+                            {
+                                Formuesfullmakt = true,
+                                GodkjennerSkifteattest = false,
+                                PaatarGjeldsansvar = false,
+                                Role = heir.Relation,
+                                Nin = heir.Ssn
+                            }).ToArray(),
+                    }
+                ]
+            };
+            var estate = new EstateData
+            {
+                EstateName = "lala",
+                EstateSsn = payload.EstateSsn,
+                Data = daData,
+            };
+            await store.Create(estate);
+            var createdEstate = await store.GetByEstateSsn(payload.EstateSsn);
+            return TypedResults.Ok(EstateMapper.Map(createdEstate));
+        }
     }
 
 
     public class CreateOrUpdateEstateRequest
     {
         public required string EstateSsn { get; init; }
+    }
+
+    public class AddNewEstate
+    {
+        public required string EstateSsn { get; init; }
+
+        public List<Heir>? Heirs { get; init; }
+
+        public List<string>? Tags { get; init; }
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]

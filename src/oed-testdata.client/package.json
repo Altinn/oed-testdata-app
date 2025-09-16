@@ -10,9 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@digdir/designsystemet-css": "^1.1.10",
-    "@digdir/designsystemet-react": "^1.1.10",
-    "@digdir/designsystemet-theme": "^1.1.10",
+    "@digdir/designsystemet-css": "^1.5.0",
+    "@digdir/designsystemet-react": "^1.5.0",
+    "@digdir/designsystemet-theme": "^1.5.0",
     "@navikt/aksel-icons": "^7.5.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"

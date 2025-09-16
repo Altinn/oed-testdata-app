@@ -5,7 +5,7 @@
 
   .card__heading {
     padding: 1rem 1.5rem;
-    background-color: var(--ds-color-brand3-surface-tinted);
+    background-color: var(--ds-color-surface-tinted);
     border-radius: 0.25rem 0.25rem 0 0;
     
     ul {

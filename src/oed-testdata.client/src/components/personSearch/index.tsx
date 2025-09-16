@@ -1,8 +1,9 @@
 import { PERSON_API } from "../../utils/constants";
 import { PersonSearch } from "../../interfaces/IPersonSearch";
 import { Button, Textfield } from "@digdir/designsystemet-react";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import { useToast } from "../../context/toastContext";
+import { NewEstateForm } from "./NewEstateForm";
 
 export default function PersonSearchComp() {
   const [isDeceasedLoading, setIsDeceasedLoading] = useState(false);
@@ -115,6 +116,7 @@ export default function PersonSearchComp() {
         />
       ) : null}
       <Button onClick={findRandomHeir} disabled={isHeirLoading}>Tilfeldig arving</Button>
+      <NewEstateForm />
 
       {Array.isArray(heirs) && heirs.length > 0 && (
         <>

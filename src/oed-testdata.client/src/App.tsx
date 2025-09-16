@@ -1,4 +1,4 @@
-import { Chip, Heading, Paragraph, Spinner } from "@digdir/designsystemet-react";
+import { Chip, Heading, Paragraph, Spinner, Tabs } from "@digdir/designsystemet-react";
 import "./App.css";
 import EstateCard from "./components/estateCard";
 import { ESTATE_API } from "./utils/constants";
@@ -6,7 +6,8 @@ import { useFetchData } from "./hooks/fetchData";
 import { Estate } from "./interfaces/IEstate";
 import LoginDialog from "./components/login";
 import { useState } from "react";
-import PersonSearchComp from "./components/personSearch";
+import { HouseIcon, PlusIcon } from "@navikt/aksel-icons";
+import { NewEstateForm } from "./components/personSearch/NewEstateForm";
 
 function App() {
   const { data, loading } = useFetchData<Estate[]>(ESTATE_API);
@@ -49,38 +50,51 @@ function App() {
       <Heading level={1} data-size="xl">
         Digitalt Dødsbo - Testdata
       </Heading>
+      <Tabs defaultValue="estates" style={{ width: "100%" }}>
+        <Tabs.List style={{ marginBottom: "var(--ds-size-4)" }}>
+          <Tabs.Tab value="estates">
+            <HouseIcon /> Testbo
+          </Tabs.Tab>
+          <Tabs.Tab value="create-new-estate">
+            <PlusIcon /> Opprett nytt testbo
+          </Tabs.Tab>
+        </Tabs.List>
 
-      {loading && (
-        <Paragraph data-size="md" className="flex-center">
-          <Spinner aria-label="Laster inn data..." />
-          Laster inn data...
-        </Paragraph>
-      )}
-      <PersonSearchComp />
-      <ul style={{ display: "flex", flexDirection: "row", gap: ".5rem" }}>
-        {uniqueTags?.length > 0 &&
-          uniqueTags.map(tag =>
-            <Chip.Checkbox
-              key={tag}
-              onClick={() => toggleTag(tag)}
-              name={tag}
-              value={tag}
-              checked={selectedTags.includes(tag)}>
-              {tag}
-            </Chip.Checkbox>)
+        {loading && (
+          <Paragraph data-size="md" className="flex-center">
+            <Spinner aria-label="Laster inn data..." />
+            Laster inn data...
+          </Paragraph>
+        )}
+        <Tabs.Panel value="create-new-estate" id="new-estate-tab">
+          <NewEstateForm uniqueTags={uniqueTags} />
+        </Tabs.Panel>
+        <Tabs.Panel value="estates" id="estates-tab">
+          <ul style={{ display: "flex", flexDirection: "row", gap: ".5rem" }}>
+            {uniqueTags?.length > 0 &&
+              uniqueTags.map(tag =>
+                <Chip.Checkbox
+                  key={tag}
+                  onClick={() => toggleTag(tag)}
+                  name={tag}
+                  value={tag}
+                  checked={selectedTags.includes(tag)}>
+                  {tag}
+                </Chip.Checkbox>)
+            }
+          </ul>
 
-        }
-      </ul>
-
-      <ul className="container__grid">
-        {filteredEstates?.map((estate) => {
-          return (
-            <li key={estate.estateSsn}>
-              <EstateCard data={estate} />
-            </li>
-          );
-        })}
-      </ul>
+          <ul className="container__grid">
+            {filteredEstates?.map((estate) => {
+              return (
+                <li key={estate.estateSsn}>
+                  <EstateCard data={estate} />
+                </li>
+              );
+            })}
+          </ul>
+        </Tabs.Panel>
+      </Tabs>
     </main>
   );
 }

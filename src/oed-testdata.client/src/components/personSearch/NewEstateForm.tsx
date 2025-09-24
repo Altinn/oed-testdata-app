@@ -341,7 +341,6 @@ export function NewEstateForm({ uniqueTags }: Props) {
     e.preventDefault();
 
     if (validateForm()) {
-      console.log('Skjemadata:', formData);
       const newEstate = {
         estateSsn: formData.deceased.nin,
         deceasedName: formData.deceased.name,

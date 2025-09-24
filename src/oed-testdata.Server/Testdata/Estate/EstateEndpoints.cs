@@ -10,20 +10,23 @@ namespace oed_testdata.Server.Testdata.Estate
 {
     public static class EstateEndpoints
     {
-        public static void MapEstateEndpoints(this WebApplication app)
+        public static void MapEstateEndpoints(this WebApplication app, IWebHostEnvironment environment)
         {
             app
                 .MapGroup("/api/testdata/estate")
-                .MapEndpoints()
+                .MapEndpoints(environment)
                 .RequireAuthorization();
         }
 
-        private static RouteGroupBuilder MapEndpoints(this RouteGroupBuilder group)
+        private static RouteGroupBuilder MapEndpoints(this RouteGroupBuilder group, IWebHostEnvironment environment)
         {
             group.MapGet("/", GetAll);
             group.MapGet("/{estateSsn}", GetSingleByEstateSsn);
             group.MapPost("/", CreateOrRecreateEstate);
-            group.MapPost("/add", AddNewEstate);
+            if (environment.IsDevelopment())
+            {
+                group.MapPost("/add", AddNewEstate);
+            }
             group.MapPatch("/{estateSsn}", PatchEstate);
 
             return group;

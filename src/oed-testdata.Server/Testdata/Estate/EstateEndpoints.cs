@@ -238,6 +238,16 @@ namespace oed_testdata.Server.Testdata.Estate
                 EstateSsn = payload.EstateSsn,
                 Data = daData,
             };
+            var estateMetadata = new EstateMetadata
+            {
+                Persons = (payload.Heirs ?? []).Select(h => new EstateMetadataPerson
+                {
+                    Nin = h.Ssn,
+                    Name = h.Name
+                }).ToList(),
+                Tags = payload.Tags ?? []
+            };
+            estate.Metadata = estateMetadata;
             await store.Create(estate);
             var createdEstate = await store.GetByEstateSsn(payload.EstateSsn);
             return TypedResults.Ok(EstateMapper.Map(createdEstate));

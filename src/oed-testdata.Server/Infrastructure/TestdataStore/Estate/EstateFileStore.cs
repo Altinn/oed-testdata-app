@@ -112,11 +112,12 @@ public class EstateFileStore : IEstateStore
         var filepath = Path.Combine("Testdata/Json/Estate", filename);
 
         await using var filestream = File.Open(filepath, FileMode.Create, FileAccess.Write);
+        await CreateMetadata(estate);
         await JsonSerializer.SerializeAsync(filestream, estate.Data, JsonSerializerOptions.Default);
         await filestream.FlushAsync();
     }
 
-    public async Task CreateMetadata(EstateData estate)
+    private static async Task CreateMetadata(EstateData estate)
     {
         var filename = $"{estate.EstateSsn}-metadata.json";
         var filepath = Path.Combine("Testdata/Json/Estate", filename);

@@ -45,7 +45,7 @@ function App() {
     });
   }
   const isDevelopment = import.meta.env.MODE === "development";
-  console.log(import.meta.env.MODE);
+
   return (
     <main>
       <Heading level={1} data-size="xl">

@@ -134,12 +134,43 @@ export function NewEstateForm({ uniqueTags }: Props) {
     }
   };
 
+  // Fetches person by nin and sets name for the heir
+  const fetchHeirNameByNin = async (id: string, nin: string) => {
+    if (nin.length === 11) {
+      const res = await sendReq(() => { }, `?nin=${nin}&isDeceased=false`);
+      if (res && res.length > 0) {
+        setFormData(prev => ({
+          ...prev,
+          heirs: prev.heirs.map(h =>
+            h.id === id ? { ...h, name: res[0].name } : h
+          )
+        }));
+      }
+    }
+
+    setFormData(prev => ({
+      ...prev,
+      heirs: prev.heirs.map(h =>
+        h.id === id ? { ...h, nin } : h
+      )
+    }));
+  };
+
   const validateNIN = (nin: string): boolean => {
     return nin.length === 11 && /^\d{11}$/.test(nin);
   };
 
-  const handleDeceasedChange = (field: 'name' | 'nin', value: string) => {
+  const handleDeceasedChange = async (field: 'name' | 'nin', value: string) => {
     if (field === 'nin' && value.length > 11) return;
+    if (field === 'nin' && value.length === 11) {
+      const res = await sendReq(() => { }, `?nin=${value}&isDeceased=true`);
+      if (res && res.length > 0) {
+        setFormData(prev => ({
+          ...prev,
+          deceased: { ...prev.deceased, name: res[0].name }
+        }));
+      }
+    }
 
     setFormData(prev => ({
       ...prev,
@@ -249,7 +280,7 @@ export function NewEstateForm({ uniqueTags }: Props) {
     }
   };
 
-  const removeDeceased = (id: string) => {
+  const removeHeir = (id: string) => {
     setFormData(prev => ({
       ...prev,
       heirs: prev.heirs.filter(person => person.id !== id)
@@ -315,7 +346,7 @@ export function NewEstateForm({ uniqueTags }: Props) {
         estateSsn: formData.deceased.nin,
         deceasedName: formData.deceased.name,
         heirs: formData.heirs.map(h => ({ ssn: h.nin, relation: h.relation.value, name: h.name })),
-        tags: formData.tags 
+        tags: formData.tags
       };
       try {
         const response = await fetch(ESTATE_API + "add", {
@@ -336,6 +367,7 @@ export function NewEstateForm({ uniqueTags }: Props) {
         }
         if (!response.ok) {
           addToast("Noe gikk galt. Prøv igjen", "danger");
+          return;
         }
         addToast("Dødsboet ble opprettet.", "success");
       } catch (error) {
@@ -438,7 +470,7 @@ export function NewEstateForm({ uniqueTags }: Props) {
             ) : (
               <>
                 {formData.heirs.map((person) => (
-                  <Card key={person.id} data-color="brand1" style={{ backgroundColor: 'var(--ds-color-brand1-surface-tinted)' }}>
+                  <Card key={person.id} data-color="brand1" style={{ backgroundColor: 'var(--ds-color-brand1-surface-tinted)', margin: '0.5rem 0' }}>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem', alignItems: 'start' }}>
                       <Textfield
                         label="Fullt navn"
@@ -455,6 +487,10 @@ export function NewEstateForm({ uniqueTags }: Props) {
                           error={errors[`${person.id}-nin`]}
                           maxLength={11}
                           required
+                          onChange={async (e) => {
+                            const nin = e.target.value.replace(/\D/g, '');
+                            await fetchHeirNameByNin(person.id, nin);
+                          }}
                         />
                         <Button
                           type="button"
@@ -499,7 +535,7 @@ export function NewEstateForm({ uniqueTags }: Props) {
                           variant="tertiary"
                           data-color="danger"
                           data-size="md"
-                          onClick={() => removeDeceased(person.id)}
+                          onClick={() => removeHeir(person.id)}
                         >
                           <TrashIcon />
                         </Button>

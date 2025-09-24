@@ -314,7 +314,7 @@ export function NewEstateForm({ uniqueTags }: Props) {
       const newEstate = {
         estateSsn: formData.deceased.nin,
         deceasedName: formData.deceased.name,
-        heirs: formData.heirs.map(h => ({ ssn: h.nin, relation: h.relation.value })),
+        heirs: formData.heirs.map(h => ({ ssn: h.nin, relation: h.relation.value, name: h.name })),
         tags: formData.tags 
       };
       try {

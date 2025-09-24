@@ -191,8 +191,25 @@ namespace oed_testdata.Server.Testdata.Estate
             };
             var daData = new DaData
             {
-                DaEventList = [],
-                DaCaseList = 
+                DaEventList = new DaEvent[][]
+                {
+                    [
+                        new DaEvent
+                        {
+                            Id = daEventGuid.ToString(),
+                            Specversion = "1.0",
+                            Source = "https://domstol.no",
+                            Type = "DODSFALLSAK-STATUS_OPPDATERT",
+                            DataContentType = "application/json",
+                            Time = DateTimeOffset.Now,
+                            Data = new Data
+                            {
+                                Id = $"https://hendelsesliste.test.domstol.no/api/objects/{daEventGuid.ToString()}"
+                            }
+                        }
+                    ]
+                },
+                DaCaseList =
                 [
                     new DaCase
                     {
@@ -217,7 +234,7 @@ namespace oed_testdata.Server.Testdata.Estate
             };
             var estate = new EstateData
             {
-                EstateName = "lala",
+                EstateName = payload.DeceasedName,
                 EstateSsn = payload.EstateSsn,
                 Data = daData,
             };
@@ -236,6 +253,8 @@ namespace oed_testdata.Server.Testdata.Estate
     public class AddNewEstate
     {
         public required string EstateSsn { get; init; }
+
+        public required string DeceasedName { get; init; }
 
         public List<Heir>? Heirs { get; init; }
 

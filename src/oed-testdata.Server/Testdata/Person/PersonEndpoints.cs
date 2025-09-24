@@ -16,7 +16,7 @@ public static class PersonEndpoints
 
     private static RouteGroupBuilder MapEndpoints(this RouteGroupBuilder group)
     {
-        group.MapGet("/search", GetPersonByQuery); // Example with query parameters  
+        group.MapGet("/search", GetPersonByQuery); // Example with query parameters
         return group;
     }
 
@@ -26,9 +26,10 @@ public static class PersonEndpoints
         string? nin,
         int? count,
         bool? isDeceased,
-        bool? excludeExisting)
+        bool? excludeExisting,
+        bool? withRelations)
     {
-        var tenorWrapper = await altinnClient.TenorSearch(nin, isDeceased, count);
+        var tenorWrapper = await altinnClient.TenorSearch(nin, isDeceased, count, withRelations);
         var documents = tenorWrapper.Documents;
         if (excludeExisting is true)
         {

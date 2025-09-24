@@ -6,6 +6,7 @@ import {
   ValidationMessage,
   Heading,
   Textfield,
+  Card
 } from "@digdir/designsystemet-react";
 export default function LoginDialog() {
   const [formData, setFormData] = useState({ username: "", password: "" });
@@ -53,37 +54,39 @@ export default function LoginDialog() {
 
   return (
     <section id="login-dialog">
-      <Heading level={2} data-size="md">
-        Innlogging
-      </Heading>
+      <Card>
+        <Heading level={2} data-size="md">
+          Innlogging
+        </Heading>
 
-      <form onSubmit={onSubmit}>
-        <Textfield
-          label="Brukernavn"
-          name="username"
-          error={formError}
-          onChange={(e) =>
-            setFormData({ ...formData, username: e.target.value })
-          }
-          disabled={isLoading}
-        />
-        <Textfield
-          label="Passord"
-          name="password"
-          type="password"
-          error={formError}
-          onChange={(e) =>
-            setFormData({ ...formData, password: e.target.value })
-          }
-          disabled={isLoading}
-        />
-        {formError && (
-          <ValidationMessage>
-            Feil brukernavn eller passord. Prøv igjen.
-          </ValidationMessage>
-        )}
-        <Button type="submit">Logg inn</Button>
-      </form>
+        <form onSubmit={onSubmit}>
+          <Textfield
+            label="Brukernavn"
+            name="username"
+            error={formError}
+            onChange={(e) =>
+              setFormData({ ...formData, username: e.target.value })
+            }
+            disabled={isLoading}
+          />
+          <Textfield
+            label="Passord"
+            name="password"
+            type="password"
+            error={formError}
+            onChange={(e) =>
+              setFormData({ ...formData, password: e.target.value })
+            }
+            disabled={isLoading}
+          />
+          {formError && (
+            <ValidationMessage>
+              Feil brukernavn eller passord. Prøv igjen.
+            </ValidationMessage>
+          )}
+          <Button type="submit">Logg inn</Button>
+        </form>
+      </Card>
     </section>
   );
 }

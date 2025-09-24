@@ -13,9 +13,10 @@ import {
   Heading,
 } from '@digdir/designsystemet-react';
 import { PlusIcon, PersonPlusIcon, TrashIcon, PersonIcon, TagIcon, PersonGroupIcon, PaperplaneIcon } from '@navikt/aksel-icons';
-import { PERSON_API } from '../../utils/constants';
+import { ESTATE_API, PERSON_API } from '../../utils/constants';
 import { useToast } from '../../context/toastContext';
 import './style.css';
+import { HeirSearch } from '../../interfaces/IPersonSearch';
 
 interface Person {
   id: string;
@@ -100,7 +101,7 @@ export function NewEstateForm({ uniqueTags }: Props) {
   // const [isPersonLoading, setIsPersonLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const { addToast } = useToast();
-  
+
   const sendReq = async (
     setLoadingState: (value: boolean) => void,
     queryParams: string) => {
@@ -158,7 +159,7 @@ export function NewEstateForm({ uniqueTags }: Props) {
   const fetchRandomDeceased = async () => {
     // TODO: Temp remove setIsPersonLoading
     // const res = await sendReq(setIsPersonLoading, '?count=1&isDeceased=true');
-    const res = await sendReq(() => {}, '?count=1&isDeceased=true');
+    const res = await sendReq(() => { }, '?count=1&isDeceased=true');
     if (!res || res.length === 0) {
       addToast("Ingen personer funnet", "warning");
       return;
@@ -169,10 +170,39 @@ export function NewEstateForm({ uniqueTags }: Props) {
     }));
   };
 
+  const fetchDeceasedWithRelations = async () => {
+    // TODO: Temp remove setIsPersonLoading
+    // const res = await sendReq(setIsPersonLoading, '?count=1&isDeceased=false');
+    const res = await sendReq(() => { }, '?count=1&isDeceased=true&withRelations=true');
+    if (!res || res.length === 0) {
+      addToast("Ingen personer funnet", "warning");
+      return;
+    }
+    const deceased = res[0];
+    const mappedHeirs = deceased.relations.map((person: HeirSearch, idx: number) => ({
+      id: Date.now().toString() + '-' + idx,
+      name: person.name,
+      nin: person.nin,
+      relation:
+        RELATIONSHIP_OPTIONS.find(opt =>
+          opt.value.toLowerCase() === person.relation.toLowerCase() ||
+          opt.label.toLowerCase() === person.relation.toLowerCase() ||
+          opt.value.toLowerCase().includes(person.relation.toLowerCase()) ||
+          opt.label.toLowerCase().includes(person.relation.toLowerCase())
+        )
+    }));
+
+    setFormData(prev => ({
+      ...prev,
+      deceased: { id: deceased.id, name: deceased.name, nin: deceased.nin },
+      heirs: mappedHeirs
+    }));
+  };
+
   const fetchRandomHeir = async (id: string) => {
     // TODO: Temp remove setIsPersonLoading
     // const res = await sendReq(setIsPersonLoading, '?count=1&isDeceased=false');
-    const res = await sendReq(() => {}, '?count=1&isDeceased=false');
+    const res = await sendReq(() => { }, '?count=1&isDeceased=false');
     if (!res || res.length === 0) {
       addToast("Ingen personer funnet", "warning");
       return;
@@ -181,7 +211,7 @@ export function NewEstateForm({ uniqueTags }: Props) {
       ...prev,
       heirs: prev.heirs.map(person =>
         person.id === id
-          ? { ...person, id: res[0].id, name: res[0].name, nin: res[0].nin }
+          ? { ...person, name: res[0].name, nin: res[0].nin }
           : person
       )
     }));
@@ -202,7 +232,6 @@ export function NewEstateForm({ uniqueTags }: Props) {
 
   const updateHeirRelation = (id: string, relationItem: SuggestionItem | undefined) => {
     if (!relationItem) return;
-
     setFormData(prev => ({
       ...prev,
       heirs: prev.heirs.map(person =>
@@ -277,17 +306,57 @@ export function NewEstateForm({ uniqueTags }: Props) {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (validateForm()) {
       console.log('Skjemadata:', formData);
-      alert('Skjema sendt inn! Sjekk konsollen for data.');
+      const newEstate = {
+        estateSsn: formData.deceased.nin,
+        deceasedName: formData.deceased.name,
+        heirs: formData.heirs.map(h => ({ ssn: h.nin, relation: h.relation.value })),
+        tags: formData.tags 
+      };
+      try {
+        const response = await fetch(ESTATE_API + "add", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newEstate),
+        });
+
+        /* if auth token expired show toast */
+        if (response.status === 401) {
+          addToast(
+            "Autentiseringstoken har utløpt. Vennligst logg inn igjen.",
+            "danger"
+          );
+          return;
+        }
+        if (!response.ok) {
+          addToast("Noe gikk galt. Prøv igjen", "danger");
+        }
+        addToast("Dødsboet ble opprettet.", "success");
+      } catch (error) {
+        console.error("Error creating new estate:", error);
+        addToast("Noe gikk galt. Prøv igjen.", "danger");
+      }
     }
   };
 
   return (
     <div className='estate-form'>
+      <Button
+        type="button"
+        variant="secondary"
+        data-size="md"
+        onClick={() => fetchDeceasedWithRelations()}
+        style={{ marginTop: '0.5rem' }}
+      >
+        <PersonPlusIcon />
+        Hent person med relasjoner
+      </Button>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <form onSubmit={handleSubmit}>
           {/* Deceased Section */}
@@ -404,7 +473,7 @@ export function NewEstateForm({ uniqueTags }: Props) {
                           <Field>
                             <Label>Relasjon til avdød</Label>
                             <Suggestion
-                              selected={person.relation.label}
+                              selected={person.relation.label || ''}
                               onSelectedChange={(item) => updateHeirRelation(person.id, item)}
                             >
                               <Suggestion.Input required />
@@ -418,9 +487,7 @@ export function NewEstateForm({ uniqueTags }: Props) {
                                     key={option.value}
                                     value={option.value}
                                   >
-                                    {/* <option key={option.value} value={option.value}> */}
                                     {option.label}
-                                    {/* </option> */}
                                   </Suggestion.Option>
                                 ))}
                               </Suggestion.List>

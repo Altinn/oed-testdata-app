@@ -44,32 +44,61 @@ function App() {
       return 0;
     });
   }
-
+  const isDevelopment = import.meta.env.MODE === "development";
+  console.log(import.meta.env.MODE);
   return (
     <main>
       <Heading level={1} data-size="xl">
         Digitalt Dødsbo - Testdata
       </Heading>
-      <Tabs defaultValue="estates" style={{ width: "100%" }}>
-        <Tabs.List style={{ marginBottom: "var(--ds-size-4)" }}>
-          <Tabs.Tab value="estates">
-            <HouseIcon /> Testbo
-          </Tabs.Tab>
-          <Tabs.Tab value="create-new-estate">
-            <PlusIcon /> Opprett nytt testbo
-          </Tabs.Tab>
-        </Tabs.List>
+      {isDevelopment ? (
+        <Tabs defaultValue="estates" style={{ width: "100%" }}>
+          <Tabs.List style={{ marginBottom: "var(--ds-size-4)" }}>
+            <Tabs.Tab value="estates">
+              <HouseIcon /> Testbo
+            </Tabs.Tab>
+            <Tabs.Tab value="create-new-estate">
+              <PlusIcon /> Opprett nytt testbo
+            </Tabs.Tab>
+          </Tabs.List>
 
-        {loading && (
-          <Paragraph data-size="md" className="flex-center">
-            <Spinner aria-label="Laster inn data..." />
-            Laster inn data...
-          </Paragraph>
-        )}
-        <Tabs.Panel value="create-new-estate" id="new-estate-tab">
-          <NewEstateForm uniqueTags={uniqueTags} />
-        </Tabs.Panel>
-        <Tabs.Panel value="estates" id="estates-tab">
+          {loading && (
+            <Paragraph data-size="md" className="flex-center">
+              <Spinner aria-label="Laster inn data..." />
+              Laster inn data...
+            </Paragraph>
+          )}
+          <Tabs.Panel value="create-new-estate" id="new-estate-tab">
+            <NewEstateForm uniqueTags={uniqueTags} />
+          </Tabs.Panel>
+          <Tabs.Panel value="estates" id="estates-tab">
+            <ul style={{ display: "flex", flexDirection: "row", gap: ".5rem" }}>
+              {uniqueTags?.length > 0 &&
+                uniqueTags.map(tag =>
+                  <Chip.Checkbox
+                    key={tag}
+                    onClick={() => toggleTag(tag)}
+                    name={tag}
+                    value={tag}
+                    checked={selectedTags.includes(tag)}>
+                    {tag}
+                  </Chip.Checkbox>)
+              }
+            </ul>
+
+            <ul className="container__grid">
+              {filteredEstates?.map((estate) => {
+                return (
+                  <li key={estate.estateSsn}>
+                    <EstateCard data={estate} />
+                  </li>
+                );
+              })}
+            </ul>
+          </Tabs.Panel>
+        </Tabs>
+      ) : (
+        <>
           <ul style={{ display: "flex", flexDirection: "row", gap: ".5rem" }}>
             {uniqueTags?.length > 0 &&
               uniqueTags.map(tag =>
@@ -93,8 +122,8 @@ function App() {
               );
             })}
           </ul>
-        </Tabs.Panel>
-      </Tabs>
+        </>
+      )}
     </main>
   );
 }

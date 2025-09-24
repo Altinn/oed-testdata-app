@@ -10,15 +10,19 @@ namespace oed_testdata.Server.Testdata
 {
     public static class WebApplicationExtensions
     {
-        public static void MapTestdataEndpoints(this WebApplication app)
+        public static void MapTestdataEndpoints(this WebApplication app, IWebHostEnvironment environment)
         {
-            app.MapEstateEndpoints();
+            app.MapEstateEndpoints(environment);
             app.MapBankEndpoints();
             app.MapSvvEndpoints();
             app.MapKartverketEndpoints();
             app.MapEktepaktEndpoints();
             app.MapNorskPensjonEndpoints();
-            app.MapPersonEndpoints();
+
+            if (environment.IsDevelopment())
+            {
+                app.MapPersonEndpoints();
+            }
         }
     }
 }

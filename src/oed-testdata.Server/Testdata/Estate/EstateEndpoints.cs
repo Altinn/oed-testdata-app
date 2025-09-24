@@ -191,24 +191,12 @@ namespace oed_testdata.Server.Testdata.Estate
             };
             var daData = new DaData
             {
-                DaEventList = new DaEvent[][]
-                {
+                DaEventList =
+                [
                     [
-                        new DaEvent
-                        {
-                            Id = daEventGuid.ToString(),
-                            Specversion = "1.0",
-                            Source = "https://domstol.no",
-                            Type = "DODSFALLSAK-STATUS_OPPDATERT",
-                            DataContentType = "application/json",
-                            Time = DateTimeOffset.Now,
-                            Data = new Data
-                            {
-                                Id = $"https://hendelsesliste.test.domstol.no/api/objects/{daEventGuid.ToString()}"
-                            }
-                        }
+                        daEvent
                     ]
-                },
+                ],
                 DaCaseList =
                 [
                     new DaCase

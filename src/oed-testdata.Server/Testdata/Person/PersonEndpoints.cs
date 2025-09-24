@@ -16,29 +16,26 @@ public static class PersonEndpoints
 
     private static RouteGroupBuilder MapEndpoints(this RouteGroupBuilder group)
     {
-        group.MapGet("/search", GetPersonByQuery); // Example with query parameters
+        group.MapGet("/search", GetPersonByQuery);
         return group;
     }
 
-    private static async Task<Ok<List<PersonDto>>> GetPersonByQuery(
-        IMaskinportenClient altinnClient,
-        IEstateStore estateStore,
-        string? nin,
-        int? count,
-        bool? isDeceased,
-        bool? excludeExisting,
-        bool? withRelations)
-    {
-        var tenorWrapper = await altinnClient.TenorSearch(nin, isDeceased, count, withRelations);
-        var documents = tenorWrapper.Documents;
-        if (excludeExisting is true)
-        {
-            var estates = await estateStore.ListAll();
-            var deceasedNins = estates.Select(x => x.EstateSsn).ToHashSet();
+    public record struct PersonQuery(string? Nin, int? Count, bool? IsDeceased, bool? WithRelations);
 
-            documents = tenorWrapper.Documents
-                .Where(doc => !deceasedNins.Contains(doc.Id)).ToList();
-        }
+    private static async Task<Ok<List<PersonDto>>> GetPersonByQuery(
+        IMaskinportenClient mpClient,
+        IEstateStore estateStore,
+        [AsParameters] PersonQuery query)
+    {
+        var tenorWrapper = await mpClient.TenorSearch(PersonMapper.Map(query));
+        var documents = tenorWrapper.Documents;
+        
+        // Does not return deceased if existing deceased
+        var estates = await estateStore.ListAll();
+        var deceasedNins = estates.Select(x => x.EstateSsn).ToHashSet();
+
+        documents = tenorWrapper.Documents
+            .Where(doc => !deceasedNins.Contains(doc.Id)).ToList();
 
         return TypedResults.Ok(PersonMapper.Map(documents));
     }

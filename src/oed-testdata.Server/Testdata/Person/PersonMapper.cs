@@ -6,7 +6,7 @@ public static class PersonMapper
 {
     public static List<PersonDto> Map(List<TenorDocument> tenorDocuments)
     {
-        return tenorDocuments.Select(doc => { return Map(doc); }).ToList();
+        return tenorDocuments.Select(Map).ToList();
     }
 
     public static PersonDto Map(TenorDocument tenorDocument)
@@ -14,7 +14,13 @@ public static class PersonMapper
         return new PersonDto
         {
             Nin = tenorDocument.Id,
-            Name = tenorDocument.DisplayName
+            Name = tenorDocument.DisplayName,
+            Relations = tenorDocument.Relations.Items.Select(r => new RelatedPersonDto
+            {
+                Name = r.DisplayName,
+                Nin = r.Id,
+                Relation = r.Relation
+            }).ToList()
         };
     }
 }

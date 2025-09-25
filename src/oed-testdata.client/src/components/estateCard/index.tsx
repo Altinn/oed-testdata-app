@@ -16,7 +16,7 @@ export default function EstateCard({ data }: IProps) {
   const [loadingRemoveRoles, setLoadingRemoveRoles] = useState(false);
   const [loadingIssueProbate, setLoadingIssueProbate] = useState(false);
   const { addToast } = useToast();
-// 2 space mannen
+
   const handleResetEstate = async () => {
     try {
       setLoadingResetEstate(true);

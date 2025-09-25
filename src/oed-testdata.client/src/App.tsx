@@ -7,7 +7,7 @@ import { Estate } from "./interfaces/IEstate";
 import LoginDialog from "./components/login";
 import { useState } from "react";
 import { HouseIcon, PlusIcon } from "@navikt/aksel-icons";
-import { NewEstateForm } from "./components/personSearch/NewEstateForm";
+import { NewEstateForm } from "./components/personSearch";
 
 function App() {
   const { data, loading } = useFetchData<Estate[]>(ESTATE_API);

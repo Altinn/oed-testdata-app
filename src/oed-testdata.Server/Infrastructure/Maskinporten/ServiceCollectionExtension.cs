@@ -16,7 +16,7 @@ public static class ServiceCollectionExtension
             .GetSection(ConfigSectionName)
             .Get<MaskinportenSettings>();
 
-        settings!.Scope = "digdir:dd:probatedeclarations";
+        settings!.Scope = "digdir:dd:probatedeclarations skatteetaten:testnorge/testdata.read";
 
         services.AddMaskinportenHttpClient<SettingsJwkClientDefinition>(MaskinportenConstants.HttpClientName, settings);
         services.AddTransient<IMaskinportenClient, MaskinportenClient>();

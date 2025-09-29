@@ -12,6 +12,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Content Remove="Testdata\Json\Estate\04860299300-metadata.json" />
+	  <Content Remove="Testdata\Json\Estate\04860299300-Uvirksom_Ringdue.json" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Altinn.ApiClients.Maskinporten" Version="9.2.1" />
 		<PackageReference Include="Altinn.Platform.Storage.Interface" Version="4.0.4" />
 		<PackageReference Include="CloudNative.CloudEvents.AspNetCore" Version="2.8.0" />

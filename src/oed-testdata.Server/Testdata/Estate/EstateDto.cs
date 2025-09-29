@@ -23,6 +23,7 @@
     public class Heir
     {
         public required string Ssn { get; init; }
+        public required string Name { get; init; }
         public required string Relation { get; init; }
     }
 }

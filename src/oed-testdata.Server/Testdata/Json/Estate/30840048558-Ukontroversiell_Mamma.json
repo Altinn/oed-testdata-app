@@ -3,27 +3,27 @@
     [
       {
         "specversion": "1.0",
-        "id": "9193d303-8a53-4ae6-ad97-67de69386cfc",
+        "id": "8ddb45cc-9338-46f0-9d29-45a42f5f3994",
         "source": "https://domstol.no",
-        "type": "DODSFALLSAK-STATUS_OPPDATERT",
+        "type": "DODSFALLSAK-STATUS_LAGT_TIL",
         "datacontenttype": "application/json",
-        "time": "2024-12-09T11:13:53.5320557+01:00",
+        "time": "1900-01-01T00:00:00Z",
         "data": {
-          "@id": "https://hendelsesliste.test.domstol.no/api/objects/9193d303-8a53-4ae6-ad97-67de69386cfc"
+          "@id": "https://hendelsesliste.test.domstol.no/api/objects/d8ddb45cc-9338-46f0-9d29-45a42f5f3994"
         }
       }
     ]
   ],
   "DaCaseList": [
     {
-      "sakId": "9193d303-8a53-4ae6-ad97-67de69386cfc",
-      "saksnummer": "25-000010DFA-TOSL/07",
-      "avdode": "21885399468",
+      "sakId": "8ddb45cc-9338-46f0-9d29-45a42f5f3994",
+      "saksnummer": "25-000001DFB-TOSL/09",
+      "avdode": "30840048558",
       "embete": "Oslo Tingrett",
       "status": "MOTTATT",
       "parter": [
         {
-          "nin": "19838299493",
+          "nin": "17863248809",
           "role": "BARN",
           "formuesfullmakt": true,
           "signertDato": null,
@@ -32,7 +32,7 @@
           "godkjennerSkifteattest": false
         },
         {
-          "nin": "08828199049",
+          "nin": "19863348989",
           "role": "BARN",
           "formuesfullmakt": true,
           "signertDato": null,
@@ -41,7 +41,7 @@
           "godkjennerSkifteattest": false
         },
         {
-          "nin": "30907698129",
+          "nin": "10873547680",
           "role": "BARN",
           "formuesfullmakt": true,
           "signertDato": null,
@@ -50,8 +50,8 @@
           "godkjennerSkifteattest": false
         },
         {
-          "nin": "24872049696",
-          "role": "MOR",
+          "nin": "19862648903",
+          "role": "BARN",
           "formuesfullmakt": true,
           "signertDato": null,
           "onsketSkifteform": null,
@@ -59,17 +59,8 @@
           "godkjennerSkifteattest": false
         },
         {
-          "nin": "19911649333",
-          "role": "FAR",
-          "formuesfullmakt": true,
-          "signertDato": null,
-          "onsketSkifteform": null,
-          "paatarGjeldsansvar": false,
-          "godkjennerSkifteattest": false
-        },
-        {
-          "nin": "02825196911",
-          "role": "GJENLEV_EKTEFELLE_PARTNER",
+          "nin": "28850048489",
+          "role": "GJENLEV_PARTNER",
           "formuesfullmakt": true,
           "signertDato": null,
           "onsketSkifteform": null,
@@ -77,8 +68,8 @@
           "godkjennerSkifteattest": false
         }
       ],
-      "receivedDate": "2024-12-09T11:13:53.5324383+01:00",
-      "deadlineDate": "2025-02-07T11:13:53.5324534+01:00",
+      "receivedDate": "1900-01-01T00:00:00Z",
+      "deadlineDate": "1900-01-01T00:00:00Z",
       "resultatType": null,
       "skifteattest": null
     }

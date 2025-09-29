@@ -11,6 +11,7 @@
     public class EstateMetadataDto
     {
         public IEnumerable<EstateMetadataPersonDto> Persons { get; init; } = [];
+        public IEnumerable<string> Tags { get; init; } = [];
     }
 
     public class EstateMetadataPersonDto

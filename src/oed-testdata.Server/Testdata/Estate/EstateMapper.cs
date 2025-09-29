@@ -16,7 +16,8 @@ public static class EstateMapper
                 {
                     Nin = p.Nin,
                     Name = p.Name
-                })
+                }),
+                Tags = [..estateData.Metadata.Tags]
             },
             Heirs = estateData.Data.DaCaseList.Single().Parter.Select(p => new Heir
             {

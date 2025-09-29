@@ -17,6 +17,7 @@
   "DaCaseList": [
     {
       "sakId": "5ee69915-f3c9-465e-b346-70f7d56f8ab9",
+      "saksnummer": "25-000009DFA-TOSL/07",
       "avdode": "18855699938",
       "embete": "Oslo Tingrett",
       "status": "MOTTATT",
@@ -32,7 +33,16 @@
         },
         {
           "nin": "20856099858",
-          "role": "GJENLEV_EKTEFELLE_PARTNER",
+          "role": "GJENLEV_EKTEFELLE",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
+        },
+        {
+          "nin": "48878200554",
+          "role": "BARN",
           "formuesfullmakt": true,
           "signertDato": null,
           "onsketSkifteform": null,

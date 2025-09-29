@@ -7,6 +7,7 @@ export interface EstateMetadataPerson {
 
 export interface EstateMetadata {
   persons: EstateMetadataPerson[];
+  tags: string[];
 }
 
 export interface Estate {

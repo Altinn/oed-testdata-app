@@ -3,27 +3,36 @@
     [
       {
         "specversion": "1.0",
-        "id": "5ee69915-f3c9-465e-b346-70f7d56f8abc",
+        "id": "22ae0004-f270-4238-a32b-c05e7a6a0d79",
         "source": "https://domstol.no",
         "type": "DODSFALLSAK-STATUS_OPPDATERT",
         "datacontenttype": "application/json",
-        "time": "2024-12-04T13:04:49.758163+01:00",
+        "time": "2025-09-24T09:53:19.0457836+02:00",
         "data": {
-          "@id": "https://hendelsesliste.test.domstol.no/api/objects/5ee69915-f3c9-465e-b346-70f7d56f8ab9"
+          "@id": "https://hendelsesliste.test.domstol.no/api/objects/22ae0004-f270-4238-a32b-c05e7a6a0d79"
         }
       }
     ]
   ],
   "DaCaseList": [
     {
-      "sakId": "5ee69915-f3c9-465e-b346-70f7d56f8abc",
-      "saksnummer": "25-000017DFA-TOSL/07",
-      "avdode": "27814599456",
-      "embete": "Oslo Tingrett",
+      "sakId": "22ae0004-f270-4238-a32b-c05e7a6a0d79",
+      "saksnummer": "25-000011DFA-TOSL/07",
+      "avdode": "27864798573",
+      "embete": "Oslo tingrett",
       "status": "MOTTATT",
       "parter": [
         {
-          "nin": "27899697699",
+          "nin": "26854999884",
+          "role": "GJENLEV_PARTNER",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
+        },
+        {
+          "nin": "25817499522",
           "role": "BARN",
           "formuesfullmakt": true,
           "signertDato": null,
@@ -32,7 +41,7 @@
           "godkjennerSkifteattest": false
         },
         {
-          "nin": "58829401671",
+          "nin": "26817399621",
           "role": "BARN",
           "formuesfullmakt": true,
           "signertDato": null,
@@ -41,8 +50,8 @@
           "godkjennerSkifteattest": false
         },
         {
-          "nin": "10841799297",
-          "role": "BARNEBARN",
+          "nin": "17887199345",
+          "role": "BARN",
           "formuesfullmakt": true,
           "signertDato": null,
           "onsketSkifteform": null,
@@ -50,8 +59,8 @@
           "godkjennerSkifteattest": false
         }
       ],
-      "receivedDate": "2024-12-04T13:04:49.7585258+01:00",
-      "deadlineDate": "2025-02-02T13:04:49.7585421+01:00",
+      "receivedDate": "2025-09-24T07:53:19.0457919+00:00",
+      "deadlineDate": "2025-11-23T07:53:19.0457916+00:00",
       "resultatType": null,
       "skifteattest": null
     }

@@ -13,6 +13,7 @@
 
 	<ItemGroup>
 	  <Content Remove="Testdata\Json\Estate\04860299300-metadata.json" />
+	  <Content Remove="Testdata\Json\Estate\04860299300-Uvirksom_Ringdue.json" />
 	</ItemGroup>
 
 	<ItemGroup>

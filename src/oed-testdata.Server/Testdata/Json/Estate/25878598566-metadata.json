@@ -1,1 +1,15 @@
-{"persons":[{"nin":"12814797420","name":"OVERSIKTLIG PLATE"},{"nin":"16824996524","name":"SVENSK PYRAMIDE"}]}
+{
+  "persons": [
+    {
+      "nin": "12814797420",
+      "name": "OVERSIKTLIG PLATE"
+    },
+    {
+      "nin": "16824996524",
+      "name": "SVENSK PYRAMIDE"
+    }
+  ],
+  "tags": [
+    "Bank"
+  ]
+}

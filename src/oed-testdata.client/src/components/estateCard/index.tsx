@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Heading, Label, Spinner, DropdownMenu } from "@digdir/designsystemet-react";
+import { Button, Heading, Label, Spinner, Dropdown, Tag, Card } from "@digdir/designsystemet-react";
 import "./style.css";
 import CopyToClipboard from "../copyToClipboard";
 import { ArrowCirclepathIcon, PadlockUnlockedIcon, GavelSoundBlockIcon } from "@navikt/aksel-icons";
@@ -15,7 +15,6 @@ export default function EstateCard({ data }: IProps) {
   const [loadingResetEstate, setLoadingResetEstate] = useState(false);
   const [loadingRemoveRoles, setLoadingRemoveRoles] = useState(false);
   const [loadingIssueProbate, setLoadingIssueProbate] = useState(false);
-  const [probateDropdownOpen, setProbateDropdownOpen] = useState(false);
   const { addToast } = useToast();
 
   const handleResetEstate = async () => {
@@ -91,7 +90,6 @@ export default function EstateCard({ data }: IProps) {
 
     try {
       setLoadingIssueProbate(true);
-      setProbateDropdownOpen(false);
       const response = await fetch(estateUrl, {
         method: "PATCH",
         headers: {
@@ -119,14 +117,22 @@ export default function EstateCard({ data }: IProps) {
   };
 
   return (
-    <article className="card">
-      <Heading level={2} size="md" spacing className="card__heading">
-        Dødsbo - {data.estateName}
-        <CopyToClipboard value={data.estateSsn} />
-      </Heading>
+    <Card className="card">
+      <Card.Block className="card__heading">
+        <Heading level={2} data-size="md">
+          Dødsbo - {data.estateName}
+          <CopyToClipboard value={data.estateSsn} />   
 
-      <section className="card__content">
-        <Heading level={3} size="sm" spacing>
+          {data.metadata.tags?.length > 0 && 
+            <ul>
+              {data.metadata.tags?.map((tag) => <li key={tag}><Tag data-color={"neutral"}>{tag}</Tag></li>)}
+            </ul>     
+          }
+
+        </Heading>
+      </Card.Block>
+      <Card.Block className="card__content">
+        <Heading level={3} data-size="sm">
           Arvinger
         </Heading>
         <ul>
@@ -140,87 +146,86 @@ export default function EstateCard({ data }: IProps) {
                   <CopyToClipboard value={heir.ssn} />
                 </div>
                 <div>
-                  <Label size="small">{relation}</Label>
+                  <Label data-size="sm">{relation}</Label>
                 </div>
               </li>
             );
           })}
         </ul>
-      </section>
-
-      <div className="card__footer">
-        <Button
-          variant="secondary"
-          onClick={handleRemoveRoles}
-          disabled={loadingRemoveRoles}
-          aria-disabled={loadingRemoveRoles}
-        >
-          {loadingRemoveRoles ? (
-            <>
-              <Spinner title="laster" size="sm" />
-              Laster...
-            </>
-          ) : (
-            <>
-              <PadlockUnlockedIcon title="fjern roller" fontSize="1.5rem" />
-              Fjern roller
-            </>
-          )}
-        </Button>
-        <DropdownMenu open={probateDropdownOpen} onClose={() => setProbateDropdownOpen(false)}>
-          <DropdownMenu.Trigger 
-            variant="secondary" 
-            disabled={loadingIssueProbate} 
-            onClick={() => setProbateDropdownOpen(!probateDropdownOpen)}
+      </Card.Block>
+      <Card.Block>
+        <div className="card__footer">          
+          <Button
+            variant="secondary"
+            onClick={handleRemoveRoles}
+            disabled={loadingRemoveRoles}
+            aria-disabled={loadingRemoveRoles}
           >
-            {loadingIssueProbate ? (
-              <Spinner title="laster" size="sm" />
+            {loadingRemoveRoles ? (
+              <>
+                <Spinner aria-label="laster" data-size="sm" />
+                Laster...
+              </>
             ) : (
-              <GavelSoundBlockIcon title="utestede skifteattest" fontSize="1.5rem" />
+              <>
+                <PadlockUnlockedIcon title="fjern roller" fontSize="1.5rem" />
+                Fjern roller
+              </>
             )}
-            Skifteattest
-          </DropdownMenu.Trigger>
-          <DropdownMenu.Content>
-            <DropdownMenu.Group>
-              <DropdownMenu.Item onClick={() => handleIssueProbate('PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99')}>
-                <GavelSoundBlockIcon />
-                Privat skifte
-              </DropdownMenu.Item>
-              <DropdownMenu.Item onClick={() => handleIssueProbate('OFFENTLIG_SKIFTE_ETTER_BEGJARING')}>
-                <GavelSoundBlockIcon />
-                Offentlig skifte etter begjæring
-              </DropdownMenu.Item>
-              <DropdownMenu.Item onClick={() => handleIssueProbate('USKIFTE_MED_SAMTYKKE')}>
-                <GavelSoundBlockIcon />
-                Uskifte med samtykke
-              </DropdownMenu.Item>
-              <DropdownMenu.Item onClick={() => handleIssueProbate('GJENLEVENDE_EKTEFELLE_I_USKIFTE_IHT_ARVELOVEN_KAP_5')}>
-                <GavelSoundBlockIcon />
-                Gjenlevende ektefelle i uskifte
-              </DropdownMenu.Item>
-            </DropdownMenu.Group>            
-          </DropdownMenu.Content>
-        </DropdownMenu>
-        <Button
-          variant="secondary"
-          color="danger"
-          onClick={handleResetEstate}
-          disabled={loadingResetEstate}
-          aria-disabled={loadingResetEstate}
-        >
-          {loadingResetEstate ? (
-            <>
-              <Spinner title="laster" size="xs" />
-              Laster...
-            </>
-          ) : (
-            <>
-              <ArrowCirclepathIcon title="a11y-title" fontSize="1.5rem" />
-              Nullstill bo
-            </>
-          )}
-        </Button>
-      </div>
-    </article>
+          </Button>
+          <Dropdown.TriggerContext>
+            <Dropdown.Trigger variant="secondary">
+              {loadingIssueProbate ? (
+                <Spinner aria-label="laster" data-size="sm" />
+                ) : (
+                  <GavelSoundBlockIcon title="utestede skifteattest" fontSize="1.5rem" />
+                )}
+              Skifteattest
+            </Dropdown.Trigger>
+            <Dropdown>
+              <Dropdown.List>
+                <Dropdown.Item onClick={() => handleIssueProbate('PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99')}>
+                  <Dropdown.Button>
+                    <GavelSoundBlockIcon />
+                    Privat skifte
+                  </Dropdown.Button>
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => handleIssueProbate('OFFENTLIG_SKIFTE_ETTER_BEGJARING')}>
+                  <Dropdown.Button>
+                    <GavelSoundBlockIcon />
+                    Offentlig skifte etter begjæring
+                  </Dropdown.Button>
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => handleIssueProbate('GJENLEVENDE_EKTEFELLE_I_USKIFTE_IHT_ARVELOVEN_KAP_5')}>
+                  <Dropdown.Button>
+                    <GavelSoundBlockIcon />
+                    Gjenlevende ektefelle i uskifte
+                  </Dropdown.Button>
+                </Dropdown.Item>
+              </Dropdown.List>    
+            </Dropdown>
+          </Dropdown.TriggerContext>
+          <Button
+            data-color={"danger"}
+            variant="secondary"
+            onClick={handleResetEstate}
+            disabled={loadingResetEstate}
+            aria-disabled={loadingResetEstate}
+          >
+            {loadingResetEstate ? (
+              <>
+                <Spinner aria-label="laster" data-size="xs" />
+                Laster...
+              </>
+            ) : (
+              <>
+                <ArrowCirclepathIcon title="a11y-title" fontSize="1.5rem" />
+                Nullstill bo
+              </>
+            )}
+          </Button>
+        </div>
+      </Card.Block>
+    </Card>
   );
 }

@@ -1,0 +1,9 @@
+{
+  "persons": [
+    { "nin": "26854999884", "name": "LEDENDE DUNKJEVLE" },
+    { "nin": "25817499522", "name": "UMOTIVERT JUBEL" },
+    { "nin": "26817399621", "name": "UBESTIKKELIG FJORD" },
+    { "nin": "17887199345", "name": "T\u00D8RST DROSJE" }
+  ],
+  "tags": ["Landbruk"]
+}

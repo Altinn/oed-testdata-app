@@ -17,19 +17,11 @@
   "DaCaseList": [
     {
       "sakId": "093ffebe-b4e5-45ac-a8bf-e549332353b1",
+      "saksnummer": "25-000004DFA-TOSL/07",
       "avdode": "06888298329",
       "embete": "Oslo Tingrett",
       "status": "MOTTATT",
       "parter": [
-        {
-          "nin": "09911899318",
-          "role": "BARN",
-          "formuesfullmakt": true,
-          "signertDato": null,
-          "onsketSkifteform": null,
-          "paatarGjeldsansvar": false,
-          "godkjennerSkifteattest": false
-        },
         {
           "nin": "05845896854",
           "role": "MOR",

@@ -1,1 +1,20 @@
-{"persons":[{"nin":"24848299983","name":"BLID STOKK"},{"nin":"20856099858","name":"TROSSIG HAI"}]}
+{
+  "persons": [
+    {
+      "nin": "24848299983",
+      "name": "BLID STOKK"
+    },
+    {
+      "nin": "20856099858",
+      "name": "TROSSIG HAI"
+    },
+    {
+      "nin": "48878200554",
+      "name": "FRISK JUBEL"
+    }
+  ],
+  "tags": [
+    "Utviklere",
+    "Lars Olav"
+  ]
+}

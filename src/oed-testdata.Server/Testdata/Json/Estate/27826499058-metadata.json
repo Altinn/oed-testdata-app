@@ -1,1 +1,16 @@
-{"persons":[{"nin":"19862849658","name":"FIKTIV INDREFILET"},{"nin":"06922749556","name":"VIRKELIG VAREDEKLARASJON"}]}
+{
+  "persons": [
+    {
+      "nin": "19862849658",
+      "name": "FIKTIV INDREFILET"
+    },
+    {
+      "nin": "06922749556",
+      "name": "VIRKELIG VAREDEKLARASJON"
+    }
+  ],
+  "tags": [
+    "Utviklere",
+    "Lars Olav"
+  ]
+}

@@ -1,1 +1,24 @@
-{"persons":[{"nin":"09911899318","name":"KRASS FETTER"},{"nin":"05845896854","name":"RAFFINERT HANDLINGSEVNE"},{"nin":"09895896931","name":"TRYGG FRUKT"},{"nin":"30918398437","name":"DISKRET DRONNING"}]}
+{
+  "persons": [
+    {
+      "nin": "09911899318",
+      "name": "KRASS FETTER"
+    },
+    {
+      "nin": "05845896854",
+      "name": "RAFFINERT HANDLINGSEVNE"
+    },
+    {
+      "nin": "09895896931",
+      "name": "TRYGG FRUKT"
+    },
+    {
+      "nin": "30918398437",
+      "name": "DISKRET DRONNING"
+    }
+  ],
+  "tags": [
+    "Utviklere",
+    "Thomas"
+  ]
+}

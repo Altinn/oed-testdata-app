@@ -2,18 +2,27 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  border: 2px dashed var(--fds-semantic-border-neutral-default);
-  border-radius: 0.25rem;
 
   .card__heading {
     padding: 1rem 1.5rem;
-    background-color: var(--fds-semantic-surface-third-light);
+    background-color: var(--ds-color-brand3-surface-tinted);
     border-radius: 0.25rem 0.25rem 0 0;
+    
+    ul {
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+
+      li>span {
+        font-size: 1rem;
+      }
+    }
   }
 
   .card__content {
     padding: 1rem 1.5rem;
     flex-grow: 1;
+
     ul {
       margin-bottom: 1rem;
     }
@@ -21,14 +30,8 @@
     li {
       display: flex;
       flex-direction: column;
-      /* display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem; */
       padding: 0.5rem 1rem;
-      background-color: var(--fds-semantic-surface-neutral-subtle);
+      background-color: var(--ds-color-neutral-surface-tinted);
       margin-bottom: 1rem;
 
       div {
@@ -45,7 +48,6 @@
     display: flex;
     justify-content: flex-end;
     gap: 1rem;
-    padding: 0 1.5rem 1.5rem 1rem;
   }
 
   .card__toast {

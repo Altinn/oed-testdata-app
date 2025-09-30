@@ -10,12 +10,6 @@
 		<SpaProxyServerUrl>https://localhost:5173</SpaProxyServerUrl>
 		<UserSecretsId>633a644f-15a0-459f-a69c-e12c450742a0</UserSecretsId>
 	</PropertyGroup>
-
-	<ItemGroup>
-	  <Content Remove="Testdata\Json\Estate\04860299300-metadata.json" />
-	  <Content Remove="Testdata\Json\Estate\04860299300-Uvirksom_Ringdue.json" />
-	</ItemGroup>
-
 	<ItemGroup>
 		<PackageReference Include="Altinn.ApiClients.Maskinporten" Version="9.2.1" />
 		<PackageReference Include="Altinn.Platform.Storage.Interface" Version="4.0.4" />

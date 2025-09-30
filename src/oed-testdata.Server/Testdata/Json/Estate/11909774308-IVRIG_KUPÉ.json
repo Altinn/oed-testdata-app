@@ -1,0 +1,41 @@
+{
+  "DaEventList": [
+    [
+      {
+        "specversion": "1.0",
+        "id": "9f5a3c81-1e9f-4a27-b17a-8aa16d5ce5dd",
+        "source": "https://domstol.no",
+        "type": "DODSFALLSAK-STATUS_LAGT_TIL",
+        "datacontenttype": "application/json",
+        "time": "1900-01-01T00:00:00Z",
+        "data": {
+          "@id": "https://hendelsesliste.test.domstol.no/api/objects/9f5a3c81-1e9f-4a27-b17a-8aa16d5ce5dd"
+        }
+      }
+    ]
+  ],
+  "DaCaseList": [
+    {
+      "sakId": "9f5a3c81-1e9f-4a27-b17a-8aa16d5ce5dd",
+      "saksnummer": "25-000001DFA-TOSL/027",
+      "avdode": "11909774308",
+      "embete": "Oslo Tingrett",
+      "status": "MOTTATT",
+      "parter": [
+        {
+          "nin": "14856199410",
+          "role": "BARN",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
+        }
+      ],
+      "receivedDate": "1900-01-01T00:00:00Z",
+      "deadlineDate": "1900-01-01T00:00:00Z",
+      "resultatType": null,
+      "skifteattest": null
+    }
+  ]
+}

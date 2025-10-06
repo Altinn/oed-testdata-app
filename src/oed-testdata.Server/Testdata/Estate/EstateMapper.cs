@@ -22,6 +22,7 @@ public static class EstateMapper
             Heirs = estateData.Data.DaCaseList.Single().Parter.Select(p => new Heir
             {
                 Ssn = p.Nin,
+                Name = string.Empty,
                 Relation = p.Role
             })
         };

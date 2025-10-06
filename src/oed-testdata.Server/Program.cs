@@ -73,7 +73,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapBasicAuthenticationEndpoints();
-app.MapTestdataEndpoints();
+app.MapTestdataEndpoints(app.Environment);
 app.MapOedInstanceEndpoints();
 app.MapCloudEventEndpoints();
 

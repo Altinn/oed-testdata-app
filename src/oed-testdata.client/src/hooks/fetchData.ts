@@ -17,7 +17,6 @@ export const useFetchData = <T>(url: string) => {
         setLoading(false);
       }
     };
-
     fetchData();
   }, [url]);
 

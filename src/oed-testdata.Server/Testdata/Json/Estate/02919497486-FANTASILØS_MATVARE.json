@@ -1,0 +1,68 @@
+{
+  "DaEventList": [
+    [
+      {
+        "specversion": "1.0",
+        "id": "dc9189a3-85a3-4b2f-a182-885db8328226",
+        "source": "https://domstol.no",
+        "type": "DODSFALLSAK-STATUS_OPPDATERT",
+        "datacontenttype": "application/json",
+        "time": "2025-10-07T14:13:01.4714728+02:00",
+        "data": {
+          "@id": "https://hendelsesliste.test.domstol.no/api/objects/dc9189a3-85a3-4b2f-a182-885db8328226"
+        }
+      }
+    ]
+  ],
+  "DaCaseList": [
+    {
+      "sakId": "dc9189a3-85a3-4b2f-a182-885db8328226",
+      "saksnummer": "25-000011DFA-TOSL/07",
+      "avdode": "02919497486",
+      "embete": "Oslo tingrett",
+      "status": "MOTTATT",
+      "parter": [
+        {
+          "nin": "11902398718",
+          "role": "BARN",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
+        },
+        {
+          "nin": "12816698098",
+          "role": "MOR",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
+        },
+        {
+          "nin": "09886895914",
+          "role": "FAR",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
+        },
+        {
+          "nin": "14899699883",
+          "role": "GJENLEV_EKTEFELLE_PARTNER",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
+        }
+      ],
+      "receivedDate": "2025-10-07T12:13:01.4714844+00:00",
+      "deadlineDate": "2025-12-06T12:13:01.4714842+00:00",
+      "resultatType": null,
+      "skifteattest": null
+    }
+  ]
+}

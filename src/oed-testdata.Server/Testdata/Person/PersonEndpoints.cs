@@ -20,7 +20,7 @@ public static class PersonEndpoints
         return group;
     }
 
-    public record struct PersonQuery(string? Nin, int? Count, bool? IsDeceased, bool? WithRelations);
+    public record struct PersonQuery(string? Nin, int? Count, bool? IsDeceased, bool? WithRelations, int? MaxAmountOfChildren);
 
     private static async Task<Ok<List<PersonDto>>> GetPersonByQuery(
         IMaskinportenClient mpClient,

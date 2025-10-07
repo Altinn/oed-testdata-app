@@ -7,13 +7,15 @@ public record struct TenorQueryParameters(
     string? Nin,
     bool? IsDeceased,
     bool? WithRelations,
-    int? Count);
+    int? Count,
+    int? MaxAmountOfChildren);
 
 public record struct TenorSearchQuery(
     bool IsDeceased,
     bool IsNorwegianCitizen,
     string Nin,
     bool WithRelations,
+    int MaxAmountOfChildren,
     int Count);
 
 public class TenorSearchQueryBuilder
@@ -49,7 +51,12 @@ public class TenorSearchQueryBuilder
     public TenorSearchQueryBuilder WithPersonStatus(bool? isDeceased)
     {
         _query.IsDeceased = isDeceased ?? false;
+        return this;
+    }
 
+    public TenorSearchQueryBuilder WithAmountOfChildren(int? amountOfChildren)
+    {
+        _query.MaxAmountOfChildren = amountOfChildren ?? 0;
         return this;
     }
 
@@ -68,12 +75,16 @@ public class TenorSearchQueryBuilder
 
         if (_query.WithRelations)
         {
-            kqlParams.Add("antallBarn:%5B1+to+3%5D");
             pathParams.Add("vis=tenorRelasjoner.freg.tenorRelasjonsnavn,tenorRelasjoner.freg.visningnavn,tenorRelasjoner.freg.id,id,visningnavn");
         }
         else
         {
             pathParams.Add($"nokkelinformasjon=true");
+        }
+
+        if (_query.MaxAmountOfChildren > 0)
+        {
+            kqlParams.Add($"antallBarn:%5B1+to+{_query.MaxAmountOfChildren}%5D");
         }
 
         if (_query.Count > 0)

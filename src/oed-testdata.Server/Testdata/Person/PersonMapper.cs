@@ -17,7 +17,8 @@ public static class PersonMapper
             Count = tenorDocuments.Count,
             WithRelations = tenorDocuments.WithRelations,
             IsDeceased = tenorDocuments.IsDeceased,
-            Nin = tenorDocuments.Nin
+            Nin = tenorDocuments.Nin,
+            MaxAmountOfChildren = tenorDocuments.MaxAmountOfChildren
         };
     }
 

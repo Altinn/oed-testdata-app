@@ -32,6 +32,7 @@ namespace oed_testdata.Server.Infrastructure.Maskinporten
             var query = new TenorSearchQueryBuilder()
                 .WithNorwegianCitizenship()
                 .WithRelations(searchQuery.WithRelations)
+                .WithAmountOfChildren(searchQuery.MaxAmountOfChildren ?? 3)
                 .WithPersonStatus(searchQuery.IsDeceased)
                 .WithCount(searchQuery.Count)
                 .WithNin(searchQuery.Nin)

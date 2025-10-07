@@ -161,13 +161,14 @@ export function NewEstateForm({ uniqueTags }: Props) {
   const handleDeceasedChange = async (field: 'name' | 'nin', value: string) => {
     if (field === 'nin' && value.length > 11) return;
     if (field === 'nin' && value.length === 11) {
-      const res = await sendReq(() => { }, `?nin=${value}&isDeceased=true`);
-      if (res && res.length > 0) {
-        setFormData(prev => ({
-          ...prev,
-          deceased: { ...prev.deceased, name: res[0].name }
-        }));
-      }
+      await fetchDeceasedWithRelations(value, -1);
+      // const res = await sendReq(() => { }, `?nin=${value}&isDeceased=true`);
+      // if (res && res.length > 0) {
+      //   setFormData(prev => ({
+      //     ...prev,
+      //     deceased: { ...prev.deceased, name: res[0].name }
+      //   }));
+      // }
     }
 
     setFormData(prev => ({
@@ -197,8 +198,9 @@ export function NewEstateForm({ uniqueTags }: Props) {
     }));
   };
 
-  const fetchDeceasedWithRelations = async () => {
-    const res = await sendReq(() => { }, '?count=1&isDeceased=true&withRelations=true');
+  const fetchDeceasedWithRelations = async (nin?: string | undefined, maxAmountOfChildren?: number | undefined) => {
+    const queryParams = `?count=1&isDeceased=true&withRelations=true`;
+    const res = await sendReq(() => { }, queryParams + (nin ? `&nin=${nin}` : '') + (maxAmountOfChildren ? `&maxAmountOfChildren=${maxAmountOfChildren}` : ''));
     if (!res || res.length === 0) {
       addToast("Ingen personer funnet", "warning");
       return;

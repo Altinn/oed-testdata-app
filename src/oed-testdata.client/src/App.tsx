@@ -72,7 +72,7 @@ function App() {
             <NewEstateForm uniqueTags={uniqueTags} />
           </Tabs.Panel>
           <Tabs.Panel value="estates" id="estates-tab">
-            <ul style={{ display: "flex", flexDirection: "row", gap: ".5rem" }}>
+            <ul style={{ display: "flex", flexDirection: "row", gap: ".5rem", flexWrap: "wrap" }}>
               {uniqueTags?.length > 0 &&
                 uniqueTags.map(tag =>
                   <Chip.Checkbox

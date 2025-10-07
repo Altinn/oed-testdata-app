@@ -162,13 +162,6 @@ export function NewEstateForm({ uniqueTags }: Props) {
     if (field === 'nin' && value.length > 11) return;
     if (field === 'nin' && value.length === 11) {
       await fetchDeceasedWithRelations(value, -1);
-      // const res = await sendReq(() => { }, `?nin=${value}&isDeceased=true`);
-      // if (res && res.length > 0) {
-      //   setFormData(prev => ({
-      //     ...prev,
-      //     deceased: { ...prev.deceased, name: res[0].name }
-      //   }));
-      // }
     }
 
     setFormData(prev => ({

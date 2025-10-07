@@ -99,7 +99,7 @@ function App() {
         </Tabs>
       ) : (
         <>
-          <ul style={{ display: "flex", flexDirection: "row", gap: ".5rem" }}>
+          <ul style={{ display: "flex", flexDirection: "row", gap: ".5rem", flexWrap: "wrap"  }}>
             {uniqueTags?.length > 0 &&
               uniqueTags.map(tag =>
                 <Chip.Checkbox

@@ -34,7 +34,7 @@ function App() {
     );
   }
 
-  const uniqueTags = [...new Set(data?.flatMap(estate => estate.metadata.tags))];
+  const uniqueTags = [...new Set(data?.flatMap(estate => estate.metadata.tags))]?.sort();
   const filteredEstates = data?.filter(estate => selectedTags.every(tag => estate.metadata.tags.includes(tag)));
 
   if (selectedTags.length === 0) {

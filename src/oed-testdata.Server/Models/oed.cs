@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 
+#pragma warning disable CS8618
 namespace oed_testdata.Server.Models
 {
     [XmlRoot(ElementName = "oed")]
@@ -228,3 +229,4 @@ namespace oed_testdata.Server.Models
         public bool ProbateIssuedCorrespondenceSent { get; set; }
     }
 }
+#pragma warning restore CS8618

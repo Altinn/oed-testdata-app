@@ -2,6 +2,8 @@
 
 namespace oed_testdata.Server.Infrastructure.TestdataStore.Svv;
 
+#pragma warning disable CS8618
+
 public class SvvResponse
 {
     [JsonPropertyName("vehicles")]
@@ -22,3 +24,5 @@ public class Vehicle
     [JsonPropertyName("registrationDate")] public DateTime? RegistrationDate { get; set; }
     [JsonPropertyName("status")] public string Status { get; set; }
 }
+
+#pragma warning restore CS8618

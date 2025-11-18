@@ -41,7 +41,7 @@ namespace oed_testdata.Server.Testdata.Estate
         private static async Task<Ok<EstateDto>> GetSingleByEstateSsn(IEstateStore store, string estateSsn)
         {
             var data = await store.GetByEstateSsn(estateSsn);
-            return TypedResults.Ok(EstateMapper.Map(data));
+            return TypedResults.Ok(EstateMapper.Map(data!));
         }
 
         private static async Task<IResult> CreateOrRecreateEstate(
@@ -118,7 +118,7 @@ namespace oed_testdata.Server.Testdata.Estate
             try
             {
                 var estate = await store.GetByEstateSsn(request.EstateSsn);
-                var data = estate.Data;
+                var data = estate!.Data;
                 var daCase = data.DaCaseList.Single();
 
                 if (request.Status is not null)
@@ -241,7 +241,7 @@ namespace oed_testdata.Server.Testdata.Estate
             estate.Metadata = estateMetadata;
             await store.Create(estate);
             var createdEstate = await store.GetByEstateSsn(payload.EstateSsn);
-            return TypedResults.Ok(EstateMapper.Map(createdEstate));
+            return TypedResults.Ok(EstateMapper.Map(createdEstate!));
         }
     }
 

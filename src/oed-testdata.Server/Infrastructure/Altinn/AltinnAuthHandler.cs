@@ -38,7 +38,7 @@ namespace oed_testdata.Server.Infrastructure.Altinn
                     AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(86300)
                 });
 
-            return token;
+            return token!;
         }
 
         private async Task<string> GetEnterpriseToken()

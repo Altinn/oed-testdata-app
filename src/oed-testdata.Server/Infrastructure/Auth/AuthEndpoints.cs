@@ -46,7 +46,7 @@ namespace oed_testdata.Server.Infrastructure.Auth
                 return TypedResults.SignIn(new ClaimsPrincipal(claimsIdentity),
                     authenticationScheme: CookieAuthenticationDefaults.AuthenticationScheme);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return TypedResults.InternalServerError();
             }

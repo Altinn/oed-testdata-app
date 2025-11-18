@@ -1,6 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 
 namespace oed_testdata.Server.Infrastructure.TestdataStore.Estate;
+
+#pragma warning disable CS8618
 public class DaData
 {
     [JsonPropertyName("DaEventList")]
@@ -128,3 +130,5 @@ public class Parter
     [JsonPropertyName("godkjennerSkifteattest")]
     public required bool GodkjennerSkifteattest { get; set; }
 }
+
+#pragma warning restore CS8618

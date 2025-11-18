@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
@@ -9,7 +9,7 @@ Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "oed-testdata.client", "src\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{71D9F4EC-FE79-49A9-A263-28A400FCEB8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "oed-testdata.JsonGenerator", "src\oed-testdata.JsonGenerator\oed-testdata.JsonGenerator.csproj", "{E6160752-E1F5-44A8-8734-372698AF5D40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "oed-testdata.JsonGenerator", "src\oed-testdata.JsonGenerator\oed-testdata.JsonGenerator.csproj", "{E6160752-E1F5-44A8-8734-372698AF5D40}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

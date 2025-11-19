@@ -8,7 +8,6 @@ on:
 env:
   DOTNET_VERSION: "9.x" # Global environment variables
   TEST_APP_SERVICE_NAME: "oed-testapp-app-linux"
-  PROD_RESOURCE_GROUP_NAME: "altinn-digdir-oed-rg"
 
 jobs:
   build:
@@ -24,7 +23,7 @@ jobs:
           printf "%s on %s by %s\n" "$GITHUB_REPOSITORY" "$GITHUB_REF_NAME" "$GITHUB_ACTOR"
 
       - name: Set up .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -38,11 +37,11 @@ jobs:
         run: dotnet test -c Release --no-build --verbosity normal
 
       - name: Publish
-        run: mkdir -p /home/runner/.aspnet/https && dotnet publish ./src/oed-testdata.Server/oed-testdata.Server.csproj --no-build -c Release -o ./publish
+        run: dotnet publish ./src/oed-testdata.Server/oed-testdata.Server.csproj --no-build -c Release -o ./publish
 
       - name: Deploy to Azure App Service (Test)
-        uses: azure/webapps-deploy@v3
+        uses: azure/webapps-deploy@v2
         with:
-          app-name: "${{ env.TEST_APP_SERVICE_NAME}}"
+          app-name: "${{ vars.TEST_APP_SERVICE_NAME}}"
           publish-profile: ${{ secrets.PUBLISH_PROFILE_LINUX }}
           package: ./publish/

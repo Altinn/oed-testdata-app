@@ -3,18 +3,20 @@
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public enum MaritalStatusDeclarationEnum
     {
-
         [System.Runtime.Serialization.EnumMember(Value = @"ugift")]
-        Ugift = 0,
+        Ugift = 1,
 
         [System.Runtime.Serialization.EnumMember(Value = @"gift")]
-        Gift = 1,
+        Gift = 2,
 
-        [System.Runtime.Serialization.EnumMember(Value = @"separert")]
-        Separert = 2,
+        [System.Runtime.Serialization.EnumMember(Value = "enkeEllerEnkemann")]           
+        EnkeEllerEnkemann = 3,
+
+        [System.Runtime.Serialization.EnumMember(Value = "separert")]
+        Separert = 4,
 
         [System.Runtime.Serialization.EnumMember(Value = @"skilt")]
-        Skilt = 3,
+        Skilt = 5,
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]

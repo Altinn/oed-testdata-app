@@ -1,11 +1,11 @@
-import { Chip, Heading, Paragraph, Spinner, Tabs } from "@digdir/designsystemet-react";
+import { Chip, Heading, Paragraph, Spinner, Switch, Tabs } from "@digdir/designsystemet-react";
 import "./App.css";
 import EstateCard from "./components/estateCard";
 import { ESTATE_API } from "./utils/constants";
 import { useFetchData } from "./hooks/fetchData";
 import { Estate } from "./interfaces/IEstate";
 import LoginDialog from "./components/login";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HouseIcon, PlusIcon } from "@navikt/aksel-icons";
 import { NewEstateForm } from "./components/personSearch";
 
@@ -13,6 +13,31 @@ function App() {
   const { data, loading } = useFetchData<Estate[]>(ESTATE_API);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const isAuthenticated = localStorage.getItem("auth") === "true";
+    const [darkMode, setDarkMode] = useState<boolean>(
+    localStorage.getItem("darkMode") === "true"
+  );
+
+ useEffect(() => {
+    const bodyDiv = document.getElementById("body");
+    if (bodyDiv) {
+      bodyDiv.setAttribute("data-color-scheme", darkMode ? "dark" : "light");
+    }
+  }, [darkMode]);
+  
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const isDarkMode = event.target.checked;
+    const bodyDiv = document.getElementById("body");
+    console.log("bodyDiv", bodyDiv);
+
+    if (!bodyDiv) {
+      return;
+    }
+
+    console.log("isDark", isDarkMode);
+    bodyDiv.setAttribute("data-color-scheme", isDarkMode ? "dark" : "light");
+    setDarkMode(isDarkMode);
+    localStorage.setItem("darkMode", isDarkMode ? "true" : "false");
+  };
 
   const toggleTag = (tag: string) => {
     if (!selectedTags.includes(tag)) {
@@ -51,6 +76,12 @@ function App() {
       <Heading level={1} data-size="xl">
         Digitalt Dødsbo - Testdata
       </Heading>
+      <Switch
+        label="Mørk modus"
+        checked={darkMode}
+        onChange={handleChange}
+        id="dark-mode"          
+      />
       {isDevelopment ? (
         <Tabs defaultValue="estates" style={{ width: "100%" }}>
           <Tabs.List style={{ marginBottom: "var(--ds-size-4)" }}>

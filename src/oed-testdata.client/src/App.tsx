@@ -1,4 +1,12 @@
-import { Chip, Heading, Paragraph, Spinner, Switch, Tabs } from "@digdir/designsystemet-react";
+import {
+  Chip,
+  Heading,
+  List,
+  Paragraph,
+  Spinner,
+  Switch,
+  Tabs,
+} from "@digdir/designsystemet-react";
 import "./App.css";
 import EstateCard from "./components/estateCard";
 import { ESTATE_API } from "./utils/constants";
@@ -13,17 +21,17 @@ function App() {
   const { data, loading } = useFetchData<Estate[]>(ESTATE_API);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const isAuthenticated = localStorage.getItem("auth") === "true";
-    const [darkMode, setDarkMode] = useState<boolean>(
+  const [darkMode, setDarkMode] = useState<boolean>(
     localStorage.getItem("darkMode") === "true"
   );
 
- useEffect(() => {
+  useEffect(() => {
     const bodyDiv = document.getElementById("body");
     if (bodyDiv) {
       bodyDiv.setAttribute("data-color-scheme", darkMode ? "dark" : "light");
     }
   }, [darkMode]);
-  
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const isDarkMode = event.target.checked;
     const bodyDiv = document.getElementById("body");
@@ -43,9 +51,50 @@ function App() {
     if (!selectedTags.includes(tag)) {
       setSelectedTags([...selectedTags, tag]);
     } else {
-      setSelectedTags([...selectedTags.filter(st => st != tag)])
+      setSelectedTags([...selectedTags.filter((st) => st != tag)]);
     }
-  }
+  };
+
+  const EstatesPanel = () => {
+    return (
+      <>
+        <Heading
+          level={2}
+          data-size="xs"
+          style={{ marginBottom: "var(--ds-size-2)" }}
+        >
+          Filtrer på tagger
+        </Heading>
+        <List.Unordered className="tag-list" data-size="sm">
+          {uniqueTags?.length > 0 &&
+            uniqueTags.map((tag) => (
+              <Chip.Checkbox
+                key={tag}
+                onClick={() => toggleTag(tag)}
+                name={tag}
+                value={tag}
+                checked={selectedTags.includes(tag)}
+                data-color="warning"
+              >
+                {tag}
+              </Chip.Checkbox>
+            ))}
+        </List.Unordered>
+        <List.Unordered
+          className="container__grid"
+          style={{ alignItems: "baseline" }}
+        >
+          {filteredEstates?.map((estate) => {
+            return (
+              <List.Item key={estate.estateSsn}>
+                <EstateCard data={estate} />
+              </List.Item>
+            );
+          })}
+        </List.Unordered>
+      </>
+    );
+  };
 
   if (!isAuthenticated) {
     return (
@@ -59,8 +108,12 @@ function App() {
     );
   }
 
-  const uniqueTags = [...new Set(data?.flatMap(estate => estate.metadata.tags))]?.sort();
-  const filteredEstates = data?.filter(estate => selectedTags.every(tag => estate.metadata.tags.includes(tag)));
+  const uniqueTags = [
+    ...new Set(data?.flatMap((estate) => estate.metadata.tags)),
+  ]?.sort();
+  const filteredEstates = data?.filter((estate) =>
+    selectedTags.every((tag) => estate.metadata.tags.includes(tag))
+  );
 
   if (selectedTags.length === 0) {
     filteredEstates?.sort((a, b) => {
@@ -72,90 +125,52 @@ function App() {
   const isDevelopment = import.meta.env.MODE === "development";
 
   return (
-    <main>
-      <Heading level={1} data-size="xl">
-        Digitalt Dødsbo - Testdata
-      </Heading>
+    <>
       <Switch
         label="Mørk modus"
         checked={darkMode}
         onChange={handleChange}
-        id="dark-mode"          
+        id="dark-mode"
+        style={{ padding: "var(--ds-size-4)" }}
       />
-      {isDevelopment ? (
-        <Tabs defaultValue="estates" style={{ width: "100%" }}>
-          <Tabs.List style={{ marginBottom: "var(--ds-size-4)" }}>
-            <Tabs.Tab value="estates">
-              <HouseIcon /> Testbo
-            </Tabs.Tab>
-            <Tabs.Tab value="create-new-estate">
-              <PlusIcon /> Opprett nytt testbo
-            </Tabs.Tab>
-          </Tabs.List>
+      <main>
+        <Heading
+          level={1}
+          data-size="xl"
+          style={{ marginBottom: "var(--ds-size-3)" }}
+        >
+          Digitalt Dødsbo - Testdata
+        </Heading>
 
-          {loading && (
-            <Paragraph data-size="md" className="flex-center">
-              <Spinner aria-label="Laster inn data..." />
-              Laster inn data...
-            </Paragraph>
-          )}
-          <Tabs.Panel value="create-new-estate" id="new-estate-tab">
-            <NewEstateForm uniqueTags={uniqueTags} />
-          </Tabs.Panel>
-          <Tabs.Panel value="estates" id="estates-tab">
-            <ul style={{ display: "flex", flexDirection: "row", gap: ".5rem", flexWrap: "wrap" }}>
-              {uniqueTags?.length > 0 &&
-                uniqueTags.map(tag =>
-                  <Chip.Checkbox
-                    key={tag}
-                    onClick={() => toggleTag(tag)}
-                    name={tag}
-                    value={tag}
-                    checked={selectedTags.includes(tag)}>
-                    {tag}
-                  </Chip.Checkbox>)
-              }
-            </ul>
+        {isDevelopment ? (
+          <Tabs defaultValue="estates" style={{ width: "100%" }}>
+            <Tabs.List style={{ marginBottom: "var(--ds-size-4)" }}>
+              <Tabs.Tab value="estates">
+                <HouseIcon /> Testbo
+              </Tabs.Tab>
+              <Tabs.Tab value="create-new-estate">
+                <PlusIcon /> Opprett nytt testbo
+              </Tabs.Tab>
+            </Tabs.List>
 
-            <ul className="container__grid">
-              {filteredEstates?.map((estate) => {
-                return (
-                  <li key={estate.estateSsn}>
-                    <EstateCard data={estate} />
-                  </li>
-                );
-              })}
-            </ul>
-          </Tabs.Panel>
-        </Tabs>
-      ) : (
-        <>
-          <ul style={{ display: "flex", flexDirection: "row", gap: ".5rem", flexWrap: "wrap"  }}>
-            {uniqueTags?.length > 0 &&
-              uniqueTags.map(tag =>
-                <Chip.Checkbox
-                  key={tag}
-                  onClick={() => toggleTag(tag)}
-                  name={tag}
-                  value={tag}
-                  checked={selectedTags.includes(tag)}>
-                  {tag}
-                </Chip.Checkbox>)
-            }
-          </ul>
-
-          <ul className="container__grid">
-            {filteredEstates?.map((estate) => {
-              return (
-                <li key={estate.estateSsn}>
-                  <EstateCard data={estate} />
-                </li>
-              );
-            })}
-          </ul>
-        </>
-      )}
-    </main>
+            {loading && (
+              <Paragraph data-size="md" className="flex-center">
+                <Spinner aria-label="Laster inn data..." />
+                Laster inn data...
+              </Paragraph>
+            )}
+            <Tabs.Panel value="create-new-estate" id="new-estate-tab">
+              <NewEstateForm uniqueTags={uniqueTags} />
+            </Tabs.Panel>
+            <Tabs.Panel value="estates" id="estates-tab">
+              <EstatesPanel />
+            </Tabs.Panel>
+          </Tabs>
+        ) : (
+          <EstatesPanel />
+        )}
+      </main>
+    </>
   );
 }
 

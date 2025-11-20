@@ -1,8 +1,23 @@
 import { useState } from "react";
-import { Button, Heading, Label, Spinner, Dropdown, Tag, Card } from "@digdir/designsystemet-react";
+import {
+  Button,
+  Heading,
+  Label,
+  Spinner,
+  Dropdown,
+  Tag,
+  Card,
+  Paragraph,
+  Table,
+  List,
+} from "@digdir/designsystemet-react";
 import "./style.css";
 import CopyToClipboard from "../copyToClipboard";
-import { ArrowCirclepathIcon, PadlockUnlockedIcon, GavelSoundBlockIcon } from "@navikt/aksel-icons";
+import {
+  ArrowCirclepathIcon,
+  PadlockUnlockedIcon,
+  GavelSoundBlockIcon,
+} from "@navikt/aksel-icons";
 import { Estate } from "../../interfaces/IEstate";
 import { ESTATE_API } from "../../utils/constants";
 import { useToast } from "../../context/toastContext";
@@ -80,11 +95,14 @@ export default function EstateCard({ data }: IProps) {
 
   const handleIssueProbate = async (type: string) => {
     const estateUrl = `${ESTATE_API}${data.estateSsn}`;
-    if (confirm(
+    if (
+      confirm(
         "Er du sikker på at du vil utestede skifteattest til dette boet?\n\n" +
-        "Denne funksjonen er KUN ment å simulere utsendelse av skifteattest fra DA uten at det på forhånd er sendt inn en skifteerklæring via Digitalt Dødsbo.\n\n" +
-        "NB! Skifteattesten vil KUN bli utstedt til den første arvingen i boet.\n\n" +
-        "Dersom man heller ønsker en skifteattest som tar hensyn til valg tatt i skifteerklæringen skal dette gjøres ved å sende inn skifteerklæringen.") == false) {
+          "Denne funksjonen er KUN ment å simulere utsendelse av skifteattest fra DA uten at det på forhånd er sendt inn en skifteerklæring via Digitalt Dødsbo.\n\n" +
+          "NB! Skifteattesten vil KUN bli utstedt til den første arvingen i boet.\n\n" +
+          "Dersom man heller ønsker en skifteattest som tar hensyn til valg tatt i skifteerklæringen skal dette gjøres ved å sende inn skifteerklæringen."
+      ) == false
+    ) {
       return;
     }
 
@@ -117,45 +135,56 @@ export default function EstateCard({ data }: IProps) {
   };
 
   return (
-    <Card className="card">
-      <Card.Block className="card__heading">
-        <Heading level={2} data-size="md">
-          Dødsbo - {data.estateName}
-          <CopyToClipboard value={data.estateSsn} />   
-
-          {data.metadata.tags?.length > 0 && 
-            <ul>
-              {data.metadata.tags?.map((tag) => <li key={tag}><Tag data-color={"neutral"}>{tag}</Tag></li>)}
-            </ul>     
-          }
-
-        </Heading>
-      </Card.Block>
-      <Card.Block className="card__content">
-        <Heading level={3} data-size="sm">
-          Arvinger
-        </Heading>
-        <ul>
-          {data.heirs.map((heir) => {
-            const metadata = data?.metadata?.persons?.find(p => p.nin === heir.ssn);
-            const relation = heir.relation?.split(":").pop();
-            return (
-              <li key={heir.ssn}>                
-                <div>
-                  <Label weight="semibold">{metadata?.name || '<ukjent>'}</Label>
-                  <CopyToClipboard value={heir.ssn} />
-                </div>
-                <div>
-                  <Label data-size="sm">{relation}</Label>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
+    <Card data-color="brand2" data-size="sm">
+      <Card.Block>
+        <Heading level={2}>Dødsbo - {data.estateName}</Heading>
+        <CopyToClipboard value={data.estateSsn} />
+        {data.metadata.tags?.length > 0 && (
+          <List.Unordered className="tag-list">
+            {data.metadata.tags?.map((tag) => (
+              <List.Item key={tag}>
+                <Tag data-color="warning" variant="outline">
+                  {tag}
+                </Tag>
+              </List.Item>
+            ))}
+          </List.Unordered>
+        )}
       </Card.Block>
       <Card.Block>
-        <div className="card__footer">          
+        <Table zebra>
+          <caption>Arvinger</caption>
+          <Table.Body>
+            {data.heirs.map((heir) => {
+              const metadata = data?.metadata?.persons?.find(
+                (p) => p.nin === heir.ssn
+              );
+              const relation = heir.relation?.split(":").pop();
+              return (
+                <Table.Row key={heir.ssn}>
+                  <Table.Cell
+                    className="flex-between"
+                    style={{ alignItems: "baseline" }}
+                  >
+                    <div className="flex-col">
+                      <Label weight="semibold">
+                        {metadata?.name || "<ukjent>"}
+                      </Label>
+                      <Paragraph>{relation}</Paragraph>
+                    </div>
+                    <CopyToClipboard value={heir.ssn} />
+                  </Table.Cell>
+                </Table.Row>
+              );
+            })}
+          </Table.Body>
+        </Table>
+      </Card.Block>
+
+      <Card.Block>
+        <div className="card__footer">
           <Button
+            data-color="accent"
             variant="secondary"
             onClick={handleRemoveRoles}
             disabled={loadingRemoveRoles}
@@ -163,7 +192,7 @@ export default function EstateCard({ data }: IProps) {
           >
             {loadingRemoveRoles ? (
               <>
-                <Spinner aria-label="laster" data-size="sm" />
+                <Spinner aria-label="laster" />
                 Laster...
               </>
             ) : (
@@ -174,39 +203,58 @@ export default function EstateCard({ data }: IProps) {
             )}
           </Button>
           <Dropdown.TriggerContext>
-            <Dropdown.Trigger variant="secondary">
+            <Dropdown.Trigger data-color="accent" variant="secondary">
               {loadingIssueProbate ? (
-                <Spinner aria-label="laster" data-size="sm" />
-                ) : (
-                  <GavelSoundBlockIcon title="utestede skifteattest" fontSize="1.5rem" />
-                )}
+                <Spinner aria-label="laster" />
+              ) : (
+                <GavelSoundBlockIcon
+                  title="utestede skifteattest"
+                  fontSize="1.5rem"
+                />
+              )}
               Skifteattest
             </Dropdown.Trigger>
             <Dropdown>
               <Dropdown.List>
-                <Dropdown.Item onClick={() => handleIssueProbate('PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99')}>
+                <Dropdown.Item
+                  onClick={() =>
+                    handleIssueProbate(
+                      "PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99"
+                    )
+                  }
+                >
                   <Dropdown.Button>
                     <GavelSoundBlockIcon />
                     Privat skifte
                   </Dropdown.Button>
                 </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleIssueProbate('OFFENTLIG_SKIFTE_ETTER_BEGJARING')}>
+                <Dropdown.Item
+                  onClick={() =>
+                    handleIssueProbate("OFFENTLIG_SKIFTE_ETTER_BEGJARING")
+                  }
+                >
                   <Dropdown.Button>
                     <GavelSoundBlockIcon />
                     Offentlig skifte etter begjæring
                   </Dropdown.Button>
                 </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleIssueProbate('GJENLEVENDE_EKTEFELLE_I_USKIFTE_IHT_ARVELOVEN_KAP_5')}>
+                <Dropdown.Item
+                  onClick={() =>
+                    handleIssueProbate(
+                      "GJENLEVENDE_EKTEFELLE_I_USKIFTE_IHT_ARVELOVEN_KAP_5"
+                    )
+                  }
+                >
                   <Dropdown.Button>
                     <GavelSoundBlockIcon />
                     Gjenlevende ektefelle i uskifte
                   </Dropdown.Button>
                 </Dropdown.Item>
-              </Dropdown.List>    
+              </Dropdown.List>
             </Dropdown>
           </Dropdown.TriggerContext>
           <Button
-            data-color={"danger"}
+            data-color="danger"
             variant="secondary"
             onClick={handleResetEstate}
             disabled={loadingResetEstate}

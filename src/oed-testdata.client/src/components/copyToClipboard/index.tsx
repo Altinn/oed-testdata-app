@@ -17,9 +17,9 @@ export default function CopyToClipboard({ value }: IProps) {
       <Tooltip content="kopiert" open={copied === value} placement="right" >
         <Button
           icon
-          color="second"
+          data-color="accent"
           variant="tertiary"
-          data-size="md"
+          data-size="sm"
           onClick={() => {
             navigator.clipboard.writeText(value);
             setCopied(value);

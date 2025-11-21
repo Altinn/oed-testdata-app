@@ -65,19 +65,20 @@ function App() {
         >
           Filtrer på tagger
         </Heading>
-        <List.Unordered className="tag-list" data-size="sm">
+        <List.Unordered className="tag-list">
           {uniqueTags?.length > 0 &&
             uniqueTags.map((tag) => (
-              <Chip.Checkbox
-                key={tag}
-                onClick={() => toggleTag(tag)}
-                name={tag}
-                value={tag}
-                checked={selectedTags.includes(tag)}
-                data-color="warning"
-              >
-                {tag}
-              </Chip.Checkbox>
+              <List.Item key={tag}>
+                <Chip.Checkbox
+                  onClick={() => toggleTag(tag)}
+                  name={tag}
+                  value={tag}
+                  checked={selectedTags.includes(tag)}
+                  data-color="warning"
+                >
+                  {tag}
+                </Chip.Checkbox>
+              </List.Item>
             ))}
         </List.Unordered>
         <List.Unordered
@@ -154,7 +155,7 @@ function App() {
             </Tabs.List>
 
             {loading && (
-              <Paragraph data-size="md" className="flex-center">
+              <Paragraph className="flex-center">
                 <Spinner aria-label="Laster inn data..." />
                 Laster inn data...
               </Paragraph>

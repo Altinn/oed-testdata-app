@@ -3,6 +3,14 @@
   padding: 2rem;
   border: 1px solid var(--ds-color-neutral-border-subtle);
   border-radius: var(--ds-border-radius-md);
+
+  fieldset {
+    margin-bottom: var(--ds-size-10);
+  }
+
+  hr {
+    margin-bottom: var(--ds-size-10);
+  }
 }
 
 .estate-card {

@@ -19,7 +19,7 @@ import {
   GavelSoundBlockIcon,
 } from "@navikt/aksel-icons";
 import { Estate } from "../../interfaces/IEstate";
-import { ESTATE_API } from "../../utils/constants";
+import { ESTATE_API, RELATIONSHIP_OPTIONS } from "../../utils/constants";
 import { useToast } from "../../context/toastContext";
 
 interface IProps {
@@ -135,7 +135,7 @@ export default function EstateCard({ data }: IProps) {
   };
 
   return (
-    <Card data-color="brand2" data-size="sm">
+    <Card data-color="brand2">
       <Card.Block>
         <Heading level={2}>Dødsbo - {data.estateName}</Heading>
         <CopyToClipboard value={data.estateSsn} />
@@ -159,7 +159,10 @@ export default function EstateCard({ data }: IProps) {
               const metadata = data?.metadata?.persons?.find(
                 (p) => p.nin === heir.ssn
               );
-              const relation = heir.relation?.split(":").pop();
+              const relation =
+                RELATIONSHIP_OPTIONS.find((opt) => opt.value === heir.relation)
+                  ?.label || heir.relation;
+
               return (
                 <Table.Row key={heir.ssn}>
                   <Table.Cell
@@ -262,7 +265,7 @@ export default function EstateCard({ data }: IProps) {
           >
             {loadingResetEstate ? (
               <>
-                <Spinner aria-label="laster" data-size="xs" />
+                <Spinner aria-label="laster" />
                 Laster...
               </>
             ) : (

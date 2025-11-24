@@ -1,3 +1,48 @@
 export const ESTATE_API = "/api/testdata/estate/";
 export const PERSON_API = "/api/testdata/people/search";
 export const AUTH_LOGIN_API = "/api/auth/login";
+
+
+export const RELATIONSHIP_OPTIONS = [
+  { value: '', label: 'Velg relasjon' },
+  { value: 'PART_ANNEN', label: 'Annen part' },
+  { value: 'GJENLEV_EKTEFELLE_PARTNER', label: 'Gjenlevende ektefelle/partner' },
+  { value: 'GJENLEV_PARTNER', label: 'Gjenlevende partner' },
+  { value: 'GJENLEV_SAMBOER', label: 'Gjenlevende samboer' },
+  { value: 'BARN', label: 'Barn' },
+  { value: 'BARNEBARN', label: 'Barnebarn' },
+  { value: 'SAERKULLSBARN', label: 'Særkullsbarn' },
+  { value: 'SAERKULLSBARN_BARN', label: 'Særkullsbarns barn' },
+  { value: 'FAR', label: 'Far' },
+  { value: 'MOR', label: 'Mor' },
+  { value: 'SOESKEN', label: 'Søsken' },
+  { value: 'SOESKENS_BARN', label: 'Søskens barn' },
+  { value: 'SOESKENS_BARNEBARN', label: 'Søskens barnebarn' },
+  { value: 'HALV_SOESKEN', label: 'Halvsøsken' },
+  { value: 'HALV_SOESKENS_BARN', label: 'Halvsøskens barn' },
+  { value: 'FARFAR', label: 'Farfar' },
+  { value: 'FARMOR', label: 'Farmor' },
+  { value: 'MORFAR', label: 'Morfar' },
+  { value: 'MORMOR', label: 'Mormor' },
+  { value: 'ONKEL', label: 'Onkel' },
+  { value: 'TANTE', label: 'Tante' },
+  { value: 'FETTER', label: 'Fetter' },
+  { value: 'KUSINE', label: 'Kusine' },
+  { value: 'STATEN', label: 'Staten' },
+  { value: 'AVDOEDE', label: 'Avdøde' },
+  { value: 'FORDRINGSHAVER', label: 'Fordringshaver' },
+  { value: 'AVDOEDE_EKTEFELLE_PARTNER', label: 'Avdøde ektefelle/partner' },
+  { value: 'TEST_ARVING_FULL', label: 'Test arving (full)' },
+  { value: 'TEST_ARVING_BEGR', label: 'Test arving (begrenset)' },
+  { value: 'VERGE', label: 'Verge' },
+  { value: 'FORELDREVERGE_AKTOER', label: 'Foreldreverge aktør' },
+  { value: 'MIDLERTIDIGVERGE_AKTOER', label: 'Midlertidig verge aktør' },
+  { value: 'FULLMEKTIG', label: 'Fullmektig' },
+  { value: 'PROSFULL', label: 'Prosessfullmektig' },
+  { value: 'FREMTIDSFULLMEKTIG', label: 'Fremtidsfullmektig' },
+  { value: 'GJENLEV_EKTEFELLE', label: 'Gjenlevende ektefelle' },
+  { value: 'MOTTAKER_FULLMAKT_DOEDSBO_LITEN_VERDI', label: 'Mottaker fullmakt dødsbo liten verdi' },
+  { value: 'BARNEBARNS_BARN', label: 'Barnebarns barn' },
+  { value: 'SOESKENS_BARNEBARNS_BARN', label: 'Søskens barnebarns barn' },
+  { value: 'HALV_SOESKENS_BARNEBARN', label: 'Halvsøskens barnebarn' }
+];

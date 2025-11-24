@@ -43,3 +43,14 @@ pre {
   flex-direction: column;
   gap: var(--ds-size-1);
 }
+
+.tag-list {
+  list-style: none;
+  display: flex;
+  gap: var(--ds-size-3);
+  flex-wrap: wrap;
+  align-items: baseline;
+  li {
+    margin-top: 0;
+  }
+}

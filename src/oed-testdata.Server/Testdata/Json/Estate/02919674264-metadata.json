@@ -1,1 +1,14 @@
-{"persons":[{"nin":"18832748591","name":"SJENERT ERIDOFOBI"}],"tags":["Kartverket"]}
+{
+  "persons": [
+    {
+      "nin": "18832748591",
+      "name": "SJENERT ERIDOFOBI"
+    }
+  ],
+  "tags": [
+    "Ektepakt",
+    "SVV",
+    "Pensjon",
+    "Kartverket"
+  ]
+}

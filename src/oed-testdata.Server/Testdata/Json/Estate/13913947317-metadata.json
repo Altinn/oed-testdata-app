@@ -1,1 +1,34 @@
-{"persons":[{"nin":"13837496173","name":"FORSKJELLIG KARAFFEL"},{"nin":"02927096229","name":"DOBBEL S\u00D8STER"},{"nin":"19876294772","name":"MATERIALISTISK ALPINSKI"},{"nin":"08860549043","name":"OPPRETT KJELTRING"},{"nin":"16840549570","name":"HELDIG FAKKEL"},{"nin":"09814099064","name":"RAFFINERT BLOMSTERPLANTE"}],"tags":["Ektepakt"]}
+{
+  "persons": [
+    {
+      "nin": "13837496173",
+      "name": "FORSKJELLIG KARAFFEL"
+    },
+    {
+      "nin": "02927096229",
+      "name": "DOBBEL S\u00D8STER"
+    },
+    {
+      "nin": "19876294772",
+      "name": "MATERIALISTISK ALPINSKI"
+    },
+    {
+      "nin": "08860549043",
+      "name": "OPPRETT KJELTRING"
+    },
+    {
+      "nin": "16840549570",
+      "name": "HELDIG FAKKEL"
+    },
+    {
+      "nin": "09814099064",
+      "name": "RAFFINERT BLOMSTERPLANTE"
+    }
+  ],
+  "tags": [
+    "Ektepakt",
+    "SVV",
+    "Pensjon",
+    "Kartverket"
+  ]
+}

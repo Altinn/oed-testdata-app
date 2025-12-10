@@ -12,6 +12,11 @@ public class DaData
     public required DaCase[] DaCaseList { get; set; }
 
 
+    public void UpdateTilgangsdato(DateTimeOffset? date)
+    {
+        DaCaseList.Single().TilgangsdatoDigitaltDodsbo = date;
+    }
+
     public void UpdateTimestamps(DateTimeOffset timestamp)
     {
         DaEventList.First().First().Time = timestamp;
@@ -93,6 +98,12 @@ public class DaCase
 
     [JsonPropertyName("skifteattest")]
     public Skifteattest? Skifteattest { get; set; }
+
+    [JsonPropertyName("tilgangsdatoDigitaltDodsbo")]
+    public DateTimeOffset? TilgangsdatoDigitaltDodsbo { get; set; }
+
+    [JsonPropertyName("erAnnullert")]
+    public bool? ErAnnullert { get; set; }
 }
 
 public class Skifteattest

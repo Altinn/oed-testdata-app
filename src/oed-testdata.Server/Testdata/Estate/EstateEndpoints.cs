@@ -87,6 +87,7 @@ namespace oed_testdata.Server.Testdata.Estate
                 var data = estate.Data;
                 data.SetMottattStatus();
                 data.UpdateTimestamps(DateTimeOffset.Now);
+                data.UpdateTilgangsdato(request.TilgangsdatoDigitaltDodsbo);
 
                 await oedClient.PostDaEvent(data);
 
@@ -149,6 +150,11 @@ namespace oed_testdata.Server.Testdata.Estate
                     }
                 }
 
+                if (request.TilgangsdatoDigitaltDodsbo is not null)
+                {
+                    data.UpdateTilgangsdato(request.TilgangsdatoDigitaltDodsbo);
+                }
+                
                 data.UpdateTimestamps(DateTimeOffset.Now);
                 await oedClient.PostDaEvent(data);
 
@@ -249,6 +255,7 @@ namespace oed_testdata.Server.Testdata.Estate
     public class CreateOrUpdateEstateRequest
     {
         public required string EstateSsn { get; init; }
+        public DateTimeOffset? TilgangsdatoDigitaltDodsbo { get; init; }
     }
 
     public class AddNewEstate
@@ -278,5 +285,9 @@ namespace oed_testdata.Server.Testdata.Estate
         public EstateStatus? Status { get; init; }
 
         public string? ResultatType { get; set; }
+
+        [JsonPropertyName("tilgangsdatoDigitaltDodsbo")]
+        public DateTimeOffset? TilgangsdatoDigitaltDodsbo { get; set; }
+
     }
 }

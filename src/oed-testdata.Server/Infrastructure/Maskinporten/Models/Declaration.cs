@@ -69,7 +69,7 @@
         public int PropertyUnitNumber { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("municipalityNumber")]
-        public int MunicipalityNumber { get; set; } = default!;
+        public string MunicipalityNumber { get; set; } = default!;
 
     }
 
@@ -247,7 +247,7 @@
         public System.DateTimeOffset DateOfDeath { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("municipalityNumber")]
-        public int MunicipalityNumber { get; set; } = default!;
+        public string MunicipalityNumber { get; set; } = default!;
 
     }
 

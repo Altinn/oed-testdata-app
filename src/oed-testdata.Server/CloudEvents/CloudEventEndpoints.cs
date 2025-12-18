@@ -93,6 +93,11 @@ public static class CloudEventEndpoints
                 .Select(h => h.HeirNin)
                 .ToArray()
         };
+        // Setter første arving som påtar seg gjeldsansvar til mottaker av original skifteattest
+        daCase.Parter
+            .Single(p => 
+                p.Nin == daCase.Skifteattest.ArvingerSomPaatarSegGjeldsansvar.First())
+            .MottakerOriginalSkifteattest = true;
         
         await oedClient.PostDaEvent(estate.Data);
         logger.LogInformation("Issued probate for subject [{Subject}]", cloudEvent.Subject);

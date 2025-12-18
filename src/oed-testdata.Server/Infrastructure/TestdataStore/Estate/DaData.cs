@@ -140,6 +140,10 @@ public class Parter
 
     [JsonPropertyName("godkjennerSkifteattest")]
     public required bool GodkjennerSkifteattest { get; set; }
+
+    [JsonPropertyName("mottakerOriginalSkifteattest")]
+    public bool MottakerOriginalSkifteattest { get; set; }
+
 }
 
 #pragma warning restore CS8618

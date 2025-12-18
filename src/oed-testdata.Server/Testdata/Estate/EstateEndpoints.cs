@@ -143,6 +143,7 @@ namespace oed_testdata.Server.Testdata.Estate
                                 .ToArray(),
                             ArvingerSomPaatarSegGjeldsansvar = [daCase.Parter.First().Nin]
                         };
+                        daCase.Parter.First().MottakerOriginalSkifteattest = true;
                     }
                     else
                     {
@@ -223,6 +224,7 @@ namespace oed_testdata.Server.Testdata.Estate
                                 Formuesfullmakt = true,
                                 GodkjennerSkifteattest = false,
                                 PaatarGjeldsansvar = false,
+                                MottakerOriginalSkifteattest = false,
                                 Role = heir.Relation,
                                 Nin = heir.Ssn
                             }).ToArray(),

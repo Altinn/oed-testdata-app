@@ -1,0 +1,64 @@
+{
+    "DaEventList": [
+        [
+            {
+                "specversion": "1.0",
+                "id": "eb3cda36-20c5-44a5-8f48-77f2355d5c28",
+                "source": "https://domstol.no",
+                "type": "DODSFALLSAK-STATUS_OPPDATERT",
+                "datacontenttype": "application/json",
+                "time": "2026-02-04T13:06:25.459457+01:00",
+                "data": {
+                    "@id": "https://hendelsesliste.test.domstol.no/api/objects/eb3cda36-20c5-44a5-8f48-77f2355d5c28"
+                }
+            }
+        ]
+    ],
+    "DaCaseList": [
+        {
+            "sakId": "eb3cda36-20c5-44a5-8f48-77f2355d5c28",
+            "saksnummer": "25-000011DFA-TOSL/07",
+            "avdode": "27831849733",
+            "embete": "Oslo tingrett",
+            "status": "MOTTATT",
+            "parter": [
+                {
+                    "nin": "03915097277",
+                    "role": "BARN",
+                    "formuesfullmakt": true,
+                    "signertDato": null,
+                    "onsketSkifteform": null,
+                    "paatarGjeldsansvar": false,
+                    "godkjennerSkifteattest": false,
+                    "mottakerOriginalSkifteattest": false
+                },
+                {
+                    "nin": "31884698750",
+                    "role": "BARN",
+                    "formuesfullmakt": true,
+                    "signertDato": null,
+                    "onsketSkifteform": null,
+                    "paatarGjeldsansvar": false,
+                    "godkjennerSkifteattest": false,
+                    "mottakerOriginalSkifteattest": false
+                },
+                {
+                    "nin": "31921949092",
+                    "role": "GJENLEV_EKTEFELLE_PARTNER",
+                    "formuesfullmakt": true,
+                    "signertDato": null,
+                    "onsketSkifteform": null,
+                    "paatarGjeldsansvar": false,
+                    "godkjennerSkifteattest": false,
+                    "mottakerOriginalSkifteattest": false
+                }
+            ],
+            "receivedDate": "2026-02-04T12:06:25.459474+00:00",
+            "deadlineDate": "2026-04-05T12:06:25.459474+00:00",
+            "resultatType": null,
+            "skifteattest": null,
+            "tilgangsdatoDigitaltDodsbo": null,
+            "erAnnullert": null
+        }
+    ]
+}

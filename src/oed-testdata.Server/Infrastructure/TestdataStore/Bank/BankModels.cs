@@ -31,6 +31,7 @@ public class Bankaccount
 
 public class Account
 {
+    public bool hasErrors { get; set; }
     public string accountNumber { get; set; }
     public Accountdetail accountDetail { get; set; }
     public object transactions { get; set; }

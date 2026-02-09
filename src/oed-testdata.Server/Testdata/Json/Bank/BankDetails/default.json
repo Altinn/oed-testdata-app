@@ -286,6 +286,7 @@
           "accountBookedBalance": 1400
         },
         {
+          "hasErrors": true,
           "accountNumber": "12278825335",
           "accountDetail": {
             "status": "enabled",

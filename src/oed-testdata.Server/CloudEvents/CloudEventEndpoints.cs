@@ -85,18 +85,20 @@ public static class CloudEventEndpoints
         daCase.Skifteattest = new Skifteattest
         {
             Resultat = "PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99",
-            Arvinger = declaration.Heirs
-                .Select(h => h.Nin)
+            Arvinger = daCase.Parter
+                .Select((p, i) => new SkifteattestArvingPerson
+                {
+                    Type = "Person",
+                    Nin = p.Nin,
+                    PaatarGjeldsansvar =
+                        declaration.SignatureClaims.Signatures.Any(s => s.AcceptsDebt && s.HeirNin == p.Nin)
+                })
                 .ToArray(),
-            ArvingerSomPaatarSegGjeldsansvar = declaration.SignatureClaims.Signatures
-                .Where(h => h.AcceptsDebt)
-                .Select(h => h.HeirNin)
-                .ToArray()
         };
         // Setter første arving som påtar seg gjeldsansvar til mottaker av original skifteattest
         daCase.Parter
             .Single(p => 
-                p.Nin == daCase.Skifteattest.ArvingerSomPaatarSegGjeldsansvar.First())
+                p.Nin == daCase.Skifteattest.Arvinger.First().Nin)
             .MottakerOriginalSkifteattest = true;
         
         await oedClient.PostDaEvent(estate.Data);

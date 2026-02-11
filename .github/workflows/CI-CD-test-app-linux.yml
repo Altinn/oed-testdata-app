@@ -6,9 +6,8 @@ on:
       - main
   workflow_dispatch:
 env:
-  DOTNET_VERSION: "10.x" # Global environment variables
+  DOTNET_VERSION: "10.0.102" # Global environment variables
   TEST_APP_SERVICE_NAME: "oed-testapp-app-linux"
-  DOTNET_GENERATE_ASPNET_CERTIFICATE: false
 
 jobs:
   build:
@@ -38,7 +37,6 @@ jobs:
         run: dotnet test -c Release --no-build --verbosity normal
 
       - name: Publish
-        continue-on-error: true
         run: mkdir -p /home/runner/.aspnet/https && dotnet publish ./src/oed-testdata.Server/oed-testdata.Server.csproj --no-build -c Release -o ./publish
 
       - name: Deploy to Azure App Service (Test)

@@ -8,6 +8,7 @@ on:
 env:
   DOTNET_VERSION: "10.x" # Global environment variables
   TEST_APP_SERVICE_NAME: "oed-testapp-app-linux"
+  DOTNET_GENERATE_ASPNET_CERTIFICATE: false
 
 jobs:
   build:

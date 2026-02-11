@@ -16,14 +16,14 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: GitHub metadata
         run: |
           printf "%s on %s by %s\n" "$GITHUB_REPOSITORY" "$GITHUB_REF_NAME" "$GITHUB_ACTOR"
 
       - name: Set up .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 

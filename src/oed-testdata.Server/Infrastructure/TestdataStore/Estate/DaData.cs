@@ -109,27 +109,17 @@ public class DaCase
 public class Skifteattest
 {
     [JsonPropertyName("arvinger")]
-    public required SkifteattestArvingPerson[] Arvinger { get; set; }
+    public required string[] Arvinger { get; set; }
+
+    [JsonPropertyName("arvingerSomPaatarSegGjeldsansvar")]
+    public required string[] ArvingerSomPaatarSegGjeldsansvar { get; set; }
 
     [JsonPropertyName("resultat")]
     public required string Resultat { get; set; }
 }
 
-public class SkifteattestArvingPerson
-{
-    [JsonPropertyName("type")]
-    public required string Type { get; set; } = "Person";
-    [JsonPropertyName("nin")]
-    public string Nin { get; set; }
-    [JsonPropertyName("paatarGjeldsansvar")]
-    public bool PaatarGjeldsansvar { get; set; }
-}
-
 public class Parter
 {
-    [JsonPropertyName("type")]
-    public string Type { get; set; } = "Person";
-
     [JsonPropertyName("nin")]
     public required string Nin { get; set; }
 

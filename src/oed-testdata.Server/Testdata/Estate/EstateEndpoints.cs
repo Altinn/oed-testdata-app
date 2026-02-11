@@ -139,13 +139,9 @@ namespace oed_testdata.Server.Testdata.Estate
                         {
                             Resultat = request.ResultatType,
                             Arvinger = daCase.Parter
-                                .Select((p, i) => new SkifteattestArvingPerson
-                                {
-                                    Type = "Person", 
-                                    Nin = p.Nin, 
-                                    PaatarGjeldsansvar = i == 0
-                                })
-                                .ToArray()
+                                .Select(p => p.Nin)
+                                .ToArray(),
+                            ArvingerSomPaatarSegGjeldsansvar = [daCase.Parter.First().Nin]
                         };
                         daCase.Parter.First().MottakerOriginalSkifteattest = true;
                     }

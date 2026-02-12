@@ -16,14 +16,14 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
       - name: GitHub metadata
         run: |
           printf "%s on %s by %s\n" "$GITHUB_REPOSITORY" "$GITHUB_REF_NAME" "$GITHUB_ACTOR"
 
       - name: Set up .NET
-        uses: actions/setup-dotnet@v5
+        uses: actions/setup-dotnet@baa11fbfe1d6520db94683bd5c7a3818018e4309 # v5
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -40,7 +40,7 @@ jobs:
         run: mkdir -p /home/runner/.aspnet/https && dotnet publish ./src/oed-testdata.Server/oed-testdata.Server.csproj --no-build -c Release -o ./publish
 
       - name: Deploy to Azure App Service (Test)
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@122b7ec46017e53a3f71e3a027d67550a1641f5e # v2
         with:
           app-name: "${{ env.TEST_APP_SERVICE_NAME }}"
           publish-profile: ${{ secrets.PUBLISH_PROFILE_LINUX }}

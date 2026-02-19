@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 
 namespace oed_testdata.Server.Infrastructure.TestdataStore.Estate;
 
@@ -130,8 +130,14 @@ public class Parter
     [JsonPropertyName("type")]
     public string Type { get; set; } = "Person";
 
+    [JsonPropertyName("kind")]
+    public string Kind { get; set; }
+
     [JsonPropertyName("nin")]
     public string Nin { get; set; }
+
+    [JsonPropertyName("organisasjonsNummer")]
+    public string? OrganisasjonsNummer { get; set; }
 
     [JsonPropertyName("role")]
     public required string Role { get; set; }
@@ -153,7 +159,6 @@ public class Parter
 
     [JsonPropertyName("mottakerOriginalSkifteattest")]
     public bool MottakerOriginalSkifteattest { get; set; }
-
 }
 
 #pragma warning restore CS8618

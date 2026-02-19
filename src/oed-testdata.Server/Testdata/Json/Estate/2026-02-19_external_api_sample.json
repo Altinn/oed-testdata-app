@@ -1,0 +1,105 @@
+        {
+          "sakId": "e8aa8cd8-7146-4984-9681-24b14a07207f",
+          "saksnummer": "25-000074DFA-TOSL",
+          "avdode": "18858274865",
+          "embete": "Oslo tingrett",
+          "status": "FERDIGBEHANDLET",
+          "parter": [
+            {
+              "type": "PersonPapp",
+              "navn": {
+                "firstName": "Ole",
+                "lastName": "Papp"
+              },
+              "dateOfBirth": "2011-11-05",
+              "role": "BARNEBARN",
+              "mottakerOriginalSkifteattest": false
+            },
+            {
+              "type": "Person",
+              "nin": "07871147986",
+              "role": "BARN",
+              "formuesfullmakt": true,
+              "mottakerOriginalSkifteattest": true
+            },
+            {
+              "type": "Person",
+              "nin": "04916198987",
+              "role": "BARN",
+              "formuesfullmakt": true,
+              "mottakerOriginalSkifteattest": false
+            },
+            {
+              "type": "PersonPapp",
+              "navn": {
+                "firstName": "Voksen",
+                "lastName": "Papp"
+              },
+              "dateOfBirth": "1979-06-16",
+              "role": "BARN",
+              "mottakerOriginalSkifteattest": false
+            },
+            {
+              "type": "ForetakPapp",
+              "organisasjonsNavn": "Firma Papp",
+              "registreringsNummer": "123-123-123-123",
+              "countryCode": "NOR",
+              "role": "TEST_ARVING_FULL",
+              "mottakerOriginalSkifteattest": false
+            },
+            {
+              "type": "Foretak",
+              "organisasjonsNummer": 313955028,
+              "role": "TEST_ARVING_FULL",
+              "mottakerOriginalSkifteattest": false
+            }
+          ],
+          "receivedDate": "2025-11-04",
+          "skifteattest": {
+            "arvinger": [
+              {
+                "type": "PersonPapp",
+                "navn": {
+                  "firstName": "Ole",
+                  "lastName": "Papp"
+                },
+                "dateOfBirth": "2011-11-05",
+                "paatarGjeldsansvar": false
+              },
+              {
+                "type": "Person",
+                "nin": "07871147986",
+                "paatarGjeldsansvar": true
+              },
+              {
+                "type": "ForetakPapp",
+                "organisasjonsNavn": "Firma Papp",
+                "paatarGjeldsansvar": true
+              },
+              {
+                "type": "PersonPapp",
+                "navn": {
+                  "firstName": "Voksen",
+                  "lastName": "Papp"
+                },
+                "dateOfBirth": "1979-06-16",
+                "paatarGjeldsansvar": true
+              },
+              {
+                "type": "Foretak",
+                "organisasjonsNummer": 313955028,
+                "paatarGjeldsansvar": false
+              },
+              {
+                "type": "Person",
+                "nin": "04916198987",
+                "paatarGjeldsansvar": true
+              }
+            ],
+            "resultat": "PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99"
+          },
+          "erAnnullert": null,
+          "resultatType": "PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99",
+          "deadlineDate": "2026-01-03",
+          "tilgangsdatoDigitaltDodsbo": null
+        }

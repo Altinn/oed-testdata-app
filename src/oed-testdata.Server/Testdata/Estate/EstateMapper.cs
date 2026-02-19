@@ -15,13 +15,16 @@ public static class EstateMapper
                 Persons = estateData.Metadata.Persons.Select(p => new EstateMetadataPersonDto
                 {
                     Nin = p.Nin,
-                    Name = p.Name
+                    Name = p.Name,
+                    OrgNum = p.OrganisasjonsNummer!
                 }),
                 Tags = [..estateData.Metadata.Tags]
             },
             Heirs = estateData.Data.DaCaseList.Single().Parter.Select(p => new Heir
             {
+                Kind = string.IsNullOrEmpty(p.Nin) ? "company" : "person",
                 Ssn = p.Nin,
+                OrgNum = p.OrganisasjonsNummer!,
                 Name = string.Empty,
                 Relation = p.Role
             })

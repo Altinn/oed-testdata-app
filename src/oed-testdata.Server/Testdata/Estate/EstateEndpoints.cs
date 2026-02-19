@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -225,12 +225,14 @@ namespace oed_testdata.Server.Testdata.Estate
                         Parter = (payload.Heirs ?? []).Select(heir =>
                             new Parter
                             {
+                                Kind = heir.Kind,
                                 Formuesfullmakt = true,
                                 GodkjennerSkifteattest = false,
                                 PaatarGjeldsansvar = false,
                                 MottakerOriginalSkifteattest = false,
                                 Role = heir.Relation,
-                                Nin = heir.Ssn
+                                Nin = heir.Ssn,
+                                OrganisasjonsNummer = heir.OrgNum
                             }).ToArray(),
                     }
                 ]
@@ -246,6 +248,7 @@ namespace oed_testdata.Server.Testdata.Estate
                 Persons = (payload.Heirs ?? []).Select(h => new EstateMetadataPerson
                 {
                     Nin = h.Ssn,
+                    OrganisasjonsNummer = h.OrgNum,
                     Name = h.Name
                 }).ToList(),
                 Tags = payload.Tags ?? []

@@ -1,5 +1,6 @@
 export const ESTATE_API = "/api/testdata/estate/";
 export const PERSON_API = "/api/testdata/people/search";
+export const COMPANY_API = "/api/testdata/companies/search";
 export const AUTH_LOGIN_API = "/api/auth/login";
 
 
@@ -44,5 +45,6 @@ export const RELATIONSHIP_OPTIONS = [
   { value: 'MOTTAKER_FULLMAKT_DOEDSBO_LITEN_VERDI', label: 'Mottaker fullmakt dødsbo liten verdi' },
   { value: 'BARNEBARNS_BARN', label: 'Barnebarns barn' },
   { value: 'SOESKENS_BARNEBARNS_BARN', label: 'Søskens barnebarns barn' },
-  { value: 'HALV_SOESKENS_BARNEBARN', label: 'Halvsøskens barnebarn' }
+  { value: 'HALV_SOESKENS_BARNEBARN', label: 'Halvsøskens barnebarn' },
+  { value: 'TEST', label: 'Testamentert' },
 ];

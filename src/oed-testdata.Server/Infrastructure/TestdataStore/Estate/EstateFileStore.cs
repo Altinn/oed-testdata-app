@@ -6,10 +6,13 @@ public class EstateMetadataPerson()
 {
     public string? Nin { get; init; }
     public required string Name { get; init; }
+    public string? OrganisasjonsNummer { get; init; }
 }
 
 public class EstateMetadata()
 {
+    // Not really persons, but we want to be able to link companies to estates as well,
+    // and this is the easiest way to do it without changing too much of the existing code
     public List<EstateMetadataPerson> Persons { get; init; } = [];
     public List<string> Tags { get; init; } = [];
 }
@@ -122,7 +125,7 @@ public class EstateFileStore : IEstateStore
 
     private static async Task CreateMetadata(EstateData estate)
     {
-        var filename = $"{estate.EstateSsn}-metadata.json";
+        var filename = $"{estate.EstateSsn}{MetdataPostfix}";
         var filepath = Path.Combine("Testdata/Json/Estate", filename);
 
         await using var filestream = File.Open(filepath, FileMode.Create, FileAccess.Write);

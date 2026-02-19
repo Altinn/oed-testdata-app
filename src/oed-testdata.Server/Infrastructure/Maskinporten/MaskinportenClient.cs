@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using System.Web;
 using oed_testdata.Server.Infrastructure.Maskinporten.Models;
 
@@ -8,6 +8,7 @@ namespace oed_testdata.Server.Infrastructure.Maskinporten
     {
         public Task<Declaration> GetDeclaration(string partyId, string oedDeclarationInstanceGuid);
         public Task<TenorWrapper> TenorSearch(TenorQueryParameters searchQuery);
+        public Task<TenorCompanyWrapper> TenorCompanySearch(TenorCompanyQueryParameters searchQuery);
     }
     
     public class MaskinportenClient(IHttpClientFactory httpClientFactory) : IMaskinportenClient
@@ -38,13 +39,32 @@ namespace oed_testdata.Server.Infrastructure.Maskinporten
                 .WithNin(searchQuery.Nin)
                 .Build();
 
-            var path = $"https://testdata.api.skatteetaten.no/api/testnorge/v2/soek/freg" + query;
+            var path = $"https://testdata.api.skatteetaten.no/api/testnorge/v2/soek/freg{query}";
             var response = await _httpClient.GetAsync(path);
 
             response.EnsureSuccessStatusCode();
 
             await using var contentStream = await response.Content.ReadAsStreamAsync();
             var data = JsonSerializer.Deserialize<TenorWrapper>(contentStream);
+
+            return data!;
+        }
+
+        public async Task<TenorCompanyWrapper> TenorCompanySearch(TenorCompanyQueryParameters searchQuery)
+        {
+            var query = new TenorCompanySearchQueryBuilder()
+                .WithOrgNum(searchQuery.OrgNum)
+                .WithCount(searchQuery.Count)
+                .WithType(searchQuery.Type)
+                .Build();
+
+            var path = $"https://testdata.api.skatteetaten.no/api/testnorge/v2/soek/brreg-er-fr{query}";
+            var response = await _httpClient.GetAsync(path);
+            
+            response.EnsureSuccessStatusCode();
+
+            await using var contentStream = await response.Content.ReadAsStreamAsync();
+            var data = JsonSerializer.Deserialize<TenorCompanyWrapper>(contentStream);
 
             return data!;
         }

@@ -19,12 +19,15 @@ public class EstateMetadataPersonDto
 {
     public string Nin { get; set; }
     public string Name { get; set; }
+    public string OrgNum { get; init; }
 }
 
 public class Heir
 {
-    public required string Ssn { get; init; }
+    public string Kind { get; init; }
     public required string Name { get; init; }
-    public required string Relation { get; init; }
+    public string Ssn { get; init; }
+    public string Relation { get; init; }
+    public string OrgNum { get; init; }
 }
 #pragma warning restore CS8618

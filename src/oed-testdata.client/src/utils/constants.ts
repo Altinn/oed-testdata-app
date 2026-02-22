@@ -44,6 +44,5 @@ export const RELATIONSHIP_OPTIONS = [
   { value: 'MOTTAKER_FULLMAKT_DOEDSBO_LITEN_VERDI', label: 'Mottaker fullmakt dødsbo liten verdi' },
   { value: 'BARNEBARNS_BARN', label: 'Barnebarns barn' },
   { value: 'SOESKENS_BARNEBARNS_BARN', label: 'Søskens barnebarns barn' },
-  { value: 'HALV_SOESKENS_BARNEBARN', label: 'Halvsøskens barnebarn' },
-  { value: 'TEST', label: 'Testamentert' },
+  { value: 'HALV_SOESKENS_BARNEBARN', label: 'Halvsøskens barnebarn' }
 ];

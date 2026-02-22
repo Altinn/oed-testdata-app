@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace oed_testdata.Server.Testdata.Person;
+﻿namespace oed_testdata.Server.Testdata.Person;
 
 public class PersonDto
 {
@@ -16,5 +14,4 @@ public class RelatedPersonDto
     public required string Type { get; init; }
     public required string Name { get; init; }
     public required string Relation { get; init; }
-
 }

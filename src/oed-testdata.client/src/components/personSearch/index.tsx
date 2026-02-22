@@ -2,14 +2,10 @@ import React, { useState } from "react";
 import {
   Button,
   Textfield,
-  EXPERIMENTAL_Suggestion as Suggestion,
   Chip,
-  Card,
   Dropdown,
   Paragraph,
   Fieldset,
-  Label,
-  Field,
   Divider,
   Heading,
   Avatar,
@@ -19,11 +15,9 @@ import {
 import {
   PlusIcon,
   PersonPlusIcon,
-  TrashIcon,
   PersonIcon,
   TagIcon,
   PersonGroupIcon,
-  BriefcaseIcon,
   PaperplaneIcon,
   Buildings3Icon,
   PersonCheckmarkIcon,
@@ -36,9 +30,9 @@ import {
 } from "../../utils/constants";
 import { useToast } from "../../context/toastContext";
 import "./style.css";
-import ForetakForm from "./forms/foretak";
 import { HeirSearch } from "../../interfaces/IPersonSearch";
 import { Foretak, Heir, Person } from "./types";
+import ForetakForm from "./forms/foretak";
 import PersonForm from "./forms/person";
 
 interface FormData {

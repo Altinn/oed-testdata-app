@@ -3,7 +3,6 @@ export const PERSON_API = "/api/testdata/people/search";
 export const COMPANY_API = "/api/testdata/companies/search";
 export const AUTH_LOGIN_API = "/api/auth/login";
 
-
 export const RELATIONSHIP_OPTIONS = [
   { value: '', label: 'Velg relasjon' },
   { value: 'PART_ANNEN', label: 'Annen part' },

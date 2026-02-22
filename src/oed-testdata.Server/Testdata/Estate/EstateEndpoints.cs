@@ -225,8 +225,8 @@ namespace oed_testdata.Server.Testdata.Estate
                         Parter = (payload.Heirs ?? []).Select(heir =>
                             new Parter
                             {
-                                Kind = heir.Kind,
-                                Formuesfullmakt = true,
+                                Type = heir.Type,
+                                Formuesfullmakt = heir.Type == "Person" && Random.Shared.NextSingle() >= 0.5,
                                 GodkjennerSkifteattest = false,
                                 PaatarGjeldsansvar = false,
                                 MottakerOriginalSkifteattest = false,

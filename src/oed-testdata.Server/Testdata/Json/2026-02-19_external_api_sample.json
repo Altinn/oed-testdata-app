@@ -12,22 +12,13 @@
                 "lastName": "Papp"
               },
               "dateOfBirth": "2011-11-05",
-              "role": "BARNEBARN",
               "mottakerOriginalSkifteattest": false
             },
             {
               "type": "Person",
               "nin": "07871147986",
-              "role": "BARN",
               "formuesfullmakt": true,
               "mottakerOriginalSkifteattest": true
-            },
-            {
-              "type": "Person",
-              "nin": "04916198987",
-              "role": "BARN",
-              "formuesfullmakt": true,
-              "mottakerOriginalSkifteattest": false
             },
             {
               "type": "PersonPapp",
@@ -36,7 +27,6 @@
                 "lastName": "Papp"
               },
               "dateOfBirth": "1979-06-16",
-              "role": "BARN",
               "mottakerOriginalSkifteattest": false
             },
             {

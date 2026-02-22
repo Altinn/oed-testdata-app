@@ -130,9 +130,6 @@ public class Parter
     [JsonPropertyName("type")]
     public string Type { get; set; } = "Person";
 
-    [JsonPropertyName("kind")]
-    public string Kind { get; set; }
-
     [JsonPropertyName("nin")]
     public string Nin { get; set; }
 

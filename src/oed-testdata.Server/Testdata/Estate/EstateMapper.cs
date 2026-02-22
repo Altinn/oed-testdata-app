@@ -22,7 +22,7 @@ public static class EstateMapper
             },
             Heirs = estateData.Data.DaCaseList.Single().Parter.Select(p => new Heir
             {
-                Kind = string.IsNullOrEmpty(p.Nin) ? "company" : "person",
+                Type = p.Type,
                 Ssn = p.Nin,
                 OrgNum = p.OrganisasjonsNummer!,
                 Name = string.Empty,

@@ -24,8 +24,8 @@ public class EstateMetadataPersonDto
 
 public class Heir
 {
-    public string Kind { get; init; }
     public required string Name { get; init; }
+    public required string Type { get; init; }
     public string Ssn { get; init; }
     public string Relation { get; init; }
     public string OrgNum { get; init; }

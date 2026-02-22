@@ -226,6 +226,7 @@ namespace oed_testdata.Server.Testdata.Estate
                             new Parter
                             {
                                 Type = heir.Type,
+                                // Random true/false for person, to simulate heirs without fullmakt
                                 Formuesfullmakt = heir.Type == "Person" && Random.Shared.NextSingle() >= 0.5,
                                 GodkjennerSkifteattest = false,
                                 PaatarGjeldsansvar = false,

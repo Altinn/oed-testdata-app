@@ -443,26 +443,14 @@ export function NewEstateForm({ uniqueTags }: Props) {
       const newEstate = {
         estateSsn: formData.deceased.nin,
         deceasedName: formData.deceased.name,
-        heirs: formData.heirs.map((heir) => 
-        {
-            switch (heir.type) {
-                case "Person":
-                    return {
-                        name: heir.name,
-                        type: heir.type,
-                        ssn: heir.nin,
-                        relation: heir.relation?.value,
-                    }
-                case "Foretak":
-                    return {
-                        name: heir.name,
-                        type: heir.type,
-                        orgnum: heir.organisasjonsNummer,
-                        relation: heir.relation?.value,
-                    }
-                default:
-                    addToast(heir.type + " ikke implementert", "danger")
-             }
+        parts: formData.heirs.map((heir) => {
+            const { type, relation, role: _, ...rest } = heir;
+            // Rebuild the object with 'type' first. .NET polymorphism complains if type is not the first property
+            return {
+                type, 
+                role: relation?.value || "",
+                ...rest
+            };
         }),
         tags: formData.tags,
       };

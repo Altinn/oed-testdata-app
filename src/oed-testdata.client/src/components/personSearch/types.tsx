@@ -4,9 +4,11 @@ type SuggestionItem = {
 };
 
 type CommonHeirFields = {
-    id: string;
     type: string;
+    id: string;
     mottakerOriginalSkifteattest: boolean;
+    relation?: SuggestionItem;
+    role: string;
 };
 
 export type Heir =
@@ -17,17 +19,14 @@ export type Heir =
 
 export type Person = {
     type: 'Person';
-    role: string;
     nin: string;
     name: string;
-    relation?: SuggestionItem;
 } & (CommonHeirFields)
 
 export type Foretak = {
     type: 'Foretak';
     organisasjonsNummer: string;
     name: string;
-    relation?: SuggestionItem;
 } & (CommonHeirFields)
 
 export type PersonPapp = {

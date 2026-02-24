@@ -23,44 +23,36 @@
       "status": "MOTTATT",
       "parter": [
         {
+          "type": "Person",
           "nin": "26854999884",
           "role": "GJENLEV_PARTNER",
           "formuesfullmakt": true,
-          "signertDato": null,
-          "onsketSkifteform": null,
-          "paatarGjeldsansvar": false,
-          "godkjennerSkifteattest": false
+          "signertDato": null
         },
         {
+          "type": "Person",
           "nin": "25817499522",
           "role": "BARN",
           "formuesfullmakt": true,
-          "signertDato": null,
-          "onsketSkifteform": null,
-          "paatarGjeldsansvar": false,
-          "godkjennerSkifteattest": false
+          "signertDato": null
         },
         {
+          "type": "Person",
           "nin": "26817399621",
           "role": "BARN",
           "formuesfullmakt": true,
-          "signertDato": null,
-          "onsketSkifteform": null,
-          "paatarGjeldsansvar": false,
-          "godkjennerSkifteattest": false
+          "signertDato": null
         },
         {
+          "type": "Person",
           "nin": "17887199345",
           "role": "BARN",
           "formuesfullmakt": true,
-          "signertDato": null,
-          "onsketSkifteform": null,
-          "paatarGjeldsansvar": false,
-          "godkjennerSkifteattest": false
+          "signertDato": null
         }
       ],
-      "receivedDate": "2025-09-24T07:53:19.0457919+00:00",
-      "deadlineDate": "2025-11-23T07:53:19.0457916+00:00",
+      "receivedDate": "2025-09-24T09:53:19.0457919+02:00",
+      "deadlineDate": "2025-11-23T08:53:19.0457916+01:00",
       "resultatType": null,
       "skifteattest": null
     }

@@ -1,0 +1,52 @@
+{
+  "DaEventList": [
+    [
+      {
+        "specversion": "1.0",
+        "id": "e247c328-a418-4462-8b11-28c27c7262d1",
+        "source": "https://domstol.no",
+        "type": "DODSFALLSAK-STATUS_OPPDATERT",
+        "datacontenttype": "application/json",
+        "time": "2026-02-23T17:11:51.4531747+01:00",
+        "data": {
+          "@id": "https://hendelsesliste.test.domstol.no/api/objects/e247c328-a418-4462-8b11-28c27c7262d1"
+        }
+      }
+    ]
+  ],
+  "DaCaseList": [
+    {
+      "sakId": "e247c328-a418-4462-8b11-28c27c7262d1",
+      "saksnummer": "25-000011DFA-TOSL/07",
+      "avdode": "31907796259",
+      "embete": "Oslo tingrett",
+      "status": "MOTTATT",
+      "parter": [
+        {
+          "type": "Person",
+          "nin": "18852149007",
+          "signertDato": null,
+          "formuesfullmakt": false,
+          "role": "HALV_SOESKENS_BARN",
+          "name": "VERDIFULL BREGNE",
+          "mottakerOriginalSkifteattest": false,
+          "id": "1771863102129"
+        },
+        {
+          "type": "Foretak",
+          "organisasjonsNummer": "313122670",
+          "role": "TEST_ARVING_FULL",
+          "name": "GRETTEN ULTRAFIOLETT TIGER AS",
+          "mottakerOriginalSkifteattest": false,
+          "id": "1771863103365"
+        }
+      ],
+      "receivedDate": "2026-02-23T17:11:51.4532095+01:00",
+      "deadlineDate": "2026-04-24T18:11:51.4532093+02:00",
+      "resultatType": null,
+      "skifteattest": null,
+      "tilgangsdatoDigitaltDodsbo": null,
+      "erAnnullert": null
+    }
+  ]
+}

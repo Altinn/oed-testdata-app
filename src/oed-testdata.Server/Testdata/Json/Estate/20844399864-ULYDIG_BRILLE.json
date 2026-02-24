@@ -1,1 +1,53 @@
-{"DaEventList":[[{"specversion":"1.0","id":"75fd7515-cbca-4cc0-bbdf-735ac268762b","source":"https://domstol.no","type":"DODSFALLSAK-STATUS_OPPDATERT","datacontenttype":"application/json","time":"2025-10-07T14:12:52.3856491+02:00","data":{"@id":"https://hendelsesliste.test.domstol.no/api/objects/75fd7515-cbca-4cc0-bbdf-735ac268762b"}}]],"DaCaseList":[{"sakId":"75fd7515-cbca-4cc0-bbdf-735ac268762b","saksnummer":"25-000011DFA-TOSL/07","avdode":"20844399864","embete":"Oslo tingrett","status":"MOTTATT","parter":[{"nin":"18821349636","role":"MOR","formuesfullmakt":true,"signertDato":null,"onsketSkifteform":null,"paatarGjeldsansvar":false,"godkjennerSkifteattest":false},{"nin":"25911349739","role":"FAR","formuesfullmakt":true,"signertDato":null,"onsketSkifteform":null,"paatarGjeldsansvar":false,"godkjennerSkifteattest":false},{"nin":"12894698223","role":"GJENLEV_EKTEFELLE_PARTNER","formuesfullmakt":true,"signertDato":null,"onsketSkifteform":null,"paatarGjeldsansvar":false,"godkjennerSkifteattest":false}],"receivedDate":"2025-10-07T12:12:52.3856624+00:00","deadlineDate":"2025-12-06T12:12:52.385662+00:00","resultatType":null,"skifteattest":null}]}
+{
+  "DaEventList": [
+    [
+      {
+        "specversion": "1.0",
+        "id": "75fd7515-cbca-4cc0-bbdf-735ac268762b",
+        "source": "https://domstol.no",
+        "type": "DODSFALLSAK-STATUS_OPPDATERT",
+        "datacontenttype": "application/json",
+        "time": "2025-10-07T14:12:52.3856491+02:00",
+        "data": {
+          "@id": "https://hendelsesliste.test.domstol.no/api/objects/75fd7515-cbca-4cc0-bbdf-735ac268762b"
+        }
+      }
+    ]
+  ],
+  "DaCaseList": [
+    {
+      "sakId": "75fd7515-cbca-4cc0-bbdf-735ac268762b",
+      "saksnummer": "25-000011DFA-TOSL/07",
+      "avdode": "20844399864",
+      "embete": "Oslo tingrett",
+      "status": "MOTTATT",
+      "parter": [
+        {
+          "type": "Person",
+          "nin": "18821349636",
+          "role": "MOR",
+          "formuesfullmakt": true,
+          "signertDato": null
+        },
+        {
+          "type": "Person",
+          "nin": "25911349739",
+          "role": "FAR",
+          "formuesfullmakt": true,
+          "signertDato": null
+        },
+        {
+          "type": "Person",
+          "nin": "12894698223",
+          "role": "GJENLEV_EKTEFELLE_PARTNER",
+          "formuesfullmakt": true,
+          "signertDato": null
+        }
+      ],
+      "receivedDate": "2025-10-07T14:12:52.3856624+02:00",
+      "deadlineDate": "2025-12-06T13:12:52.385662+01:00",
+      "resultatType": null,
+      "skifteattest": null
+    }
+  ]
+}

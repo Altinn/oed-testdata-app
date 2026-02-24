@@ -23,31 +23,25 @@
       "status": "MOTTATT",
       "parter": [
         {
+          "type": "Person",
           "nin": "27899697699",
           "role": "BARN",
           "formuesfullmakt": true,
-          "signertDato": null,
-          "onsketSkifteform": null,
-          "paatarGjeldsansvar": false,
-          "godkjennerSkifteattest": false
+          "signertDato": null
         },
         {
+          "type": "Person",
           "nin": "58829401671",
           "role": "BARN",
           "formuesfullmakt": true,
-          "signertDato": null,
-          "onsketSkifteform": null,
-          "paatarGjeldsansvar": false,
-          "godkjennerSkifteattest": false
+          "signertDato": null
         },
         {
+          "type": "Person",
           "nin": "10841799297",
           "role": "BARNEBARN",
           "formuesfullmakt": true,
-          "signertDato": null,
-          "onsketSkifteform": null,
-          "paatarGjeldsansvar": false,
-          "godkjennerSkifteattest": false
+          "signertDato": null
         }
       ],
       "receivedDate": "2024-12-04T13:04:49.7585258+01:00",

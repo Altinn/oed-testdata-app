@@ -1,1 +1,42 @@
-{"DaEventList":[[{"specversion":"1.0","id":"ac9470a7-a9bf-4d0d-83b6-ef60db9aa726","source":"https://domstol.no","type":"DODSFALLSAK-STATUS_OPPDATERT","datacontenttype":"application/json","time":"2026-02-04T13:06:33.3225872+01:00","data":{"@id":"https://hendelsesliste.test.domstol.no/api/objects/ac9470a7-a9bf-4d0d-83b6-ef60db9aa726"}}]],"DaCaseList":[{"sakId":"ac9470a7-a9bf-4d0d-83b6-ef60db9aa726","saksnummer":"25-000011DFA-TOSL/07","avdode":"02826199310","embete":"Oslo tingrett","status":"MOTTATT","parter":[{"nin":"04886198464","role":"GJENLEV_EKTEFELLE_PARTNER","formuesfullmakt":true,"signertDato":null,"onsketSkifteform":null,"paatarGjeldsansvar":false,"godkjennerSkifteattest":false,"mottakerOriginalSkifteattest":false}],"receivedDate":"2026-02-04T12:06:33.3226963+00:00","deadlineDate":"2026-04-05T12:06:33.3226959+00:00","resultatType":null,"skifteattest":null,"tilgangsdatoDigitaltDodsbo":null,"erAnnullert":null}]}
+{
+  "DaEventList": [
+    [
+      {
+        "specversion": "1.0",
+        "id": "ac9470a7-a9bf-4d0d-83b6-ef60db9aa726",
+        "source": "https://domstol.no",
+        "type": "DODSFALLSAK-STATUS_OPPDATERT",
+        "datacontenttype": "application/json",
+        "time": "2026-02-04T13:06:33.3225872+01:00",
+        "data": {
+          "@id": "https://hendelsesliste.test.domstol.no/api/objects/ac9470a7-a9bf-4d0d-83b6-ef60db9aa726"
+        }
+      }
+    ]
+  ],
+  "DaCaseList": [
+    {
+      "sakId": "ac9470a7-a9bf-4d0d-83b6-ef60db9aa726",
+      "saksnummer": "25-000011DFA-TOSL/07",
+      "avdode": "02826199310",
+      "embete": "Oslo tingrett",
+      "status": "MOTTATT",
+      "parter": [
+        {
+          "type": "Person",
+          "nin": "04886198464",
+          "role": "GJENLEV_EKTEFELLE_PARTNER",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "mottakerOriginalSkifteattest": false
+        }
+      ],
+      "receivedDate": "2026-02-04T13:06:33.3226963+01:00",
+      "deadlineDate": "2026-04-05T14:06:33.3226959+02:00",
+      "resultatType": null,
+      "skifteattest": null,
+      "tilgangsdatoDigitaltDodsbo": null,
+      "erAnnullert": null
+    }
+  ]
+}

@@ -23,58 +23,46 @@
       "status": "MOTTATT",
       "parter": [
         {
+          "type": "Person",
           "nin": "19838299493",
           "role": "BARN",
           "formuesfullmakt": true,
-          "signertDato": null,
-          "onsketSkifteform": null,
-          "paatarGjeldsansvar": false,
-          "godkjennerSkifteattest": false
+          "signertDato": null
         },
         {
+          "type": "Person",
           "nin": "08828199049",
           "role": "BARN",
           "formuesfullmakt": true,
-          "signertDato": null,
-          "onsketSkifteform": null,
-          "paatarGjeldsansvar": false,
-          "godkjennerSkifteattest": false
+          "signertDato": null
         },
         {
+          "type": "Person",
           "nin": "30907698129",
           "role": "BARN",
           "formuesfullmakt": true,
-          "signertDato": null,
-          "onsketSkifteform": null,
-          "paatarGjeldsansvar": false,
-          "godkjennerSkifteattest": false
+          "signertDato": null
         },
         {
+          "type": "Person",
           "nin": "24872049696",
           "role": "MOR",
           "formuesfullmakt": true,
-          "signertDato": null,
-          "onsketSkifteform": null,
-          "paatarGjeldsansvar": false,
-          "godkjennerSkifteattest": false
+          "signertDato": null
         },
         {
+          "type": "Person",
           "nin": "19911649333",
           "role": "FAR",
           "formuesfullmakt": true,
-          "signertDato": null,
-          "onsketSkifteform": null,
-          "paatarGjeldsansvar": false,
-          "godkjennerSkifteattest": false
+          "signertDato": null
         },
         {
+          "type": "Person",
           "nin": "02825196911",
           "role": "GJENLEV_EKTEFELLE_PARTNER",
           "formuesfullmakt": true,
-          "signertDato": null,
-          "onsketSkifteform": null,
-          "paatarGjeldsansvar": false,
-          "godkjennerSkifteattest": false
+          "signertDato": null
         }
       ],
       "receivedDate": "2024-12-09T11:13:53.5324383+01:00",

@@ -23,40 +23,32 @@
       "status": "MOTTATT",
       "parter": [
         {
+          "type": "Person",
           "nin": "26820049658",
           "role": "GJENLEV_PARTNER",
           "formuesfullmakt": true,
-          "signertDato": null,
-          "onsketSkifteform": null,
-          "paatarGjeldsansvar": false,
-          "godkjennerSkifteattest": false
+          "signertDato": null
         },
         {
+          "type": "Person",
           "nin": "19902949758",
           "role": "BARN",
           "formuesfullmakt": true,
-          "signertDato": null,
-          "onsketSkifteform": null,
-          "paatarGjeldsansvar": false,
-          "godkjennerSkifteattest": false
+          "signertDato": null
         },
         {
+          "type": "Person",
           "nin": "13862148147",
           "role": "BARN",
           "formuesfullmakt": true,
-          "signertDato": null,
-          "onsketSkifteform": null,
-          "paatarGjeldsansvar": false,
-          "godkjennerSkifteattest": false
+          "signertDato": null
         },
         {
+          "type": "Person",
           "nin": "26913349996",
           "role": "BARN",
           "formuesfullmakt": true,
-          "signertDato": null,
-          "onsketSkifteform": null,
-          "paatarGjeldsansvar": false,
-          "godkjennerSkifteattest": false
+          "signertDato": null
         }
       ],
       "receivedDate": "1900-01-01T00:00:00Z",

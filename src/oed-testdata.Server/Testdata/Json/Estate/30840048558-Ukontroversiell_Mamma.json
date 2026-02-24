@@ -23,49 +23,39 @@
       "status": "MOTTATT",
       "parter": [
         {
+          "type": "Person",
           "nin": "17863248809",
           "role": "BARN",
           "formuesfullmakt": true,
-          "signertDato": null,
-          "onsketSkifteform": null,
-          "paatarGjeldsansvar": false,
-          "godkjennerSkifteattest": false
+          "signertDato": null
         },
         {
+          "type": "Person",
           "nin": "19863348989",
           "role": "BARN",
           "formuesfullmakt": true,
-          "signertDato": null,
-          "onsketSkifteform": null,
-          "paatarGjeldsansvar": false,
-          "godkjennerSkifteattest": false
+          "signertDato": null
         },
         {
+          "type": "Person",
           "nin": "10873547680",
           "role": "BARN",
           "formuesfullmakt": true,
-          "signertDato": null,
-          "onsketSkifteform": null,
-          "paatarGjeldsansvar": false,
-          "godkjennerSkifteattest": false
+          "signertDato": null
         },
         {
+          "type": "Person",
           "nin": "19862648903",
           "role": "BARN",
           "formuesfullmakt": true,
-          "signertDato": null,
-          "onsketSkifteform": null,
-          "paatarGjeldsansvar": false,
-          "godkjennerSkifteattest": false
+          "signertDato": null
         },
         {
+          "type": "Person",
           "nin": "28850048489",
           "role": "GJENLEV_PARTNER",
           "formuesfullmakt": true,
-          "signertDato": null,
-          "onsketSkifteform": null,
-          "paatarGjeldsansvar": false,
-          "godkjennerSkifteattest": false
+          "signertDato": null
         }
       ],
       "receivedDate": "1900-01-01T00:00:00Z",

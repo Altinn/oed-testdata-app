@@ -3,30 +3,30 @@
     [
       {
         "specversion": "1.0",
-        "id": "a2cb3ec5-9106-417a-86be-d198e40bdc29",
+        "id": "7c328bab-3b18-477b-9042-ddc358393f3a",
         "source": "https://domstol.no",
         "type": "DODSFALLSAK-STATUS_OPPDATERT",
         "datacontenttype": "application/json",
-        "time": "2026-02-19T11:44:44.3445017+01:00",
+        "time": "2026-02-22T20:13:10.0877521+01:00",
         "data": {
-          "@id": "https://hendelsesliste.test.domstol.no/api/objects/a2cb3ec5-9106-417a-86be-d198e40bdc29"
+          "@id": "https://hendelsesliste.test.domstol.no/api/objects/7c328bab-3b18-477b-9042-ddc358393f3a"
         }
       }
     ]
   ],
   "DaCaseList": [
     {
-      "sakId": "a2cb3ec5-9106-417a-86be-d198e40bdc29",
+      "sakId": "7c328bab-3b18-477b-9042-ddc358393f3a",
       "saksnummer": "25-000011DFA-TOSL/07",
-      "avdode": "30884597907",
+      "avdode": "19904598960",
       "embete": "Oslo tingrett",
       "status": "MOTTATT",
       "parter": [
         {
           "type": "Person",
-          "nin": "12926198465",
+          "nin": "27835395915",
           "organisasjonsNummer": null,
-          "role": "BARN",
+          "role": "GJENLEV_EKTEFELLE_PARTNER",
           "formuesfullmakt": true,
           "signertDato": null,
           "mottakerOriginalSkifteattest": false
@@ -34,15 +34,15 @@
         {
           "type": "Foretak",
           "nin": null,
-          "organisasjonsNummer": "310919705",
-          "role": null,
-          "formuesfullmakt": true,
+          "organisasjonsNummer": "314391829",
+          "role": "TEST_ARVING_FULL",
+          "formuesfullmakt": false,
           "signertDato": null,
           "mottakerOriginalSkifteattest": false
         }
       ],
-      "receivedDate": "2026-02-19T11:44:44.3445269+01:00",
-      "deadlineDate": "2026-04-20T12:44:44.3445265+02:00",
+      "receivedDate": "2026-02-22T20:13:10.0877951+01:00",
+      "deadlineDate": "2026-04-23T21:13:10.0877947+02:00",
       "resultatType": null,
       "skifteattest": null,
       "tilgangsdatoDigitaltDodsbo": null,

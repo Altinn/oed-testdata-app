@@ -1,1 +1,39 @@
-{"DaEventList":[[{"specversion":"1.0","id":"f4f4aa94-83ae-496c-bcd2-d9d76104c568","source":"https://domstol.no","type":"DODSFALLSAK-STATUS_OPPDATERT","datacontenttype":"application/json","time":"2025-10-20T14:06:22.6263859+02:00","data":{"@id":"https://hendelsesliste.test.domstol.no/api/objects/f4f4aa94-83ae-496c-bcd2-d9d76104c568"}}]],"DaCaseList":[{"sakId":"f4f4aa94-83ae-496c-bcd2-d9d76104c568","saksnummer":"25-000011DFA-TOSL/07","avdode":"02913049511","embete":"Oslo tingrett","status":"MOTTATT","parter":[{"nin":"26851049303","role":"BARN","formuesfullmakt":true,"signertDato":null,"onsketSkifteform":null,"paatarGjeldsansvar":false,"godkjennerSkifteattest":false}],"receivedDate":"2025-10-20T12:06:22.6264523+00:00","deadlineDate":"2025-12-19T12:06:22.6264511+00:00","resultatType":null,"skifteattest":null}]}
+{
+  "DaEventList": [
+    [
+      {
+        "specversion": "1.0",
+        "id": "f4f4aa94-83ae-496c-bcd2-d9d76104c568",
+        "source": "https://domstol.no",
+        "type": "DODSFALLSAK-STATUS_OPPDATERT",
+        "datacontenttype": "application/json",
+        "time": "2025-10-20T14:06:22.6263859+02:00",
+        "data": {
+          "@id": "https://hendelsesliste.test.domstol.no/api/objects/f4f4aa94-83ae-496c-bcd2-d9d76104c568"
+        }
+      }
+    ]
+  ],
+  "DaCaseList": [
+    {
+      "sakId": "f4f4aa94-83ae-496c-bcd2-d9d76104c568",
+      "saksnummer": "25-000011DFA-TOSL/07",
+      "avdode": "02913049511",
+      "embete": "Oslo tingrett",
+      "status": "MOTTATT",
+      "parter": [
+        {
+          "type": "Person",
+          "nin": "26851049303",
+          "role": "BARN",
+          "formuesfullmakt": true,
+          "signertDato": null
+        }
+      ],
+      "receivedDate": "2025-10-20T14:06:22.6264523+02:00",
+      "deadlineDate": "2025-12-19T13:06:22.6264511+01:00",
+      "resultatType": null,
+      "skifteattest": null
+    }
+  ]
+}

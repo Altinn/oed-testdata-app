@@ -23,26 +23,22 @@
       "status": "MOTTATT",
       "parter": [
         {
+          "type": "Person",
           "nin": "19862849658",
           "role": "MOR",
           "formuesfullmakt": true,
-          "signertDato": null,
-          "onsketSkifteform": null,
-          "paatarGjeldsansvar": false,
-          "godkjennerSkifteattest": false
+          "signertDato": null
         },
         {
+          "type": "Person",
           "nin": "06922749556",
           "role": "FAR",
           "formuesfullmakt": true,
-          "signertDato": null,
-          "onsketSkifteform": null,
-          "paatarGjeldsansvar": false,
-          "godkjennerSkifteattest": false
+          "signertDato": null
         }
       ],
       "receivedDate": "2025-02-27T13:25:15.7456872+01:00",
-      "deadlineDate": "2025-04-28T13:25:15.7457025+01:00",
+      "deadlineDate": "2025-04-28T14:25:15.7457025+02:00",
       "resultatType": null,
       "skifteattest": null
     }

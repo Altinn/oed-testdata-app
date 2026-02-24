@@ -1,0 +1,52 @@
+{
+  "DaEventList": [
+    [
+      {
+        "specversion": "1.0",
+        "id": "67fd852d-be45-4f0d-8b20-913f0caa6f78",
+        "source": "https://domstol.no",
+        "type": "DODSFALLSAK-STATUS_OPPDATERT",
+        "datacontenttype": "application/json",
+        "time": "2026-02-24T09:10:10.8131298+01:00",
+        "data": {
+          "@id": "https://hendelsesliste.test.domstol.no/api/objects/67fd852d-be45-4f0d-8b20-913f0caa6f78"
+        }
+      }
+    ]
+  ],
+  "DaCaseList": [
+    {
+      "sakId": "67fd852d-be45-4f0d-8b20-913f0caa6f78",
+      "saksnummer": "25-000011DFA-TOSL/07",
+      "avdode": "24925498943",
+      "embete": "Oslo tingrett",
+      "status": "MOTTATT",
+      "parter": [
+        {
+          "type": "Person",
+          "nin": "01860248405",
+          "signertDato": null,
+          "formuesfullmakt": false,
+          "role": "HALV_SOESKENS_BARN",
+          "name": "OPPRIKTIG FERSKVANN",
+          "mottakerOriginalSkifteattest": false,
+          "id": "1771920602507"
+        },
+        {
+          "type": "Foretak",
+          "organisasjonsNummer": "310312282",
+          "role": "TEST_ARVING_FULL",
+          "name": "ÅPEN KOMPATIBEL TIGER AS",
+          "mottakerOriginalSkifteattest": false,
+          "id": "1771920603699"
+        }
+      ],
+      "receivedDate": "2026-02-24T09:10:10.8131524+01:00",
+      "deadlineDate": "2026-04-25T10:10:10.8131521+02:00",
+      "resultatType": null,
+      "skifteattest": null,
+      "tilgangsdatoDigitaltDodsbo": null,
+      "erAnnullert": null
+    }
+  ]
+}

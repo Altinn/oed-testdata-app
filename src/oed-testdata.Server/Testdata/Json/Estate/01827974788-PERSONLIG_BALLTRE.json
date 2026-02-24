@@ -23,13 +23,11 @@
       "status": "MOTTATT",
       "parter": [
         {
+          "type": "Person",
           "nin": "28857697520",
           "role": "BARN",
           "formuesfullmakt": true,
-          "signertDato": null,
-          "onsketSkifteform": null,
-          "paatarGjeldsansvar": false,
-          "godkjennerSkifteattest": false
+          "signertDato": null
         }
       ],
       "receivedDate": "1900-01-01T00:00:00Z",

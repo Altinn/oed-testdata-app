@@ -4,7 +4,7 @@ namespace oed_testdata.Server.Infrastructure.TestdataStore.Estate;
 
 public class EstateMetadataPerson()
 {
-    public required string Nin { get; init; }
+    public string? Nin { get; init; }
     public required string Name { get; init; }
 }
 
@@ -27,7 +27,10 @@ public class EstateFileStore : IEstateStore
     private const string EstatePath = "./Testdata/Json/Estate";
     private const string MetdataPostfix = "-metadata.json";
 
-    private JsonSerializerOptions _serializerOptions = new(JsonSerializerDefaults.Web);
+    private JsonSerializerOptions _serializerOptions = new(JsonSerializerDefaults.Web) 
+    {
+        UnmappedMemberHandling = System.Text.Json.Serialization.JsonUnmappedMemberHandling.Skip
+    };
 
     public async Task<IEnumerable<EstateData>> ListAll()
     {

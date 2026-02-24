@@ -131,13 +131,13 @@ public class Parter
     public string Type { get; set; } = "Person";
 
     [JsonPropertyName("nin")]
-    public required string Nin { get; set; }
+    public string Nin { get; set; }
 
     [JsonPropertyName("role")]
     public required string Role { get; set; }
 
     [JsonPropertyName("formuesfullmakt")]
-    public required bool Formuesfullmakt { get; set; }
+    public bool Formuesfullmakt { get; set; }
 
     [JsonPropertyName("signertDato")]
     public DateTimeOffset? SignertDato { get; set; }
@@ -146,10 +146,10 @@ public class Parter
     public string? OnsketSkifteform { get; set; }
 
     [JsonPropertyName("paatarGjeldsansvar")]
-    public required bool PaatarGjeldsansvar { get; set; }
+    public bool PaatarGjeldsansvar { get; set; }
 
     [JsonPropertyName("godkjennerSkifteattest")]
-    public required bool GodkjennerSkifteattest { get; set; }
+    public bool GodkjennerSkifteattest { get; set; }
 
     [JsonPropertyName("mottakerOriginalSkifteattest")]
     public bool MottakerOriginalSkifteattest { get; set; }

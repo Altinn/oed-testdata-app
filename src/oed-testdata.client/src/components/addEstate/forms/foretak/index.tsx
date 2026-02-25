@@ -10,7 +10,6 @@ import {
 import { Foretak, HeirFormProps } from "./../../types";
 
 export default function ForetakForm({ heir, onFetch, onRandom, onRemove, errors }: HeirFormProps<Foretak>) {
-
     return (
         <Card key={heir.id} data-color="brand1" variant="tinted">
             <div
@@ -33,7 +32,7 @@ export default function ForetakForm({ heir, onFetch, onRandom, onRemove, errors 
                     <Textfield
                         label="Tenor org. nr. (9 siffer)"
                         value={heir.organisasjonsNummer}
-                        error={errors[`${heir.id}-nin`]}
+                        error={errors[`${heir.id}-orgnum`]}
                         maxLength={9}
                         required
                         onChange={async (e) => {

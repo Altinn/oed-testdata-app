@@ -127,7 +127,7 @@ export function NewEstateForm({ uniqueTags }: Props) {
   // Fetches person by nin and sets name for the heir
   const fetchHeirNameByNin = async (id: string, nin: string, isDeceased?: boolean) => {
     if (nin.length === 11) {
-      const res = await sendPersonReq(() => {}, `?nin=${nin}&isDeceased=${isDeceased}`);
+      const res = await sendPersonReq(() => {}, `?nin=${nin}&isDeceased=${isDeceased || false}`);
       if (res && res.length > 0) {
         setFormData((prev) => ({
           ...prev,
@@ -147,12 +147,12 @@ export function NewEstateForm({ uniqueTags }: Props) {
   // Fetches company by org num and sets name for the heir
   const fetchHeirNameByOrgNum = async (id: string, orgnum: string) => {
     if (orgnum.length === 9) {
-      const res = await sendCompanyReq(() => {}, `?id=${orgnum}`);
+      const res = await sendCompanyReq(() => {}, `?orgNum=${orgnum}&count=1`);
       if (res && res.length > 0) {
         setFormData((prev) => ({
           ...prev,
           heirs: prev.heirs.map((h) =>
-            h.id === id ? { ...h, name: res[0].name } : h
+            h.id === id ? { ...h, name: res[0].name, organisasjonsNummer: orgnum } : h
           ),
         }));
       }

@@ -1,15 +1,19 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace oed_testdata.Server.Infrastructure.TestdataStore.Estate;
 
 public class EstateMetadataPerson()
 {
     public string? Nin { get; init; }
-    public required string Name { get; init; }
+    public string? Name { get; init; }
+    public string? OrganisasjonsNummer { get; init; }
 }
 
 public class EstateMetadata()
 {
+    // Not really persons, but we want to be able to link companies to estates as well,
+    // and this is the easiest way to do it without changing too much of the existing code
     public List<EstateMetadataPerson> Persons { get; init; } = [];
     public List<string> Tags { get; init; } = [];
 }
@@ -27,10 +31,14 @@ public class EstateFileStore : IEstateStore
     private const string EstatePath = "./Testdata/Json/Estate";
     private const string MetdataPostfix = "-metadata.json";
 
-    private JsonSerializerOptions _serializerOptions = new(JsonSerializerDefaults.Web) 
+    private readonly JsonSerializerOptions _serializerOptions = new()
     {
-        UnmappedMemberHandling = System.Text.Json.Serialization.JsonUnmappedMemberHandling.Skip
+        PropertyNameCaseInsensitive = true,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        NumberHandling = JsonNumberHandling.AllowReadingFromString,
+        UnmappedMemberHandling = JsonUnmappedMemberHandling.Skip
     };
+
 
     public async Task<IEnumerable<EstateData>> ListAll()
     {
@@ -116,17 +124,19 @@ public class EstateFileStore : IEstateStore
 
         await using var filestream = File.Open(filepath, FileMode.Create, FileAccess.Write);
         await CreateMetadata(estate);
-        await JsonSerializer.SerializeAsync(filestream, estate.Data, JsonSerializerOptions.Default);
+        await JsonSerializer.SerializeAsync(filestream, estate.Data, _serializerOptions);
         await filestream.FlushAsync();
     }
 
-    private static async Task CreateMetadata(EstateData estate)
+    private async Task CreateMetadata(EstateData estate)
     {
-        var filename = $"{estate.EstateSsn}-metadata.json";
+        var filename = $"{estate.EstateSsn}{MetdataPostfix}";
         var filepath = Path.Combine("Testdata/Json/Estate", filename);
 
         await using var filestream = File.Open(filepath, FileMode.Create, FileAccess.Write);
-        await JsonSerializer.SerializeAsync(filestream, estate.Metadata, JsonSerializerOptions.Web);
+
+
+        await JsonSerializer.SerializeAsync(filestream, estate.Metadata, _serializerOptions);
         await filestream.FlushAsync();
     }
 

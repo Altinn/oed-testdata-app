@@ -1,4 +1,3 @@
-﻿using System.Text;
 using System.Text.Json.Serialization;
 
 namespace oed_testdata.Server.Infrastructure.Maskinporten.Models;

@@ -1,8 +1,6 @@
 ﻿using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace oed_testdata.JsonGenerator.Models.Da;
-
 
 internal static class PartRoleConverter
 {
@@ -19,11 +17,11 @@ internal static class PartRoleConverter
         if (!string.IsNullOrWhiteSpace(partialMatch) &&
             Enum.TryParse(partialMatch, ignoreCase: true, out role))
         {
-            Console.WriteLine($"Resolved relation from tenor: [{tenorRelasjonsnavn}] => [{role.ToString()}]");
+            Console.WriteLine($"Resolved relation from tenor: [{tenorRelasjonsnavn}] => [{role}]");
             return role;
         }
 
-        Console.WriteLine($"!!!! Unresolvable relation from tenor: [{ tenorRelasjonsnavn }], using [{PartRole.PART_ANNEN.ToString()}] - Manual edit of json file required");
+        Console.WriteLine($"!!!! Unresolvable relation from tenor: [{tenorRelasjonsnavn}], using [{PartRole.PART_ANNEN}] - Manual edit of json file required");
         return PartRole.PART_ANNEN;
     }
 }
@@ -82,8 +80,8 @@ internal static class DaFile
 
         return new DaData
         {
-            DaEventList = new DaEvent[][]
-            {
+            DaEventList =
+            [
                 [
                     new DaEvent
                     {
@@ -99,7 +97,7 @@ internal static class DaFile
                         }
                     }
                 ]
-            },
+            ],
             DaCaseList =
             [
                 new DaCase

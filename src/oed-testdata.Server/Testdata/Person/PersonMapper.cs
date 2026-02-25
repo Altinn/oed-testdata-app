@@ -28,9 +28,11 @@ public static class PersonMapper
         {
             Nin = tenorDocument.Id,
             Name = tenorDocument.DisplayName,
+            Type = "Person",
             Relations = tenorDocument.Relations.Items.Select(r => new RelatedPersonDto
             {
                 Name = r.DisplayName,
+                Type = "Person",
                 Nin = r.Id,
                 Relation = r.Relation
             }).ToList()

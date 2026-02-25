@@ -2,45 +2,38 @@ import React, { useState } from "react";
 import {
   Button,
   Textfield,
-  EXPERIMENTAL_Suggestion as Suggestion,
   Chip,
-  Card,
+  Dropdown,
   Paragraph,
   Fieldset,
-  Label,
-  Field,
   Divider,
   Heading,
   Avatar,
   List,
+  SuggestionItem,
 } from "@digdir/designsystemet-react";
 import {
   PlusIcon,
   PersonPlusIcon,
-  TrashIcon,
   PersonIcon,
   TagIcon,
   PersonGroupIcon,
   PaperplaneIcon,
+  Buildings3Icon,
+  PersonCheckmarkIcon,
 } from "@navikt/aksel-icons";
 import {
   ESTATE_API,
   PERSON_API,
+  COMPANY_API,
   RELATIONSHIP_OPTIONS,
 } from "../../utils/constants";
 import { useToast } from "../../context/toastContext";
 import "./style.css";
 import { HeirSearch } from "../../interfaces/IPersonSearch";
-
-interface Person {
-  id: string;
-  name: string;
-  nin: string;
-}
-
-interface Heir extends Person {
-  relation: SuggestionItem;
-}
+import { Foretak, Heir, Person } from "./types";
+import ForetakForm from "./forms/foretak";
+import PersonForm from "./forms/person";
 
 interface FormData {
   deceased: Person;
@@ -52,14 +45,10 @@ interface Props {
   uniqueTags?: string[];
 }
 
-type SuggestionItem = {
-  value: string;
-  label: string;
-};
-
 export function NewEstateForm({ uniqueTags }: Props) {
+  const [newHeirDropdownOpen, setNewHeirDropdownOpen] = useState(false);
   const [formData, setFormData] = useState<FormData>({
-    deceased: { id: "1", name: "", nin: "" },
+    deceased: { type: "Person", id: "1", name: "", nin: "", mottakerOriginalSkifteattest: false, role: "" },
     heirs: [],
     tags: [],
   });
@@ -69,7 +58,40 @@ export function NewEstateForm({ uniqueTags }: Props) {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const { addToast } = useToast();
 
-  const sendReq = async (
+  const sendCompanyReq = async (
+    setLoadingState: (value: boolean) => void,
+    queryParams: string
+  ) => {
+    try {
+      setLoadingState(true);
+      const response = await fetch(COMPANY_API + queryParams, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.status === 401) {
+        addToast(
+          "Autentiseringstoken har utløpt. Vennligst logg inn igjen.",
+          "danger"
+        );
+        return;
+      }
+      if (!response.ok) {
+        addToast("Noe gikk galt. Prøv igjen", "danger");
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error("Error resetting estate:", error);
+      addToast("Noe gikk galt. Prøv igjen.", "danger");
+    } finally {
+      setLoadingState(false);
+    }
+  };
+
+  const sendPersonReq = async (
     setLoadingState: (value: boolean) => void,
     queryParams: string
   ) => {
@@ -103,9 +125,9 @@ export function NewEstateForm({ uniqueTags }: Props) {
   };
 
   // Fetches person by nin and sets name for the heir
-  const fetchHeirNameByNin = async (id: string, nin: string) => {
+  const fetchHeirNameByNin = async (id: string, nin: string, isDeceased?: boolean) => {
     if (nin.length === 11) {
-      const res = await sendReq(() => {}, `?nin=${nin}&isDeceased=false`);
+      const res = await sendPersonReq(() => {}, `?nin=${nin}&isDeceased=${isDeceased}`);
       if (res && res.length > 0) {
         setFormData((prev) => ({
           ...prev,
@@ -122,6 +144,26 @@ export function NewEstateForm({ uniqueTags }: Props) {
     }));
   };
 
+  // Fetches company by org num and sets name for the heir
+  const fetchHeirNameByOrgNum = async (id: string, orgnum: string) => {
+    if (orgnum.length === 9) {
+      const res = await sendCompanyReq(() => {}, `?id=${orgnum}`);
+      if (res && res.length > 0) {
+        setFormData((prev) => ({
+          ...prev,
+          heirs: prev.heirs.map((h) =>
+            h.id === id ? { ...h, name: res[0].name } : h
+          ),
+        }));
+      }
+    }
+
+    setFormData((prev) => ({
+      ...prev,
+      heirs: prev.heirs.map((h) => (h.id === id ? { ...h, orgnum } : h)),
+    }));
+  };
+
   const validateNIN = (nin: string): boolean => {
     return nin.length === 11 && /^\d{11}$/.test(nin);
   };
@@ -129,7 +171,7 @@ export function NewEstateForm({ uniqueTags }: Props) {
   const handleDeceasedChange = async (field: "name" | "nin", value: string) => {
     if (field === "nin" && value.length > 11) return;
     if (field === "nin" && value.length === 11) {
-      await fetchDeceasedWithRelations(value, -1);
+      await fetchDeceasedWithRelations(value, 0);
     }
 
     setFormData((prev) => ({
@@ -148,14 +190,14 @@ export function NewEstateForm({ uniqueTags }: Props) {
   };
 
   const fetchRandomDeceased = async () => {
-    const res = await sendReq(() => {}, "?count=1&isDeceased=true");
+    const res = await sendPersonReq(() => {}, "?count=1&isDeceased=true");
     if (!res || res.length === 0) {
       addToast("Ingen personer funnet", "warning");
       return;
     }
     setFormData((prev) => ({
-      ...prev,
-      deceased: { id: res[0].id, name: res[0].name, nin: res[0].nin },
+        ...prev,
+        deceased: { type: "Person", id: res[0].id, name: res[0].name, nin: res[0].nin, mottakerOriginalSkifteattest: false, role: "" },
     }));
   };
 
@@ -164,8 +206,8 @@ export function NewEstateForm({ uniqueTags }: Props) {
     maxAmountOfChildren?: number | undefined
   ) => {
     const queryParams = `?count=1&isDeceased=true&withRelations=true`;
-    const res = await sendReq(() => {},
-    queryParams + (nin ? `&nin=${nin}` : "") + (maxAmountOfChildren ? `&maxAmountOfChildren=${maxAmountOfChildren}` : ""));
+    const res = await sendPersonReq(() => {},
+        queryParams + (nin ? `&nin=${nin}` : "") + (maxAmountOfChildren ? `&maxAmountOfChildren=${maxAmountOfChildren}` : ""));
     if (!res || res.length === 0) {
       addToast("Ingen personer funnet", "warning");
       return;
@@ -176,6 +218,7 @@ export function NewEstateForm({ uniqueTags }: Props) {
         id: Date.now().toString() + "-" + idx,
         name: person.name,
         nin: person.nin,
+        type: "Person",
         relation: RELATIONSHIP_OPTIONS.find(
           (opt) =>
             opt.value.toLowerCase() === person.relation.toLowerCase() ||
@@ -187,14 +230,14 @@ export function NewEstateForm({ uniqueTags }: Props) {
     );
 
     setFormData((prev) => ({
-      ...prev,
-      deceased: { id: deceased.id, name: deceased.name, nin: deceased.nin },
+        ...prev,
+        deceased: { type: "Person", role: "", id: deceased.id, name: deceased.name, nin: deceased.nin, mottakerOriginalSkifteattest: false },
       heirs: mappedHeirs,
     }));
   };
 
-  const fetchRandomHeir = async (id: string) => {
-    const res = await sendReq(() => {}, "?count=1&isDeceased=false");
+  const fetchRandomPersonHeir = async (id: string) => {
+    const res = await sendPersonReq(() => {}, "?count=1&isDeceased=false");
     if (!res || res.length === 0) {
       addToast("Ingen personer funnet", "warning");
       return;
@@ -209,9 +252,59 @@ export function NewEstateForm({ uniqueTags }: Props) {
     }));
   };
 
-  const addHeir = () => {
-    const newPerson: Heir = {
+  const fetchRandomCompanyHeir = async (id: string) => {
+    const res = await sendCompanyReq(() => {}, "?count=1");
+    if (!res || res.length === 0) {
+      addToast("Ingen foretak funnet", "warning");
+      return;
+    }
+    setFormData((prev) => ({
+      ...prev,
+      heirs: prev.heirs.map((company) =>
+        company.id === id
+          ? { ...company, name: res[0].name, organisasjonsNummer: res[0].orgNum }
+          : company
+      ),
+    }));
+  };
+
+  const handleAddHeirForm = async (type: 'Person' | 'PersonPapp' | 'Foretak' | 'ForetakPapp') => {
+    switch (type) {
+      case 'Person':
+        addPersonHeir();
+        break;
+      case 'Foretak':
+        addCompanyHeir();
+        break;
+      case 'PersonPapp':
+      case 'ForetakPapp':
+        addToast("Kommer snart", "warning");
+        break;
+    }
+  }
+
+  const addCompanyHeir = () => {
+    const newCompany: Foretak = {
+      type: "Foretak",
+      relation: { value: "TEST_ARVING_FULL", label: "" },
+      role: "",
+      name: "",
       id: Date.now().toString(),
+      organisasjonsNummer: "",
+      mottakerOriginalSkifteattest: false,
+    };
+    setFormData((prev) => ({
+      ...prev,
+      heirs: [...prev.heirs, newCompany],
+    }));
+  };
+ 
+  const addPersonHeir = () => {
+    const newPerson: Person = {
+      id: Date.now().toString(),
+      type: "Person",
+      role: "",
+      mottakerOriginalSkifteattest: false,
       name: "",
       nin: "",
       relation: { value: "", label: "" },
@@ -229,8 +322,8 @@ export function NewEstateForm({ uniqueTags }: Props) {
     if (!relationItem) return;
     setFormData((prev) => ({
       ...prev,
-      heirs: prev.heirs.map((person) =>
-        person.id === id ? { ...person, relation: relationItem } : person
+      heirs: prev.heirs.map((heir) =>
+        heir.id === id ? { ...heir, relation: relationItem } : heir
       ),
     }));
 
@@ -247,7 +340,7 @@ export function NewEstateForm({ uniqueTags }: Props) {
   const removeHeir = (id: string) => {
     setFormData((prev) => ({
       ...prev,
-      heirs: prev.heirs.filter((person) => person.id !== id),
+      heirs: prev.heirs.filter((heir) => heir.id !== id),
     }));
   };
 
@@ -291,18 +384,52 @@ export function NewEstateForm({ uniqueTags }: Props) {
     }
 
     // Validate heirs
-    formData.heirs.forEach((person) => {
-      if (!person.name.trim()) {
-        newErrors[`${person.id}-name`] = "Navn er påkrevd";
-      }
-      if (!person.nin.trim()) {
-        newErrors[`${person.id}-nin`] = "Fødselsnummer er påkrevd";
-      } else if (!validateNIN(person.nin)) {
-        newErrors[`${person.id}-nin`] =
-          "Fødselsnummer må være nøyaktig 11 siffer";
-      }
-      if (!person.relation) {
-        newErrors[`${person.id}-relation`] = "Relasjon er påkrevd";
+    formData.heirs.forEach((heir) => {
+        switch (heir.type) {
+          case "Person":
+            if (!heir.name.trim()) {
+              newErrors[`${heir.id}-name`] = "Navn er påkrevd";
+            }
+            if (!heir.nin.trim()) {
+              newErrors[`${heir.id}-nin`] = "Fødselsnummer er påkrevd";
+            } else if (!validateNIN(heir.nin)) {
+              newErrors[`${heir.id}-nin`] = "Fødselsnummer må være nøyaktig 11 siffer";
+            }
+            if (!heir.relation) {
+              newErrors[`${heir.id}-relation`] = "Relasjon er påkrevd";
+            }
+            break;
+
+          case "Foretak":
+            if (!heir.organisasjonsNummer.trim()) {
+              newErrors[`${heir.id}-orgnum`] = "Organisasjonsnummer er påkrevd";
+            } else if (!/^\d{9}$/.test(heir.organisasjonsNummer)) {
+              newErrors[`${heir.id}-orgnum`] = "Organisasjonsnummer må være nøyaktig 9 siffer";
+            }
+            break;
+
+          case "PersonPapp":
+            if (!heir.dateOfBirth.trim()) {
+              newErrors[`${heir.id}-dob`] = "Fødselsdato er påkrevd";
+            } else if (!/^(\d{4})-(\d{2})-(\d{2})$/.test(heir.dateOfBirth)) {
+              newErrors[`${heir.id}-dob`] = "Fødselsdato må være i formatet 'YYYY-MM-DD'";
+            }
+            if (!heir.navn) {
+              newErrors[`${heir.id}-name`] = "Navn er påkrevd";
+            }
+            break;
+
+          case "ForetakPapp":
+            if (!heir.organisasjonsNavn) {
+              newErrors[`${heir.id}-name`] = "Navn er påkrevd";
+            }
+            if (!heir.registreringsNummer) {
+              newErrors[`${heir.id}-reg`] = "Registreringsnummer er påkrevd";
+            }
+            if (!heir.countryCode) {
+              newErrors[`${heir.id}-cc`] = "Landskode er påkrevd";
+            }
+            break;
       }
     });
 
@@ -317,11 +444,15 @@ export function NewEstateForm({ uniqueTags }: Props) {
       const newEstate = {
         estateSsn: formData.deceased.nin,
         deceasedName: formData.deceased.name,
-        heirs: formData.heirs.map((h) => ({
-          ssn: h.nin,
-          relation: h.relation.value,
-          name: h.name,
-        })),
+        parts: formData.heirs.map((heir) => {
+            const { type, relation, role: _, ...rest } = heir;
+            // Rebuild the object with 'type' first. .NET polymorphism complains if type is not the first property
+            return {
+                type, 
+                role: relation?.value || "",
+                ...rest
+            };
+        }),
         tags: formData.tags,
       };
       try {
@@ -347,7 +478,7 @@ export function NewEstateForm({ uniqueTags }: Props) {
         }
         addToast("Dødsboet ble opprettet.", "success");
         setFormData({
-          deceased: { id: "1", name: "", nin: "" },
+          deceased: { type: "Person", id: "1", name: "", nin: "", role: "", mottakerOriginalSkifteattest: false },
           heirs: [],
           tags: [],
         });
@@ -357,6 +488,32 @@ export function NewEstateForm({ uniqueTags }: Props) {
       }
     }
   };
+
+  const renderForm = <T extends Heir>(heir: T) => {
+    switch (heir.type) {
+        case "Foretak":
+            return (
+                <ForetakForm
+                    heir={heir}
+                    errors={errors}
+                    onFetch={fetchHeirNameByOrgNum}
+                    onRandom={fetchRandomCompanyHeir}
+                    onRemove={removeHeir}
+                />)
+        case "Person":
+            return (
+                <PersonForm
+                    heir={heir}
+                    errors={errors}
+                    onFetch={fetchHeirNameByNin}
+                    onRandom={fetchRandomPersonHeir}
+                    onRemove={removeHeir}
+                    onRelation={updateHeirRelation}
+                />)
+        default:
+            return (<em>No renderer for {heir.type}</em>)
+    }
+  }
 
   return (
     <div className="estate-form" data-size="md">
@@ -438,14 +595,60 @@ export function NewEstateForm({ uniqueTags }: Props) {
               <Heading level={2} data-size="md">
                 Arvinger
               </Heading>
-              <Button
-                data-color="brand2"
-                onClick={addHeir}
-                style={{ marginLeft: "auto" }}
-              >
-                <PlusIcon />
-                Legg til arving
-              </Button>
+              <div style={{ marginLeft: "auto" }}>
+                  <Dropdown.TriggerContext>
+                    <Dropdown.Trigger 
+                      data-color="brand2"
+                      onClick={() => setNewHeirDropdownOpen(!newHeirDropdownOpen)}
+                    >
+                      <PlusIcon title="Legg til arving" fontSize="1.5rem" />
+                      Legg til arving
+                    </Dropdown.Trigger>
+                    <Dropdown
+                      open={newHeirDropdownOpen} 
+                      onClose={() => setNewHeirDropdownOpen(false)}
+                    >
+                      <Dropdown.List data-color="brand2">
+                        <Dropdown.Item onClick={() => {
+                          setNewHeirDropdownOpen(false);
+                          handleAddHeirForm("Person");
+                        }}>
+                          <Dropdown.Button>
+                            <PersonIcon />
+                            Person
+                          </Dropdown.Button>
+                        </Dropdown.Item>
+                        <Dropdown.Item onClick={() => {
+                          setNewHeirDropdownOpen(false);
+                          handleAddHeirForm("PersonPapp");
+                        }}>
+                          <Dropdown.Button>
+                            <PersonCheckmarkIcon />
+                            Person (papp)
+                          </Dropdown.Button>
+                        </Dropdown.Item>
+                        <Dropdown.Item onClick={() => {
+                          setNewHeirDropdownOpen(false);
+                          handleAddHeirForm("Foretak");
+                        }}>
+                          <Dropdown.Button>
+                            <Buildings3Icon  />
+                            Foretak
+                          </Dropdown.Button>
+                        </Dropdown.Item>
+                        <Dropdown.Item onClick={() => {
+                          setNewHeirDropdownOpen(false);
+                          handleAddHeirForm("ForetakPapp");
+                        }}>
+                          <Dropdown.Button>
+                            <Buildings3Icon  />
+                            Foretak (papp)
+                          </Dropdown.Button>
+                        </Dropdown.Item>
+                      </Dropdown.List>
+                    </Dropdown>
+                  </Dropdown.TriggerContext>
+              </div>
             </Fieldset.Legend>
 
             {formData.heirs.length === 0 ? (
@@ -468,93 +671,7 @@ export function NewEstateForm({ uniqueTags }: Props) {
               </div>
             ) : (
               <section className="flex-col" style={{ gap: "var(--ds-size-6)" }}>
-                {formData.heirs.map((person) => (
-                  <Card key={person.id} data-color="brand2" variant="tinted">
-                    <div
-                      style={{
-                        display: "grid",
-                        gridTemplateColumns:
-                          "repeat(auto-fit, minmax(250px, 1fr))",
-                        gap: "1rem",
-                        alignItems: "start",
-                      }}
-                    >
-                      <Textfield
-                        label="Fullt navn"
-                        value={person.name}
-                        readOnly={true}
-                        error={errors[`${person.id}-name`]}
-                        required
-                      />
-
-                      <div>
-                        <Textfield
-                          label="Tenor fødselsnummer (11 siffer)"
-                          value={person.nin}
-                          error={errors[`${person.id}-nin`]}
-                          maxLength={11}
-                          required
-                          onChange={async (e) => {
-                            const nin = e.target.value.replace(/\D/g, "");
-                            await fetchHeirNameByNin(person.id, nin);
-                          }}
-                        />
-                        <Button
-                          type="button"
-                          variant="secondary"
-                          onClick={() => fetchRandomHeir(person.id)}
-                          style={{ marginTop: "0.5rem" }}
-                        >
-                          <PersonPlusIcon />
-                          Hent tilfeldig
-                        </Button>
-                      </div>
-
-                      <div
-                        style={{
-                          display: "flex",
-                          gap: "0.5rem",
-                          alignItems: "end",
-                        }}
-                      >
-                        <div style={{ flex: 1 }}>
-                          <Field>
-                            <Label>Relasjon til avdød</Label>
-                            <Suggestion
-                              selected={person.relation.label || ""}
-                              onSelectedChange={(item) =>
-                                updateHeirRelation(person.id, item)
-                              }
-                            >
-                              <Suggestion.Input required />
-                              <Suggestion.Clear />
-                              <Suggestion.List id="relation-list">
-                                <Suggestion.Empty>Tomt</Suggestion.Empty>
-                                {RELATIONSHIP_OPTIONS.map((option) => (
-                                  <Suggestion.Option
-                                    key={option.value}
-                                    value={option.value}
-                                  >
-                                    {option.label}
-                                  </Suggestion.Option>
-                                ))}
-                              </Suggestion.List>
-                            </Suggestion>
-                          </Field>
-                        </div>
-                        <Button
-                          type="button"
-                          variant="tertiary"
-                          data-color="danger"
-                          onClick={() => removeHeir(person.id)}
-                          data-size="md"
-                        >
-                          <TrashIcon />
-                        </Button>
-                      </div>
-                    </div>
-                  </Card>
-                ))}
+                {formData.heirs.map((heir) => renderForm(heir))}
               </section>
             )}
           </Fieldset>

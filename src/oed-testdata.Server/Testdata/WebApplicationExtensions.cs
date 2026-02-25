@@ -1,6 +1,7 @@
-﻿using oed_testdata.Server.Testdata.Bank;
+using oed_testdata.Server.Testdata.Bank;
 using oed_testdata.Server.Testdata.Ektepakt;
 using oed_testdata.Server.Testdata.Estate;
+using oed_testdata.Server.Testdata.Foretak;
 using oed_testdata.Server.Testdata.Kartverket;
 using oed_testdata.Server.Testdata.NorskPensjon;
 using oed_testdata.Server.Testdata.Person;
@@ -22,6 +23,7 @@ namespace oed_testdata.Server.Testdata
             if (environment.IsDevelopment())
             {
                 app.MapPersonEndpoints();
+                app.MapForetakEndpoints();
             }
         }
     }

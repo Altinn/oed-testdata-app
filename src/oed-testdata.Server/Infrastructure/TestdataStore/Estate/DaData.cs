@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 
 namespace oed_testdata.Server.Infrastructure.TestdataStore.Estate;
 
@@ -85,7 +85,7 @@ public class DaCase
     public required string Status { get; set; }
 
     [JsonPropertyName("parter")]
-    public required Parter[] Parter { get; set; }
+    public required Part[] Parter { get; set; }
 
     [JsonPropertyName("receivedDate")]
     public required DateTimeOffset ReceivedDate { get; set; }
@@ -133,6 +133,9 @@ public class Parter
     [JsonPropertyName("nin")]
     public string Nin { get; set; }
 
+    [JsonPropertyName("organisasjonsNummer")]
+    public string? OrganisasjonsNummer { get; set; }
+
     [JsonPropertyName("role")]
     public required string Role { get; set; }
 
@@ -153,7 +156,6 @@ public class Parter
 
     [JsonPropertyName("mottakerOriginalSkifteattest")]
     public bool MottakerOriginalSkifteattest { get; set; }
-
 }
 
 #pragma warning restore CS8618

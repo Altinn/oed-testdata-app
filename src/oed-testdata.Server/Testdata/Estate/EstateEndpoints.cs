@@ -1,10 +1,10 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using oed_testdata.Server.Infrastructure.Altinn;
 using oed_testdata.Server.Infrastructure.OedEvents;
 using oed_testdata.Server.Infrastructure.TestdataStore.Estate;
+using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace oed_testdata.Server.Testdata.Estate
 {
@@ -139,6 +139,7 @@ namespace oed_testdata.Server.Testdata.Estate
                         {
                             Resultat = request.ResultatType,
                             Arvinger = daCase.Parter
+                                .OfType<PersonPart>()
                                 .Select((p, i) => new SkifteattestArvingPerson
                                 {
                                     Type = "Person", 
@@ -203,6 +204,11 @@ namespace oed_testdata.Server.Testdata.Estate
                     Id = $"https://hendelsesliste.test.domstol.no/api/objects/{daEventGuid}"
                 }
             };
+            var estateMetadata = new EstateMetadata
+            {
+                Persons = payload.Parts.Select(EstateMapper.MapMetadata).ToList(),
+                Tags = payload.Tags ?? []
+            };
             var daData = new DaData
             {
                 DaEventList =
@@ -222,35 +228,25 @@ namespace oed_testdata.Server.Testdata.Estate
                         Avdode = payload.EstateSsn,
                         Embete = "Oslo tingrett",
                         Status = "MOTTATT",
-                        Parter = (payload.Heirs ?? []).Select(heir =>
-                            new Parter
-                            {
-                                Formuesfullmakt = true,
-                                GodkjennerSkifteattest = false,
-                                PaatarGjeldsansvar = false,
-                                MottakerOriginalSkifteattest = false,
-                                Role = heir.Relation,
-                                Nin = heir.Ssn
-                            }).ToArray(),
+                        Parter = payload.Parts.ToArray(),
                     }
                 ]
             };
+            
+            
+            foreach (var part in daData.DaCaseList.First().Parter)
+            {
+                part.AdditionalProperties.Clear();
+            }
+
             var estate = new EstateData
             {
                 EstateName = payload.DeceasedName,
                 EstateSsn = payload.EstateSsn,
                 Data = daData,
+                Metadata = estateMetadata
             };
-            var estateMetadata = new EstateMetadata
-            {
-                Persons = (payload.Heirs ?? []).Select(h => new EstateMetadataPerson
-                {
-                    Nin = h.Ssn,
-                    Name = h.Name
-                }).ToList(),
-                Tags = payload.Tags ?? []
-            };
-            estate.Metadata = estateMetadata;
+
             await store.Create(estate);
             var createdEstate = await store.GetByEstateSsn(payload.EstateSsn);
             return TypedResults.Ok(EstateMapper.Map(createdEstate!));
@@ -270,7 +266,7 @@ namespace oed_testdata.Server.Testdata.Estate
 
         public required string DeceasedName { get; init; }
 
-        public List<Heir>? Heirs { get; init; }
+        public List<Part> Parts { get; init; } = [];
 
         public List<string>? Tags { get; init; }
     }

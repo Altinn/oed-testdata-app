@@ -1,0 +1,48 @@
+{
+  "DaEventList": [
+    [
+      {
+        "specversion": "1.0",
+        "id": "ee46b515-3efd-42c2-a203-228c8e75f006",
+        "source": "https://domstol.no",
+        "type": "DODSFALLSAK-STATUS_OPPDATERT",
+        "datacontenttype": "application/json",
+        "time": "2026-02-25T12:26:46.5007562+01:00",
+        "data": {
+          "@id": "https://hendelsesliste.test.domstol.no/api/objects/ee46b515-3efd-42c2-a203-228c8e75f006"
+        }
+      }
+    ]
+  ],
+  "DaCaseList": [
+    {
+      "sakId": "ee46b515-3efd-42c2-a203-228c8e75f006",
+      "saksnummer": "25-000011DFA-TOSL/07",
+      "avdode": "09846598453",
+      "embete": "Oslo tingrett",
+      "status": "MOTTATT",
+      "parter": [
+        {
+          "type": "Person",
+          "nin": "25856697595",
+          "formuesfullmakt": true,
+          "role": "BARN",
+          "mottakerOriginalSkifteattest": false
+        },
+        {
+          "type": "Person",
+          "nin": "23814199193",
+          "formuesfullmakt": false,
+          "role": "BARN",
+          "mottakerOriginalSkifteattest": false
+        }
+      ],
+      "receivedDate": "2026-02-25T11:26:46.5008037+00:00",
+      "deadlineDate": "2026-04-26T11:26:46.5008032+00:00",
+      "resultatType": null,
+      "skifteattest": null,
+      "tilgangsdatoDigitaltDodsbo": null,
+      "erAnnullert": null
+    }
+  ]
+}

@@ -91,8 +91,7 @@ public static class CloudEventEndpoints
                 {
                     Type = "Person",
                     Nin = p.Nin,
-                    PaatarGjeldsansvar =
-                        declaration.SignatureClaims.Signatures.Any(s => s.AcceptsDebt && s.HeirNin == p.Nin)
+                    PaatarGjeldsansvar = declaration.SignatureClaims.Signatures.Any(s => s.AcceptsDebt && s.HeirNin == p.Nin)
                 })
                 .ToArray(),
         };

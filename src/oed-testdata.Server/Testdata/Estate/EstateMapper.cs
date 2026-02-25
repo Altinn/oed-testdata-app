@@ -18,16 +18,37 @@ public static class EstateMapper
                     Name = p.Name,
                     OrgNum = p.OrganisasjonsNummer!
                 }),
-                Tags = [..estateData.Metadata.Tags]
+                Tags = [.. estateData.Metadata.Tags]
             },
-            Heirs = estateData.Data.DaCaseList.Single().Parter.Select(p => new Heir
-            {
-                Type = p.Type,
-                Ssn = p.Nin,
-                OrgNum = p.OrganisasjonsNummer!,
-                Name = string.Empty,
-                Relation = p.Role
-            })
+            Heirs = estateData.Data.DaCaseList.Single().Parter.Select(Map)
         };
     }
+
+    public static HeirDto Map(Part part) => new()
+    {
+        Ssn = part is PersonPart person ? person.Nin : "",
+        OrgNum = part is ForetakPart foretak ? foretak.OrganisasjonsNummer : "",
+        Relation = part.Role.ToString(),
+        Type = part switch
+        {
+            PersonPart => "Person",
+            ForetakPart => "Foretak",
+            _ => "Unknown"
+        }
+    };
+
+    public static EstateMetadataPerson MapMetadata(Part part) => part switch
+    {
+        PersonPart person => new EstateMetadataPerson
+        {
+            Nin = person.Nin,
+            Name = person.AdditionalProperties.TryGetValue("name", out var name) ? name?.ToString() : ""
+        },
+        ForetakPart foretak => new EstateMetadataPerson
+        {
+            OrganisasjonsNummer = foretak.OrganisasjonsNummer,
+            Name = foretak.AdditionalProperties.TryGetValue("name", out var name) ? name?.ToString() : ""
+        },
+        _ => throw new InvalidOperationException("Failed to parse Part")
+    };
 }

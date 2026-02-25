@@ -173,6 +173,7 @@ public partial class PersonPart : Part
     [System.ComponentModel.DataAnnotations.RegularExpression(@"^\d{11}$")]
     public string Nin { get; set; }
 
+    [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
     [System.Text.Json.Serialization.JsonPropertyName("signertDato")]
     [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
     public System.DateTimeOffset? SignertDato { get; set; }

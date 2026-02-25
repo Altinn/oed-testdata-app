@@ -85,7 +85,7 @@ public class DaCase
     public required string Status { get; set; }
 
     [JsonPropertyName("parter")]
-    public required Parter[] Parter { get; set; }
+    public required Part[] Parter { get; set; }
 
     [JsonPropertyName("receivedDate")]
     public required DateTimeOffset ReceivedDate { get; set; }

@@ -287,6 +287,7 @@ export function NewEstateForm({ uniqueTags }: Props) {
     const newCompany: Foretak = {
       type: "Foretak",
       relation: { value: "TEST_ARVING_FULL", label: "" },
+      role: "",
       name: "",
       id: Date.now().toString(),
       organisasjonsNummer: "",

@@ -213,14 +213,11 @@ export default function EstateCard({ data }: IProps) {
                   (p) => (heir.ssn && p.nin === heir.ssn)
                       || (heir.orgNum && p.orgNum === heir.orgNum)
               );
-              const relation =
-                RELATIONSHIP_OPTIONS.find((opt) => opt.value === heir.relation)
-                  ?.label || heir.relation;
-
-              const key = heir.ssn ?? heir.orgNum
+              const relation = RELATIONSHIP_OPTIONS.find((opt) => opt.value === heir.relation)?.label || heir.relation;
+              const ssnOrOrgNum = heir.ssn || heir.orgNum
               
               return (
-                <Table.Row key={key}>
+                <Table.Row key={ssnOrOrgNum}>
                   <Table.Cell
                     className="flex-between"
                     style={{ alignItems: "baseline" }}
@@ -231,7 +228,7 @@ export default function EstateCard({ data }: IProps) {
                       </Label>
                       <Paragraph>{relation}</Paragraph>
                     </div>
-                    <CopyToClipboard value={key} />
+                    <CopyToClipboard value={ssnOrOrgNum} />
                   </Table.Cell>
                 </Table.Row>
               );

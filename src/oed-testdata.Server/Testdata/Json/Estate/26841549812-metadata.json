@@ -1,0 +1,18 @@
+{
+  "persons": [
+    {
+      "nin": "30897897934",
+      "name": "JURIDISK FJELL",
+      "organisasjonsNummer": null
+    },
+    {
+      "nin": null,
+      "name": "KALD INTELLIGENT TIGER AS",
+      "organisasjonsNummer": "579-529-529"
+    }
+  ],
+  "tags": [
+    "Foretak",
+    "Papp"
+  ]
+}

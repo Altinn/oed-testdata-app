@@ -48,7 +48,7 @@ export type ForetakPapp = {
 
 export interface HeirFormProps<T extends Heir> {
     heir: T;
-    onFetch: (id: string, num: string) => void;
+    onFetch?: (id: string, num: string) => void;
     onRandom: (id: string) => void;
     onRemove: (id: string) => void;
     onRelation?: (id: string, item: SuggestionItem | undefined) => void;

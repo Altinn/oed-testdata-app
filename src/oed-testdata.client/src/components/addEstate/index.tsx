@@ -31,9 +31,10 @@ import {
 import { useToast } from "../../context/toastContext";
 import "./style.css";
 import { HeirSearch } from "../../interfaces/IPersonSearch";
-import { Foretak, Heir, Person } from "./types";
+import { Foretak, ForetakPapp, Heir, Person } from "./types";
 import ForetakForm from "./forms/foretak";
 import PersonForm from "./forms/person";
+import PappForetakForm from "./forms/pappforetak";
 
 interface FormData {
   deceased: Person;
@@ -236,6 +237,26 @@ export function NewEstateForm({ uniqueTags }: Props) {
     }));
   };
 
+  const fetchRandomPappForetak = async (id: string) => {
+      const res = await sendCompanyReq(() => { }, "?count=1");
+      if (!res || res.length === 0) {
+          addToast("Ingen foretak funnet", "warning");
+          return;
+      }
+
+      const countryCodes = ['NOR', 'CHN', 'DNK', 'FRA', 'ISL', 'ITA', 'JPN', 'QAT', 'ESP', 'SWE'];
+      const randomCountry = countryCodes[Math.floor(Math.random() * countryCodes.length)];
+
+      setFormData((prev) => ({
+          ...prev,
+          heirs: prev.heirs.map((papp) =>
+              papp.id === id
+                  ? { ...papp, organisasjonsNavn: res[0].name, countryCode: randomCountry, registreringsNummer: `${Math.round(Math.random() * 1000)}-${Math.round(Math.random() * 1000)}-${Math.round(Math.random() * 1000) }` }
+                  : papp
+          ),
+      }));
+  };
+
   const fetchRandomPersonHeir = async (id: string) => {
     const res = await sendPersonReq(() => {}, "?count=1&isDeceased=false");
     if (!res || res.length === 0) {
@@ -276,8 +297,10 @@ export function NewEstateForm({ uniqueTags }: Props) {
       case 'Foretak':
         addCompanyHeir();
         break;
-      case 'PersonPapp':
       case 'ForetakPapp':
+        addPappCompanyHeir();
+        break;
+      case 'PersonPapp':
         addToast("Kommer snart", "warning");
         break;
     }
@@ -291,6 +314,23 @@ export function NewEstateForm({ uniqueTags }: Props) {
       name: "",
       id: Date.now().toString(),
       organisasjonsNummer: "",
+      mottakerOriginalSkifteattest: false,
+    };
+    setFormData((prev) => ({
+      ...prev,
+      heirs: [...prev.heirs, newCompany],
+    }));
+  };
+
+  const addPappCompanyHeir = () => {
+    const newCompany: ForetakPapp = {
+      type: "ForetakPapp",
+      relation: { value: "TEST_ARVING_FULL", label: "" },
+      role: "",
+      countryCode: "",
+      organisasjonsNavn: "",
+      id: Date.now().toString(),
+      registreringsNummer: "",
       mottakerOriginalSkifteattest: false,
     };
     setFormData((prev) => ({
@@ -509,6 +549,14 @@ export function NewEstateForm({ uniqueTags }: Props) {
                     onRandom={fetchRandomPersonHeir}
                     onRemove={removeHeir}
                     onRelation={updateHeirRelation}
+                />)
+        case "ForetakPapp":
+            return (
+                <PappForetakForm
+                    heir={heir}
+                    errors={errors}
+                    onRandom={fetchRandomPappForetak}
+                    onRemove={removeHeir}
                 />)
         default:
             return (<em>No renderer for {heir.type}</em>)

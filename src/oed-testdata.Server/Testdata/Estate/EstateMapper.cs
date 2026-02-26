@@ -26,13 +26,24 @@ public static class EstateMapper
 
     public static HeirDto Map(Part part) => new()
     {
-        Ssn = part is PersonPart person ? person.Nin : "",
-        OrgNum = part is ForetakPart foretak ? foretak.OrganisasjonsNummer : "",
+        Ssn = part switch 
+        { 
+            PersonPart person => person.Nin,
+            _ => null
+        },
+        OrgNum = part switch
+        {
+            ForetakPart foretak => foretak.OrganisasjonsNummer,
+            ForetakPappPart papp => papp.RegistreringsNummer,
+            _ => null
+        },
         Relation = part.Role.ToString(),
         Type = part switch
         {
             PersonPart => "Person",
+            PersonPappPart => "PappPerson",
             ForetakPart => "Foretak",
+            ForetakPappPart => "PappForetak",
             _ => "Unknown"
         }
     };
@@ -48,6 +59,11 @@ public static class EstateMapper
         {
             OrganisasjonsNummer = foretak.OrganisasjonsNummer,
             Name = foretak.AdditionalProperties.TryGetValue("name", out var name) ? name?.ToString() : ""
+        },
+        ForetakPappPart foretakPapp => new EstateMetadataPerson
+        {
+            OrganisasjonsNummer = foretakPapp.RegistreringsNummer,
+            Name = foretakPapp.OrganisasjonsNavn
         },
         _ => throw new InvalidOperationException("Failed to parse Part")
     };

@@ -1,0 +1,28 @@
+{
+  "persons": [
+    {
+      "nin": "27922549848",
+      "name": "VAKKER TOMMEL",
+      "organisasjonsNummer": null
+    },
+    {
+      "nin": "615142944000000000",
+      "name": "ORIENTAL PAPEG\u00D8YE",
+      "organisasjonsNummer": null
+    },
+    {
+      "nin": null,
+      "name": "KONKRET NORMAL TIGER AS",
+      "organisasjonsNummer": "314286979"
+    },
+    {
+      "nin": null,
+      "name": "OBSERVANT VAKLENDE TIGER AS",
+      "organisasjonsNummer": "293-816-195"
+    }
+  ],
+  "tags": [
+    "Papp",
+    "Foretak"
+  ]
+}

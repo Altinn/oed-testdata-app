@@ -1,0 +1,66 @@
+{
+  "DaEventList": [
+    [
+      {
+        "specversion": "1.0",
+        "id": "9b509b29-1b9b-4f3f-a7d6-989b3167fd19",
+        "source": "https://domstol.no",
+        "type": "DODSFALLSAK-STATUS_OPPDATERT",
+        "datacontenttype": "application/json",
+        "time": "2026-02-26T16:14:10.8969528+01:00",
+        "data": {
+          "@id": "https://hendelsesliste.test.domstol.no/api/objects/9b509b29-1b9b-4f3f-a7d6-989b3167fd19"
+        }
+      }
+    ]
+  ],
+  "DaCaseList": [
+    {
+      "sakId": "9b509b29-1b9b-4f3f-a7d6-989b3167fd19",
+      "saksnummer": "25-000011DFA-TOSL/07",
+      "avdode": "01835897873",
+      "embete": "Oslo tingrett",
+      "status": "MOTTATT",
+      "parter": [
+        {
+          "type": "Person",
+          "nin": "27922549848",
+          "formuesfullmakt": false,
+          "role": "MORMOR",
+          "mottakerOriginalSkifteattest": false
+        },
+        {
+          "type": "PersonPapp",
+          "navn": {
+            "lastName": "PAPEG\u00D8YE",
+            "firstName": "ORIENTAL",
+            "middleName": null
+          },
+          "dateOfBirth": "1950-04-25",
+          "role": "TEST_ARVING_FULL",
+          "mottakerOriginalSkifteattest": false
+        },
+        {
+          "type": "Foretak",
+          "organisasjonsNummer": "314286979",
+          "role": "TEST_ARVING_FULL",
+          "mottakerOriginalSkifteattest": false
+        },
+        {
+          "type": "ForetakPapp",
+          "organisasjonsNavn": "OBSERVANT VAKLENDE TIGER AS",
+          "registreringsNummer": "293-816-195",
+          "countryCode": "ITA",
+          "role": "TEST_ARVING_FULL",
+          "mottakerOriginalSkifteattest": false
+        }
+      ],
+      "receivedDate": "2026-02-26T15:14:10.8973945+00:00",
+      "deadlineDate": "2026-04-27T15:14:10.8973941+00:00",
+      "resultatType": null,
+      "skifteattest": null,
+      "tilgangsdatoDigitaltDodsbo": null,
+      "erAnnullert": null
+    }
+  ]
+}

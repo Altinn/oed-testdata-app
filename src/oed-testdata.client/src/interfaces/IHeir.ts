@@ -1,6 +1,6 @@
 
 export interface Heir {
-    kind: string;
+    type: string;
     ssn: string;
     relation?: string;
     id: string;

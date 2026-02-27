@@ -1,0 +1,49 @@
+{
+  "DaEventList": [
+    [
+      {
+        "specversion": "1.0",
+        "id": "e9b3f393-2ebd-4224-a415-7e2e55d7afaf",
+        "source": "https://domstol.no",
+        "type": "DODSFALLSAK-STATUS_OPPDATERT",
+        "datacontenttype": "application/json",
+        "time": "2026-02-26T13:59:22.717247+01:00",
+        "data": {
+          "@id": "https://hendelsesliste.test.domstol.no/api/objects/e9b3f393-2ebd-4224-a415-7e2e55d7afaf"
+        }
+      }
+    ]
+  ],
+  "DaCaseList": [
+    {
+      "sakId": "e9b3f393-2ebd-4224-a415-7e2e55d7afaf",
+      "saksnummer": "25-000011DFA-TOSL/07",
+      "avdode": "26841549812",
+      "embete": "Oslo tingrett",
+      "status": "MOTTATT",
+      "parter": [
+        {
+          "type": "Person",
+          "nin": "30897897934",
+          "formuesfullmakt": true,
+          "role": "ONKEL",
+          "mottakerOriginalSkifteattest": false
+        },
+        {
+          "type": "ForetakPapp",
+          "organisasjonsNavn": "KALD INTELLIGENT TIGER AS",
+          "registreringsNummer": "579-529-529",
+          "countryCode": "NOR",
+          "role": "TEST_ARVING_FULL",
+          "mottakerOriginalSkifteattest": false
+        }
+      ],
+      "receivedDate": "2026-02-26T12:59:22.7173094+00:00",
+      "deadlineDate": "2026-04-27T12:59:22.7173091+00:00",
+      "resultatType": null,
+      "skifteattest": null,
+      "tilgangsdatoDigitaltDodsbo": null,
+      "erAnnullert": null
+    }
+  ]
+}

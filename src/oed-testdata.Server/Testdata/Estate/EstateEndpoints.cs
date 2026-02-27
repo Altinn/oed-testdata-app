@@ -233,7 +233,6 @@ namespace oed_testdata.Server.Testdata.Estate
                 ]
             };
             
-            
             foreach (var part in daData.DaCaseList.First().Parter)
             {
                 part.AdditionalProperties.Clear();
@@ -252,7 +251,6 @@ namespace oed_testdata.Server.Testdata.Estate
             return TypedResults.Ok(EstateMapper.Map(createdEstate!));
         }
     }
-
 
     public class CreateOrUpdateEstateRequest
     {

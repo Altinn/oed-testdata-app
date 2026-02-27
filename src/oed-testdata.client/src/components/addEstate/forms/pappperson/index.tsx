@@ -4,15 +4,14 @@ import {
     Card,
 } from "@digdir/designsystemet-react";
 import {
+    PersonPlusIcon,
     TrashIcon,
-    BriefcaseIcon,
 } from "@navikt/aksel-icons";
-import { Foretak, HeirFormProps } from "./../../types";
+import { HeirFormProps, PersonPapp } from "./../../types";
 
-export default function ForetakForm({ heir, onFetch, onRandom, onRemove, errors }: HeirFormProps<Foretak>) {
-
+export default function PappPersonForm({ heir, onRandom, onRemove, errors }: HeirFormProps<PersonPapp>) {
     return (
-        <Card key={heir.id} data-color="brand1" variant="tinted">
+        <Card key={heir.id} data-color="brand2" variant="tinted">
             <div
                 style={{
                     display: "grid",
@@ -22,24 +21,18 @@ export default function ForetakForm({ heir, onFetch, onRandom, onRemove, errors 
                 }}
             >
                 <Textfield
-                    label="Foretaksnavn"
-                    value={heir.name}
-                    readOnly={true}
-                    error={errors[`${heir.id}-name`]}
+                    label="Fornavn"
+                    value={heir.navn.firstName}
+                    error={errors[`${heir.id}-fname`]}
                     required
                 />
 
                 <div>
                     <Textfield
-                        label="Tenor org. nr. (9 siffer)"
-                        value={heir.organisasjonsNummer}
-                        error={errors[`${heir.id}-nin`]}
-                        maxLength={9}
+                        label="Etternavn"
+                        value={heir.navn.lastName}
+                        error={errors[`${heir.id}-lname`]}
                         required
-                        onChange={async (e) => {
-                            const orgnum = e.target.value.replace(/\D/g, "");
-                            await onFetch(heir.id, orgnum);
-                        }}
                     />
                     <Button
                         type="button"
@@ -47,7 +40,7 @@ export default function ForetakForm({ heir, onFetch, onRandom, onRemove, errors 
                         onClick={() => onRandom(heir.id)}
                         style={{ marginTop: "0.5rem" }}
                     >
-                        <BriefcaseIcon />
+                        <PersonPlusIcon />
                         Hent tilfeldig
                     </Button>
                 </div>
@@ -57,13 +50,22 @@ export default function ForetakForm({ heir, onFetch, onRandom, onRemove, errors 
                         display: "flex",
                         gap: "0.5rem",
                         alignItems: "end",
-                        marginTop: "2.2rem",
                     }}
                 >
+                    <Textfield
+                        label="Fødselsdato (yyyy-mm-dd)"
+                        value={heir.dateOfBirth}
+                        size={12}
+                        error={errors[`${heir.id}-dob`]}
+                        maxLength={10}
+                        required
+                    />
+
                     <Button
                         type="button"
                         variant="tertiary"
                         data-color="danger"
+                        style={{ marginLeft: 'auto' }}
                         onClick={() => onRemove(heir.id)}
                         data-size="md"
                     >
@@ -72,5 +74,5 @@ export default function ForetakForm({ heir, onFetch, onRandom, onRemove, errors 
                 </div>
             </div>
         </Card>
-  );
+    );
 }

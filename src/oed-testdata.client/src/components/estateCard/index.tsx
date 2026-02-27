@@ -10,6 +10,7 @@ import {
   Table,
   List,
   Divider,
+  Tooltip,
 } from "@digdir/designsystemet-react";
 import "./style.css";
 import CopyToClipboard from "../copyToClipboard";
@@ -23,7 +24,7 @@ import {
 import { Estate } from "../../interfaces/IEstate";
 import { ESTATE_API, RELATIONSHIP_OPTIONS } from "../../utils/constants";
 import { useToast } from "../../context/toastContext";
-import { addDays, dateOnlyString } from "../../utils/dateUtils";
+import { addDays, dateOnlyString, dateFromCSharpTicks } from "../../utils/dateUtils";
 
 interface IProps {
   data: Estate;
@@ -214,7 +215,11 @@ export default function EstateCard({ data }: IProps) {
                       || (heir.orgNum && p.orgNum === heir.orgNum)
               );
               const relation = RELATIONSHIP_OPTIONS.find((opt) => opt.value === heir.relation)?.label || heir.relation;
-              const ssnOrOrgNum = heir.ssn || heir.orgNum
+              let ssnOrOrgNum = heir.ssn || heir.orgNum
+              
+              if (heir.type == "PappPerson" && ssnOrOrgNum.length === 18) {
+                  ssnOrOrgNum = dateFromCSharpTicks(ssnOrOrgNum).toISOString().split("T")[0]
+              }
               
               return (
                 <Table.Row key={ssnOrOrgNum}>
@@ -224,7 +229,9 @@ export default function EstateCard({ data }: IProps) {
                   >
                     <div className="flex-col">
                       <Label weight="semibold">
-                        {metadata?.name || "<ukjent>"}
+                        <Tooltip content={heir.type} placement="top">
+                            {metadata?.name || "<ukjent>"}
+                        </Tooltip>
                       </Label>
                       <Paragraph>{relation}</Paragraph>
                     </div>

@@ -36,6 +36,7 @@ export default function ForetakForm({ heir, onFetch, onRandom, onRemove, errors 
                         maxLength={9}
                         required
                         onChange={async (e) => {
+                            if (!onFetch) return
                             const orgnum = e.target.value.replace(/\D/g, "");
                             await onFetch(heir.id, orgnum);
                         }}

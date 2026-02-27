@@ -29,6 +29,7 @@ public static class EstateMapper
         Ssn = part switch 
         { 
             PersonPart person => person.Nin,
+            PersonPappPart person => person.DateOfBirth.Ticks.ToString(),
             _ => null
         },
         OrgNum = part switch
@@ -64,6 +65,11 @@ public static class EstateMapper
         {
             OrganisasjonsNummer = foretakPapp.RegistreringsNummer,
             Name = foretakPapp.OrganisasjonsNavn
+        },
+        PersonPappPart personPapp => new EstateMetadataPerson
+        {
+            Nin = personPapp.DateOfBirth.Ticks.ToString(),
+            Name = $"{personPapp.Navn.FirstName} {personPapp.Navn.LastName}"
         },
         _ => throw new InvalidOperationException("Failed to parse Part")
     };

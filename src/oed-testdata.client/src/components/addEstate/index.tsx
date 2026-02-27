@@ -31,10 +31,12 @@ import {
 import { useToast } from "../../context/toastContext";
 import "./style.css";
 import { HeirSearch } from "../../interfaces/IPersonSearch";
-import { Foretak, ForetakPapp, Heir, Person } from "./types";
+import { Foretak, ForetakPapp, Heir, Person, PersonPapp } from "./types";
 import ForetakForm from "./forms/foretak";
 import PersonForm from "./forms/person";
 import PappForetakForm from "./forms/pappforetak";
+import PappPersonForm from "./forms/pappperson";
+import { randomDateISO } from "../../utils/dateUtils";
 
 interface FormData {
   deceased: Person;
@@ -273,6 +275,26 @@ export function NewEstateForm({ uniqueTags }: Props) {
     }));
   };
 
+  const fetchRandomPappPersonHeir = async (id: string) => {
+    const res = await sendPersonReq(() => {}, "?count=1&isDeceased=false");
+    if (!res || res.length === 0) {
+      addToast("Ingen personer funnet", "warning");
+      return;
+    }
+
+    const nameParts = res[0].name.split(' ')
+    const randomBirthDate = randomDateISO(new Date(1900, 0, 1), new Date(1980, 0, 1))
+
+    setFormData((prev) => ({
+      ...prev,
+      heirs: prev.heirs.map((person) =>
+        person.id === id
+          ? { ...person, navn: { firstName: nameParts[0], lastName: nameParts.at(-1) }, dateOfBirth: randomBirthDate }
+          : person
+      ),
+    }));
+  };
+
   const fetchRandomCompanyHeir = async (id: string) => {
     const res = await sendCompanyReq(() => {}, "?count=1");
     if (!res || res.length === 0) {
@@ -301,7 +323,7 @@ export function NewEstateForm({ uniqueTags }: Props) {
         addPappCompanyHeir();
         break;
       case 'PersonPapp':
-        addToast("Kommer snart", "warning");
+        addPappPersonHeir();
         break;
     }
   }
@@ -336,6 +358,22 @@ export function NewEstateForm({ uniqueTags }: Props) {
     setFormData((prev) => ({
       ...prev,
       heirs: [...prev.heirs, newCompany],
+    }));
+  };
+ 
+  const addPappPersonHeir = () => {
+    const newPerson: PersonPapp = {
+      id: Date.now().toString(),
+      type: "PersonPapp",
+      role: "",
+      mottakerOriginalSkifteattest: false,
+      navn: { firstName: "", lastName: "" },
+      dateOfBirth: "",
+      relation: { value: "TEST_ARVING_FULL", label: "" },
+    };
+    setFormData((prev) => ({
+      ...prev,
+      heirs: [...prev.heirs, newPerson],
     }));
   };
  
@@ -453,9 +491,12 @@ export function NewEstateForm({ uniqueTags }: Props) {
               newErrors[`${heir.id}-dob`] = "Fødselsdato er påkrevd";
             } else if (!/^(\d{4})-(\d{2})-(\d{2})$/.test(heir.dateOfBirth)) {
               newErrors[`${heir.id}-dob`] = "Fødselsdato må være i formatet 'YYYY-MM-DD'";
+                }
+            if (!heir.navn.firstName) {
+              newErrors[`${heir.id}-fname`] = "Fornavn er påkrevd";
             }
-            if (!heir.navn) {
-              newErrors[`${heir.id}-name`] = "Navn er påkrevd";
+            if (!heir.navn.lastName) {
+              newErrors[`${heir.id}-lname`] = "Etternavn er påkrevd";
             }
             break;
 
@@ -558,8 +599,14 @@ export function NewEstateForm({ uniqueTags }: Props) {
                     onRandom={fetchRandomPappForetak}
                     onRemove={removeHeir}
                 />)
-        default:
-            return (<em>No renderer for {heir.type}</em>)
+        case "PersonPapp":
+            return (
+                <PappPersonForm
+                    heir={heir}
+                    errors={errors}
+                    onRandom={fetchRandomPappPersonHeir}
+                    onRemove={removeHeir}
+                />)
     }
   }
 

@@ -40,6 +40,7 @@ export default function PersonForm({ heir, onFetch, onRandom, onRemove, onRelati
                         maxLength={11}
                         required
                         onChange={async (e) => {
+                            if (!onFetch) return
                             const nin = e.target.value.replace(/\D/g, "");
                             await onFetch(heir.id, nin);
                         }}

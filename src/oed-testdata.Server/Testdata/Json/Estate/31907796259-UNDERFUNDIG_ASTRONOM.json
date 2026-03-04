@@ -34,7 +34,7 @@
         },
         {
           "type": "Foretak",
-          "organisasjonsNummer": "313122670",
+          "organisasjonsNummer": 313122670,
           "role": "TEST_ARVING_FULL",
           "name": "GRETTEN ULTRAFIOLETT TIGER AS",
           "mottakerOriginalSkifteattest": false,

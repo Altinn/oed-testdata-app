@@ -134,7 +134,7 @@ public class Parter
     public string Nin { get; set; }
 
     [JsonPropertyName("organisasjonsNummer")]
-    public string? OrganisasjonsNummer { get; set; }
+    public double? OrganisasjonsNummer { get; set; }
 
     [JsonPropertyName("role")]
     public required string Role { get; set; }

@@ -34,7 +34,7 @@
         {
           "type": "Foretak",
           "nin": null,
-          "organisasjonsNummer": "314391829",
+          "organisasjonsNummer": 314391829,
           "role": "TEST_ARVING_FULL",
           "formuesfullmakt": false,
           "signertDato": null,

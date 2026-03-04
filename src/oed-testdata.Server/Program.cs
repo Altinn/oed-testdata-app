@@ -38,6 +38,8 @@ if (builder.Environment.IsDevelopment())
 builder.Services.AddBasicAuthentication(builder.Configuration, builder.Environment);
 builder.Services.AddBasicAuthorization(builder.Configuration);
 
+builder.Services.AddApplicationInsightsTelemetry();
+
 builder.Services.AddOpenApi();
 
 builder.Services.AddTransient<ITestService, TestService>();

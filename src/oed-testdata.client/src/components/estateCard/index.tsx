@@ -77,7 +77,9 @@ export default function EstateCard({ data }: IProps) {
       }
       if (!response.ok) {
         addToast("Noe gikk galt. Prøv igjen", "danger");
+        return;
       }
+
       addToast("Dødsboet ble nullstilt.", "success");
     } catch (error) {
       console.error("Error resetting estate:", error);

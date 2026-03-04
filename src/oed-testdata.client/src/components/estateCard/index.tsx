@@ -11,6 +11,7 @@ import {
   List,
   Divider,
   Tooltip,
+  Button,
 } from "@digdir/designsystemet-react";
 import "./style.css";
 import CopyToClipboard from "../copyToClipboard";
@@ -20,11 +21,17 @@ import {
   GavelSoundBlockIcon,
   ClockIcon,
   ClockDashedIcon,
+  PersonPlusIcon,
+  PersonMinusIcon,
 } from "@navikt/aksel-icons";
 import { Estate } from "../../interfaces/IEstate";
 import { ESTATE_API, RELATIONSHIP_OPTIONS } from "../../utils/constants";
 import { useToast } from "../../context/toastContext";
-import { addDays, dateOnlyString, dateFromCSharpTicks } from "../../utils/dateUtils";
+import {
+  addDays,
+  dateOnlyString,
+  dateFromCSharpTicks,
+} from "../../utils/dateUtils";
 
 interface IProps {
   data: Estate;
@@ -44,16 +51,17 @@ export default function EstateCard({ data }: IProps) {
     try {
       setLoadingResetEstate(true);
 
-      const accessDate = accessDateOffsetDays !== null
-        ? dateOnlyString(addDays(new Date(), accessDateOffsetDays))
-        : null;
+      const accessDate =
+        accessDateOffsetDays !== null
+          ? dateOnlyString(addDays(new Date(), accessDateOffsetDays))
+          : null;
 
       const response = await fetch(ESTATE_API, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           estateSsn: data.estateSsn,
           tilgangsdatoDigitaltDodsbo: accessDate,
         }),
@@ -63,7 +71,7 @@ export default function EstateCard({ data }: IProps) {
       if (response.status === 401) {
         addToast(
           "Autentiseringstoken har utløpt. Vennligst logg inn igjen.",
-          "danger"
+          "danger",
         );
         return;
       }
@@ -93,7 +101,7 @@ export default function EstateCard({ data }: IProps) {
       if (response.status === 401) {
         addToast(
           "Autentiseringstoken har utløpt. Vennligst logg inn igjen.",
-          "danger"
+          "danger",
         );
         return;
       }
@@ -116,12 +124,12 @@ export default function EstateCard({ data }: IProps) {
         "Er du sikker på at du vil utestede skifteattest til dette boet?\n\n" +
           "Denne funksjonen er KUN ment å simulere utsendelse av skifteattest fra DA uten at det på forhånd er sendt inn en skifteerklæring via Digitalt Dødsbo.\n\n" +
           "NB! Skifteattesten vil KUN bli utstedt til den første arvingen i boet.\n\n" +
-          "Dersom man heller ønsker en skifteattest som tar hensyn til valg tatt i skifteerklæringen skal dette gjøres ved å sende inn skifteerklæringen."
+          "Dersom man heller ønsker en skifteattest som tar hensyn til valg tatt i skifteerklæringen skal dette gjøres ved å sende inn skifteerklæringen.",
       ) == false
     ) {
       return;
     }
-    
+
     try {
       setLoadingIssueProbate(true);
       const response = await fetch(estateUrl, {
@@ -134,7 +142,7 @@ export default function EstateCard({ data }: IProps) {
       if (response.status === 401) {
         addToast(
           "Autentiseringstoken har utløpt. Vennligst logg inn igjen.",
-          "danger"
+          "danger",
         );
         return;
       }
@@ -155,39 +163,79 @@ export default function EstateCard({ data }: IProps) {
     try {
       setLoadingChangeAccesDate(true);
 
-      const accessDate = offsetDays !== null
-        ? dateOnlyString(addDays(new Date(), offsetDays))
-        : null;
+      const accessDate =
+        offsetDays !== null
+          ? dateOnlyString(addDays(new Date(), offsetDays))
+          : null;
 
       const response = await fetch(estateUrl, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ 
-          estateSsn: data.estateSsn, 
-          tilgangsdatoDigitaltDodsbo: accessDate  
+        body: JSON.stringify({
+          estateSsn: data.estateSsn,
+          tilgangsdatoDigitaltDodsbo: accessDate,
         }),
       });
       if (response.status === 401) {
         addToast(
           "Autentiseringstoken har utløpt. Vennligst logg inn igjen.",
-          "danger"
+          "danger",
         );
         return;
       }
       if (!response.ok) {
         addToast("Noe gikk galt. Prøv igjen", "danger");
       }
-
     } catch (error) {
       console.error("Error changing access date:", error);
       addToast("Noe gikk galt. Prøv igjen.", "danger");
     } finally {
       setLoadingChangeAccesDate(false);
     }
-  }
-  
+  };
+
+  const handleTogglePoe = async (heirNin: string, hasPoe: boolean) => {
+    const estateUrl = `${ESTATE_API}${data.estateSsn}`;
+    try {
+      setLoadingChangeAccesDate(true);
+
+      const response = await fetch(estateUrl, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          estateSsn: data.estateSsn,
+          heirs: [
+            {
+              nin: heirNin,
+              powerOfAttorney: hasPoe,
+            },
+          ],
+        }),
+      });
+      if (response.status === 401) {
+        addToast(
+          "Autentiseringstoken har utløpt. Vennligst logg inn igjen.",
+          "danger",
+        );
+        return;
+      }
+      if (!response.ok) {
+        addToast("Noe gikk galt. Prøv igjen", "danger");
+      } else {
+        addToast("Arving oppdatert! 😎", "success");
+      }
+    } catch (error) {
+      console.error("Error updating heir:", error);
+      addToast("Noe gikk galt. Prøv igjen.", "danger");
+    } finally {
+      setLoadingChangeAccesDate(false);
+    }
+  };
+
   return (
     <Card data-color="brand2">
       <Card.Block>
@@ -211,16 +259,21 @@ export default function EstateCard({ data }: IProps) {
           <Table.Body>
             {data.heirs.map((heir) => {
               const metadata = data?.metadata?.persons?.find(
-                  (p) => (heir.ssn && p.nin === heir.ssn)
-                      || (heir.orgNum && p.orgNum === heir.orgNum)
+                (p) =>
+                  (heir.ssn && p.nin === heir.ssn) ||
+                  (heir.orgNum && p.orgNum === heir.orgNum),
               );
-              const relation = RELATIONSHIP_OPTIONS.find((opt) => opt.value === heir.relation)?.label || heir.relation;
-              let ssnOrOrgNum = heir.ssn || heir.orgNum
-              
+              const relation =
+                RELATIONSHIP_OPTIONS.find((opt) => opt.value === heir.relation)
+                  ?.label || heir.relation;
+              let ssnOrOrgNum = heir.ssn || heir.orgNum;
+
               if (heir.type == "PappPerson" && ssnOrOrgNum.length === 18) {
-                  ssnOrOrgNum = dateFromCSharpTicks(ssnOrOrgNum).toISOString().split("T")[0]
+                ssnOrOrgNum = dateFromCSharpTicks(ssnOrOrgNum)
+                  .toISOString()
+                  .split("T")[0];
               }
-              
+
               return (
                 <Table.Row key={ssnOrOrgNum}>
                   <Table.Cell
@@ -230,10 +283,44 @@ export default function EstateCard({ data }: IProps) {
                     <div className="flex-col">
                       <Label weight="semibold">
                         <Tooltip content={heir.type} placement="top">
-                            {metadata?.name || "<ukjent>"}
+                          {metadata?.name || "<ukjent>"}
                         </Tooltip>
                       </Label>
                       <Paragraph>{relation}</Paragraph>
+                      {heir.powerOfAttorney !== null && (
+                        <>
+                          <Paragraph data-size="sm">
+                            <i>{heir.powerOfAttorney && "Formuesfullmakt"}</i>
+                          </Paragraph>
+                          <Paragraph
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                              gap: ".5em",
+                            }}
+                          >
+                            <Button
+                              data-size={"sm"}
+                              variant="secondary"
+                              title="Gi formuesfullmakt"
+                              onClick={() => handleTogglePoe(heir.ssn, true)}
+                            >
+                              <GavelSoundBlockIcon />
+                              <PersonPlusIcon />
+                            </Button>
+                            <Button
+                              data-size={"sm"}
+                              variant="secondary"
+                              title="Trekk tilbake formuesfullmakt"
+                              onClick={() => handleTogglePoe(heir.ssn, false)}
+                              data-color={"danger"}
+                            >
+                              <GavelSoundBlockIcon />
+                              <PersonMinusIcon />
+                            </Button>
+                          </Paragraph>
+                        </>
+                      )}
                     </div>
                     <CopyToClipboard value={ssnOrOrgNum} />
                   </Table.Cell>
@@ -246,9 +333,9 @@ export default function EstateCard({ data }: IProps) {
       <Card.Block>
         <div className="card__footer">
           <Dropdown.TriggerContext>
-            <Dropdown.Trigger 
-              data-color="accent" 
-              variant="secondary" 
+            <Dropdown.Trigger
+              data-color="accent"
+              variant="secondary"
               onClick={() => setProbateDropdownOpen(!probateDropdownOpen)}
             >
               {loadingIssueProbate ? (
@@ -261,8 +348,8 @@ export default function EstateCard({ data }: IProps) {
               )}
               Skifteattest
             </Dropdown.Trigger>
-            <Dropdown 
-              open={probateDropdownOpen} 
+            <Dropdown
+              open={probateDropdownOpen}
               onClose={() => setProbateDropdownOpen(false)}
             >
               <Dropdown.List>
@@ -270,8 +357,8 @@ export default function EstateCard({ data }: IProps) {
                   onClick={() => {
                     setProbateDropdownOpen(false);
                     handleIssueProbate(
-                      "PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99"
-                    )
+                      "PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99",
+                    );
                   }}
                 >
                   <Dropdown.Button>
@@ -282,7 +369,7 @@ export default function EstateCard({ data }: IProps) {
                 <Dropdown.Item
                   onClick={() => {
                     setProbateDropdownOpen(false);
-                    handleIssueProbate("OFFENTLIG_SKIFTE_ETTER_BEGJARING")
+                    handleIssueProbate("OFFENTLIG_SKIFTE_ETTER_BEGJARING");
                   }}
                 >
                   <Dropdown.Button>
@@ -294,8 +381,8 @@ export default function EstateCard({ data }: IProps) {
                   onClick={() => {
                     setProbateDropdownOpen(false);
                     handleIssueProbate(
-                      "GJENLEVENDE_EKTEFELLE_I_USKIFTE_IHT_ARVELOVEN_KAP_5"
-                    )
+                      "GJENLEVENDE_EKTEFELLE_I_USKIFTE_IHT_ARVELOVEN_KAP_5",
+                    );
                   }}
                 >
                   <Dropdown.Button>
@@ -307,13 +394,13 @@ export default function EstateCard({ data }: IProps) {
             </Dropdown>
           </Dropdown.TriggerContext>
           <Dropdown.TriggerContext>
-            <Dropdown.Trigger 
+            <Dropdown.Trigger
               data-color="accent"
               variant="secondary"
-              disabled={ loadingChangeAccesDate }
+              disabled={loadingChangeAccesDate}
               onClick={() => setAccessDateDropdownOpen(!accessDateDropdownOpen)}
             >
-              { loadingChangeAccesDate ? (
+              {loadingChangeAccesDate ? (
                 <Spinner aria-label="laster" />
               ) : (
                 <ClockIcon title="endre tilgansdato" fontSize="1.5rem" />
@@ -321,58 +408,62 @@ export default function EstateCard({ data }: IProps) {
               Tilgangsdato
             </Dropdown.Trigger>
             <Dropdown
-              open={accessDateDropdownOpen} 
+              open={accessDateDropdownOpen}
               onClose={() => setAccessDateDropdownOpen(false)}
             >
               <Dropdown.List>
-                <Dropdown.Item onClick={() => {
-                  setAccessDateDropdownOpen(false);
-                  handleChangeAccessDate(0);
-                }}>
+                <Dropdown.Item
+                  onClick={() => {
+                    setAccessDateDropdownOpen(false);
+                    handleChangeAccessDate(0);
+                  }}
+                >
                   <Dropdown.Button>
-                    <ClockDashedIcon />
-                    I dag
+                    <ClockDashedIcon />I dag
                   </Dropdown.Button>
                 </Dropdown.Item>
-                <Dropdown.Item onClick={() => {
-                  setAccessDateDropdownOpen(false);
-                  handleChangeAccessDate(1);
-                }}>
+                <Dropdown.Item
+                  onClick={() => {
+                    setAccessDateDropdownOpen(false);
+                    handleChangeAccessDate(1);
+                  }}
+                >
                   <Dropdown.Button>
-                    <ClockDashedIcon />
-                    I morgen
+                    <ClockDashedIcon />I morgen
                   </Dropdown.Button>
                 </Dropdown.Item>
-                <Dropdown.Item onClick={() => {
-                  setAccessDateDropdownOpen(false);
-                  handleChangeAccessDate(5);
-                }}>
+                <Dropdown.Item
+                  onClick={() => {
+                    setAccessDateDropdownOpen(false);
+                    handleChangeAccessDate(5);
+                  }}
+                >
                   <Dropdown.Button>
-                    <ClockDashedIcon />
-                    + 5d
+                    <ClockDashedIcon />+ 5d
                   </Dropdown.Button>
                 </Dropdown.Item>
                 <Divider />
-                <Dropdown.Item onClick={() => {
-                  setAccessDateDropdownOpen(false);
-                  handleChangeAccessDate(-1);
-                }}>
+                <Dropdown.Item
+                  onClick={() => {
+                    setAccessDateDropdownOpen(false);
+                    handleChangeAccessDate(-1);
+                  }}
+                >
                   <Dropdown.Button>
-                    <ClockDashedIcon />
-                    I går
+                    <ClockDashedIcon />I går
                   </Dropdown.Button>
                 </Dropdown.Item>
               </Dropdown.List>
             </Dropdown>
           </Dropdown.TriggerContext>
           <Dropdown.TriggerContext>
-            <Dropdown.Trigger 
+            <Dropdown.Trigger
               data-color="danger"
               variant="secondary"
-              disabled={ loadingResetEstate }
+              disabled={loadingResetEstate}
               onClick={() => setResetDropdownOpen(!resetDropdownOpen)}
             >
-              { loadingResetEstate ? (
+              {loadingResetEstate ? (
                 <Spinner aria-label="laster" />
               ) : (
                 <ArrowCirclepathIcon title="a11y-title" fontSize="1.5rem" />
@@ -380,14 +471,14 @@ export default function EstateCard({ data }: IProps) {
               Nullstill
             </Dropdown.Trigger>
             <Dropdown
-              open={resetDropdownOpen} 
+              open={resetDropdownOpen}
               onClose={() => setResetDropdownOpen(false)}
             >
               <Dropdown.List>
                 <Dropdown.Item
-                  onClick={() => { 
+                  onClick={() => {
                     setResetDropdownOpen(false);
-                    handleResetEstate(null); 
+                    handleResetEstate(null);
                   }}
                 >
                   <Dropdown.Button>
@@ -414,7 +505,10 @@ export default function EstateCard({ data }: IProps) {
                   }}
                 >
                   <Dropdown.Button>
-                    <PadlockUnlockedIcon title="fjern roller" fontSize="1.5rem" />
+                    <PadlockUnlockedIcon
+                      title="fjern roller"
+                      fontSize="1.5rem"
+                    />
                     Fjern roller
                   </Dropdown.Button>
                 </Dropdown.Item>
@@ -439,7 +533,7 @@ export default function EstateCard({ data }: IProps) {
                 Nullstill
               </>
             )}
-          </Button> */}          
+          </Button> */}
         </div>
       </Card.Block>
     </Card>

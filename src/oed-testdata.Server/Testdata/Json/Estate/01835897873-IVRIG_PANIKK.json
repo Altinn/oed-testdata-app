@@ -42,7 +42,7 @@
         },
         {
           "type": "Foretak",
-          "organisasjonsNummer": "314286979",
+          "organisasjonsNummer": 314286979,
           "role": "TEST_ARVING_FULL",
           "mottakerOriginalSkifteattest": false
         },

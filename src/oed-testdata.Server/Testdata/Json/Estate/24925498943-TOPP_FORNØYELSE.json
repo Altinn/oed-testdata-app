@@ -34,7 +34,7 @@
         },
         {
           "type": "Foretak",
-          "organisasjonsNummer": "310312282",
+          "organisasjonsNummer": 310312282,
           "role": "TEST_ARVING_FULL",
           "name": "ÅPEN KOMPATIBEL TIGER AS",
           "mottakerOriginalSkifteattest": false,

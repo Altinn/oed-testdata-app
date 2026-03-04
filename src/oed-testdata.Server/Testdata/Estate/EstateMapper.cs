@@ -34,7 +34,7 @@ public static class EstateMapper
         },
         OrgNum = part switch
         {
-            ForetakPart foretak => foretak.OrganisasjonsNummer,
+            ForetakPart foretak => foretak.OrganisasjonsNummer.ToString(),
             ForetakPappPart papp => papp.RegistreringsNummer,
             _ => null
         },
@@ -46,6 +46,11 @@ public static class EstateMapper
             ForetakPart => "Foretak",
             ForetakPappPart => "PappForetak",
             _ => "Unknown"
+        },
+        PowerOfAttorney = part switch
+        {
+            PersonPart person => person.Formuesfullmakt,
+            _ => null
         }
     };
 
@@ -58,7 +63,7 @@ public static class EstateMapper
         },
         ForetakPart foretak => new EstateMetadataPerson
         {
-            OrganisasjonsNummer = foretak.OrganisasjonsNummer,
+            OrganisasjonsNummer = foretak.OrganisasjonsNummer.ToString(),
             Name = foretak.AdditionalProperties.TryGetValue("name", out var name) ? name?.ToString() : ""
         },
         ForetakPappPart foretakPapp => new EstateMetadataPerson

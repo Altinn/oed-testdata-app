@@ -40,8 +40,29 @@
           "type": "Person",
           "nin": "48878200554",
           "role": "BARN",
-          "formuesfullmakt": true,
+          "formuesfullmakt": false,
           "signertDato": null
+        },
+        {
+          "type": "Foretak",
+          "organisasjonsNummer": 314286979,
+          "role": "TEST_ARVING_FULL"
+        },
+        {
+          "type": "ForetakPapp",
+          "organisasjonsNavn": "Firma Papp AB",
+          "registreringsNummer": "123-123-123-123",
+          "countryCode": "SWE",
+          "role": "TEST_ARVING_FULL"
+        },
+        {
+          "type": "PersonPapp",
+          "navn": {
+            "firstName": "Papp",
+            "lastName": "Person"
+          },
+          "dateOfBirth": "1979-06-16",
+          "role": "BARN"
         }
       ],
       "receivedDate": "2024-12-04T13:04:49.7585258+01:00",

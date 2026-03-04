@@ -11,7 +11,22 @@
     {
       "nin": "48878200554",
       "name": "FRISK JUBEL"
+    },
+    {
+      "nin": null,
+      "name": "KONKRET NORMAL TIGER AS",
+      "organisasjonsNummer": "314286979"
+    },
+    {
+      "nin": null,
+      "name": "PAPP BOLAGET AB",
+      "organisasjonsNummer": "123-123-123-123"
+    },
+    {
+      "nin": "624339360000000000",
+      "name": "Papp Person"      
     }
+    
   ],
   "tags": [
     "Utviklere",

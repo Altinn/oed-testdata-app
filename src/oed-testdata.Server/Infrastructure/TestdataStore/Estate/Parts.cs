@@ -201,7 +201,7 @@ public partial class PersonPappPart : Part
 public partial class ForetakPart : Part
 {
     [System.Text.Json.Serialization.JsonPropertyName("organisasjonsNummer")]
-    public string OrganisasjonsNummer { get; set; }
+    public double? OrganisasjonsNummer { get; set; }
 }
 
 [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.3.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]

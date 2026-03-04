@@ -46,6 +46,11 @@ public static class EstateMapper
             ForetakPart => "Foretak",
             ForetakPappPart => "PappForetak",
             _ => "Unknown"
+        },
+        PowerOfAttorney = part switch
+        {
+            PersonPart person => person.Formuesfullmakt,
+            _ => null
         }
     };
 

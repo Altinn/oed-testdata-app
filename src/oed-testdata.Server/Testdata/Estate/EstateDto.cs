@@ -29,5 +29,6 @@ public class HeirDto
     public string? Ssn { get; init; }
     public string? Relation { get; init; }
     public string? OrgNum { get; init; }
+    public bool? PowerOfAttorney { get; set; }
 }
 #pragma warning restore CS8618

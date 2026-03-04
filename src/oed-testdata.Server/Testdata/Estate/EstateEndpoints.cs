@@ -160,6 +160,20 @@ namespace oed_testdata.Server.Testdata.Estate
                 {
                     data.UpdateTilgangsdato(request.TilgangsdatoDigitaltDodsbo);
                 }
+
+                if (request.Heirs is not null)
+                {
+                    foreach (var heirFromRequest in request.Heirs)
+                    {
+                        var part = daCase.Parter.OfType<PersonPart>().SingleOrDefault(p => p.Nin == heirFromRequest.Nin);
+                        if (part is null) continue;
+
+                        if (heirFromRequest.PowerOfAttorney.HasValue)
+                        {
+                            part.Formuesfullmakt = heirFromRequest.PowerOfAttorney.Value;
+                        }
+                    }
+                }
                 
                 data.UpdateTimestamps(DateTimeOffset.Now);
                 await oedClient.PostDaEvent(data);
@@ -289,5 +303,13 @@ namespace oed_testdata.Server.Testdata.Estate
         [JsonPropertyName("tilgangsdatoDigitaltDodsbo")]
         public DateTimeOffset? TilgangsdatoDigitaltDodsbo { get; set; }
 
+        public IEnumerable<PatchEstateHeirRequest>? Heirs { get; init; }
+
+    }
+
+    public class PatchEstateHeirRequest
+    {
+        public required string Nin { get; init; }
+        public bool? PowerOfAttorney { get; init; }
     }
 }

@@ -45,6 +45,7 @@ export default function EstateCard({ data }: IProps) {
   const [loadingResetEstate, setLoadingResetEstate] = useState(false);
   const [loadingIssueProbate, setLoadingIssueProbate] = useState(false);
   const [loadingChangeAccesDate, setLoadingChangeAccesDate] = useState(false);
+  const [loadingChangePoe, setLoadingChangePoe] = useState(false);
   const { addToast } = useToast();
 
   const handleResetEstate = async (accessDateOffsetDays: number | null) => {
@@ -201,7 +202,7 @@ export default function EstateCard({ data }: IProps) {
   const handleTogglePoe = async (heirNin: string, hasPoe: boolean) => {
     const estateUrl = `${ESTATE_API}${data.estateSsn}`;
     try {
-      setLoadingChangeAccesDate(true);
+      setLoadingChangePoe(true);
 
       const response = await fetch(estateUrl, {
         method: "PATCH",
@@ -234,7 +235,7 @@ export default function EstateCard({ data }: IProps) {
       console.error("Error updating heir:", error);
       addToast("Noe gikk galt. Prøv igjen.", "danger");
     } finally {
-      setLoadingChangeAccesDate(false);
+      setLoadingChangePoe(false);
     }
   };
 
@@ -305,6 +306,7 @@ export default function EstateCard({ data }: IProps) {
                               data-size={"sm"}
                               variant="secondary"
                               title="Gi formuesfullmakt"
+                              disabled={loadingChangePoe}
                               onClick={() => handleTogglePoe(heir.ssn, true)}
                             >
                               <GavelSoundBlockIcon />
@@ -314,12 +316,16 @@ export default function EstateCard({ data }: IProps) {
                               data-size={"sm"}
                               variant="secondary"
                               title="Trekk tilbake formuesfullmakt"
+                              disabled={loadingChangePoe}
                               onClick={() => handleTogglePoe(heir.ssn, false)}
                               data-color={"danger"}
                             >
                               <GavelSoundBlockIcon />
                               <PersonMinusIcon />
                             </Button>
+                            {loadingChangePoe && (
+                              <Spinner aria-label="laster" />
+                            )}
                           </Paragraph>
                         </>
                       )}

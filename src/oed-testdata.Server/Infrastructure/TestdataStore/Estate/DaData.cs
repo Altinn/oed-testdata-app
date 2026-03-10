@@ -109,12 +109,78 @@ public class DaCase
 public class Skifteattest
 {
     [JsonPropertyName("arvinger")]
-    public required SkifteattestArvingPerson[] Arvinger { get; set; }
+    public ICollection<ArvingSkifteattest> Arvinger { get; set; }
 
     [JsonPropertyName("resultat")]
     public required string Resultat { get; set; }
 }
 
+[JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
+[JsonDerivedType(typeof(PersonSkifteattest), typeDiscriminator: "Person")]
+[JsonDerivedType(typeof(PersonPappSkifteattest), typeDiscriminator: "PersonPapp")]
+[JsonDerivedType(typeof(ForetakSkifteattest), typeDiscriminator: "Foretak")]
+[JsonDerivedType(typeof(ForetakPappSkifteattest), typeDiscriminator: "ForetakPapp")]
+[System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.3.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+public partial class ArvingSkifteattest
+{
+
+    [System.Text.Json.Serialization.JsonPropertyName("paatarGjeldsansvar")]
+    public bool PaatarGjeldsansvar { get; set; }
+
+    private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
+
+    [System.Text.Json.Serialization.JsonExtensionData]
+    public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+    {
+        get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+        set { _additionalProperties = value; }
+    }
+
+}
+
+[System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.3.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+public partial class PersonSkifteattest : ArvingSkifteattest
+{
+
+    [System.Text.Json.Serialization.JsonPropertyName("nin")]
+    [System.ComponentModel.DataAnnotations.RegularExpression(@"^\d{11}$")]
+    public string Nin { get; set; }
+
+}
+
+[System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.3.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+public partial class PersonPappSkifteattest : ArvingSkifteattest
+{
+
+    [System.Text.Json.Serialization.JsonPropertyName("navn")]
+    public PersonName Navn { get; set; }
+
+    [System.Text.Json.Serialization.JsonPropertyName("dateOfBirth")]
+    [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
+    public System.DateTimeOffset DateOfBirth { get; set; }
+
+}
+
+[System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.3.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+public partial class ForetakSkifteattest : ArvingSkifteattest
+{
+
+    [System.Text.Json.Serialization.JsonPropertyName("organisasjonsNummer")]
+    public double OrganisasjonsNummer { get; set; }
+
+}
+
+[System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.3.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+public partial class ForetakPappSkifteattest : ArvingSkifteattest
+{
+
+    [System.Text.Json.Serialization.JsonPropertyName("organisasjonsNavn")]
+    public string OrganisasjonsNavn { get; set; }
+
+}
+
+
+//------------------------------------------------
 public class SkifteattestArvingPerson
 {
     [JsonPropertyName("type")]

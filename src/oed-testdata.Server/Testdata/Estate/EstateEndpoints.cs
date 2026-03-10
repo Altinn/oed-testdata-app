@@ -139,16 +139,10 @@ namespace oed_testdata.Server.Testdata.Estate
                         {
                             Resultat = request.ResultatType,
                             Arvinger = daCase.Parter
-                                .OfType<PersonPart>()
-                                .Select((p, i) => new SkifteattestArvingPerson
-                                {
-                                    Type = "Person", 
-                                    Nin = p.Nin, 
-                                    PaatarGjeldsansvar = i == 0
-                                })
+                                .Select(ArvingExtensions.GetArvingSkifteattestFromPart)
                                 .ToArray()
                         };
-                        daCase.Parter.First().MottakerOriginalSkifteattest = true;
+                        daCase.Parter.OfType<PersonPart>().First().MottakerOriginalSkifteattest = true;
                     }
                     else
                     {

@@ -86,21 +86,12 @@ public static class CloudEventEndpoints
         {
             Resultat = "PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99",
             Arvinger = daCase.Parter
-                .OfType<PersonPart>()
-                .Select((p, i) => new SkifteattestArvingPerson
-                {
-                    Type = "Person",
-                    Nin = p.Nin,
-                    PaatarGjeldsansvar = declaration.SignatureClaims.Signatures.Any(s => s.AcceptsDebt && s.HeirNin == p.Nin)
-                })
+                .Select(ArvingExtensions.GetArvingSkifteattestFromPart)
                 .ToArray(),
         };
 
         // Setter første arving som påtar seg gjeldsansvar til mottaker av original skifteattest
-        daCase.Parter
-            .OfType<PersonPart>()
-            .Single(p => p.Nin == daCase.Skifteattest.Arvinger.First().Nin)
-            .MottakerOriginalSkifteattest = true;
+        daCase.Parter.OfType<PersonPart>().First().MottakerOriginalSkifteattest = true;
         
         await oedClient.PostDaEvent(estate.Data);
         logger.LogInformation("Issued probate for subject [{Subject}]", cloudEvent.Subject);

@@ -80,10 +80,14 @@ namespace oed_testdata.Server.Testdata.Estate
                 {
                     var activeInstance = estateInstances.First();
                     var partyId = activeInstance.InstanceOwner.PartyId;
+                    var instanceGuid = activeInstance.Id.Split("/").Last();
+
+                    await oedClient.DeleteOedInstance(partyId, instanceGuid);
+
                     if (activeInstance.Data is { Count: > 0 })
                     {
-                        var estateInstanceGuid = activeInstance.Data.First().InstanceGuid;
-                        await oedClient.DeleteOedInstance(partyId, estateInstanceGuid);
+                        var dataInstanceGuid = activeInstance.Data.First().InstanceGuid;
+                        await oedClient.DeleteOedInstance(partyId, dataInstanceGuid);
                     }
                 }
 

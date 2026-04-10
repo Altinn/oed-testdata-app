@@ -78,9 +78,13 @@ namespace oed_testdata.Server.Testdata.Estate
                 var estateInstances = await altinnClient.GetOedInstancesByDeceasedNin(estate.EstateSsn);
                 if (estateInstances is { Count: > 0 })
                 {
-                    var partyId = estateInstances.First().InstanceOwner.PartyId;
-                    var estateInstanceGuid = estateInstances.First().Data.First().InstanceGuid;
-                    await oedClient.DeleteOedInstance(partyId, estateInstanceGuid);
+                    var activeInstance = estateInstances.First();
+                    var partyId = activeInstance.InstanceOwner.PartyId;
+                    if (activeInstance.Data is { Count: > 0 })
+                    {
+                        var estateInstanceGuid = activeInstance.Data.First().InstanceGuid;
+                        await oedClient.DeleteOedInstance(partyId, estateInstanceGuid);
+                    }
                 }
 
                 // Update estate data and post DA event to create/recreate estate from scratch

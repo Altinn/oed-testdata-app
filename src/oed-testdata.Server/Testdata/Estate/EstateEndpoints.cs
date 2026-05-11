@@ -70,7 +70,8 @@ namespace oed_testdata.Server.Testdata.Estate
                 if (declarationInstances is { Count: > 0 })
                 {
                     var partyId = declarationInstances.First().InstanceOwner.PartyId;
-                    var declarationInstanceGuid = declarationInstances.First().Data.First().InstanceGuid;
+                    //var declarationInstanceGuid = declarationInstances.First().Data.First().InstanceGuid;
+                    var declarationInstanceGuid = declarationInstances.First().Id.Split("/")[1];
                     await oedClient.DeleteOedDeclarationInstance(partyId, declarationInstanceGuid);
                 }
 

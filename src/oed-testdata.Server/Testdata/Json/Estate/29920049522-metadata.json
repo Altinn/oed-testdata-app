@@ -1,0 +1,23 @@
+{
+    "persons": [
+        {
+            "nin": "07843347732",
+            "name": "NORMAL KARIES"
+        },
+        {
+            "nin": "02860049034",
+            "name": "SENSITIV BLANKETT"
+        },
+        {
+            "nin": "22833049252",
+            "name": "OVERSIKTLIG OVERGANG"
+        },
+        {
+            "nin": "20862349602",
+            "name": "USNOBBET KLEMME"
+        }
+    ],
+    "tags": [
+        "Bank"
+    ]
+}

@@ -23,6 +23,7 @@
       "status": "MOTTATT",
       "parter": [
         {
+          "type": "Person",
           "nin": "07903548627",
           "role": "BARN",
           "formuesfullmakt": true,
@@ -32,6 +33,7 @@
           "godkjennerSkifteattest": false
         },
         {
+          "type": "Person",
           "nin": "08842949255",
           "role": "BARN",
           "formuesfullmakt": true,
@@ -41,24 +43,27 @@
           "godkjennerSkifteattest": false
         },
         {
+          "type": "Person",
           "nin": "25822547810",
           "role": "BARN",
-          "formuesfullmakt": true,
+          "formuesfullmakt": false,
           "signertDato": null,
           "onsketSkifteform": null,
           "paatarGjeldsansvar": false,
           "godkjennerSkifteattest": false
         },
         {
+          "type": "Person",
           "nin": "20922648507",
           "role": "BARN",
-          "formuesfullmakt": true,
+          "formuesfullmakt": false,
           "signertDato": null,
           "onsketSkifteform": null,
           "paatarGjeldsansvar": false,
           "godkjennerSkifteattest": false
         },
         {
+          "type": "Person",
           "nin": "05870048671",
           "role": "GJENLEV_EKTEFELLE_PARTNER",
           "formuesfullmakt": true,

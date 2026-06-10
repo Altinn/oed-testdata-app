@@ -1,8 +1,12 @@
 {
   "persons": [
     {
-      "nin": "15870049436",
-      "name": "HENSYNSFULL FORSTAND"
+      "nin": "05913148675",
+      "name": "TEST1"
+    },
+    {
+      "nin": "21890049793",
+      "name": "TEST2"
     }
   ],
   "tags": [

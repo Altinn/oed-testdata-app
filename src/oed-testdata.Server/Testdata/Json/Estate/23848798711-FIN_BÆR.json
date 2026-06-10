@@ -23,6 +23,7 @@
       "status": "MOTTATT",
       "parter": [
         {
+          "type": "Person",
           "nin": "28811799361",
           "role": "BARN",
           "formuesfullmakt": true,
@@ -32,6 +33,7 @@
           "godkjennerSkifteattest": false
         },
         {
+          "type": "Person",
           "nin": "12811197945",
           "role": "BARN",
           "formuesfullmakt": true,
@@ -41,6 +43,7 @@
           "godkjennerSkifteattest": false
         },
         {
+          "type": "Person",
           "nin": "10886198227",
           "role": "MOR",
           "formuesfullmakt": true,
@@ -50,6 +53,7 @@
           "godkjennerSkifteattest": false
         },
         {
+          "type": "Person",
           "nin": "22836296145",
           "role": "FAR",
           "formuesfullmakt": true,
@@ -59,6 +63,7 @@
           "godkjennerSkifteattest": false
         },
         {
+          "type": "Person",
           "nin": "29868798473",
           "role": "GJENLEV_EKTEFELLE_PARTNER",
           "formuesfullmakt": true,

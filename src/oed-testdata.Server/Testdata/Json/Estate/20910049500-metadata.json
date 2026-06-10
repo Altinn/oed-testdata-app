@@ -1,0 +1,27 @@
+{
+  "persons": [
+    {
+      "nin": "07903548627",
+      "name": "HEL MILLION"
+    },
+    {
+      "nin": "08842949255",
+      "name": "UTNYTTENDE SPESIALIST"
+    },
+    {
+      "nin": "25822547810",
+      "name": "UTØRST FØYKE"
+    },
+    {
+      "nin": "20922648507",
+      "name": "TAPPER DEL"
+    },
+    {
+      "nin": "05870048671",
+      "name": "FROM FETTER"
+    }
+  ],
+  "tags": [
+    "E2E"
+  ]
+}

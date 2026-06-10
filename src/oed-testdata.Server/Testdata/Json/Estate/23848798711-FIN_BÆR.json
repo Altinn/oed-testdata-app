@@ -1,0 +1,77 @@
+{
+  "DaEventList": [
+    [
+      {
+        "specversion": "1.0",
+        "id": "769c6352-70f7-4039-9a9c-f940bb7f7ced",
+        "source": "https://domstol.no",
+        "type": "DODSFALLSAK-STATUS_OPPDATERT",
+        "datacontenttype": "application/json",
+        "time": "2026-06-10T12:15:55.8672017+02:00",
+        "data": {
+          "@id": "https://hendelsesliste.test.domstol.no/api/objects/769c6352-70f7-4039-9a9c-f940bb7f7ced"
+        }
+      }
+    ]
+  ],
+  "DaCaseList": [
+    {
+      "sakId": "769c6352-70f7-4039-9a9c-f940bb7f7ced",
+      "saksnummer": "25-455317DFA-TOSL/07",
+      "avdode": "23848798711",
+      "embete": "Oslo Tingrett",
+      "status": "MOTTATT",
+      "parter": [
+        {
+          "nin": "28811799361",
+          "role": "BARN",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
+        },
+        {
+          "nin": "12811197945",
+          "role": "BARN",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
+        },
+        {
+          "nin": "10886198227",
+          "role": "MOR",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
+        },
+        {
+          "nin": "22836296145",
+          "role": "FAR",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
+        },
+        {
+          "nin": "29868798473",
+          "role": "GJENLEV_EKTEFELLE_PARTNER",
+          "formuesfullmakt": true,
+          "signertDato": null,
+          "onsketSkifteform": null,
+          "paatarGjeldsansvar": false,
+          "godkjennerSkifteattest": false
+        }
+      ],
+      "receivedDate": "2026-06-10T12:15:55.8677722+02:00",
+      "deadlineDate": "2026-08-09T12:15:55.8677949+02:00",
+      "resultatType": null,
+      "skifteattest": null
+    }
+  ]
+}

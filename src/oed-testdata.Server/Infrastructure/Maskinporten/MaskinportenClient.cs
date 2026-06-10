@@ -23,7 +23,7 @@ namespace oed_testdata.Server.Infrastructure.Maskinporten
             response.EnsureSuccessStatusCode();
 
             await using var contentStream = await response.Content.ReadAsStreamAsync();
-            var data = JsonSerializer.Deserialize<Declaration>(contentStream);
+            var data = await JsonSerializer.DeserializeAsync<Declaration>(contentStream);
 
             return data!;
         }
@@ -45,7 +45,7 @@ namespace oed_testdata.Server.Infrastructure.Maskinporten
             response.EnsureSuccessStatusCode();
 
             await using var contentStream = await response.Content.ReadAsStreamAsync();
-            var data = JsonSerializer.Deserialize<TenorWrapper>(contentStream);
+            var data = await JsonSerializer.DeserializeAsync<TenorWrapper>(contentStream);
 
             return data!;
         }
@@ -64,7 +64,7 @@ namespace oed_testdata.Server.Infrastructure.Maskinporten
             response.EnsureSuccessStatusCode();
 
             await using var contentStream = await response.Content.ReadAsStreamAsync();
-            var data = JsonSerializer.Deserialize<TenorCompanyWrapper>(contentStream);
+            var data = await JsonSerializer.DeserializeAsync<TenorCompanyWrapper>(contentStream);
 
             return data!;
         }

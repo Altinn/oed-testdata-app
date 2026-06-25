@@ -38,6 +38,13 @@
         },
         {
           "type": "Person",
+          "nin": "18878097390",
+          "role": "BARN",
+          "formuesfullmakt": true,
+          "signertDato": null
+        },
+        {
+          "type": "Person",
           "nin": "48878200554",
           "role": "BARN",
           "formuesfullmakt": false,

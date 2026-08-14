@@ -40,7 +40,7 @@ jobs:
         run: mkdir -p /home/runner/.aspnet/https && dotnet publish ./src/oed-testdata.Server/oed-testdata.Server.csproj --no-build -c Release -o ./publish
 
       - name: Deploy to Azure App Service (Test)
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@02a81bead70021f5284939794bcec79c271ab383 # v3
         with:
           app-name: "${{ env.TEST_APP_SERVICE_NAME }}"
           publish-profile: ${{ secrets.PUBLISH_PROFILE_LINUX }}

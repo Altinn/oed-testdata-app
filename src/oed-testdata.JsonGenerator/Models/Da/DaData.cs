@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿#nullable disable
+using System.Text.Json.Serialization;
 
 namespace oed_testdata.JsonGenerator.Models.Da;
 public class DaData
@@ -87,10 +88,10 @@ public class DaCase
     public required DateTimeOffset DeadlineDate { get; set; }
 
     [JsonPropertyName("resultatType")]
-    public string? ResultatType { get; set; }
+    public string ResultatType { get; set; }
 
     [JsonPropertyName("skifteattest")]
-    public Skifteattest? Skifteattest { get; set; }
+    public Skifteattest Skifteattest { get; set; }
 }
 
 public class Skifteattest
@@ -121,7 +122,7 @@ public class Parter
     public DateTimeOffset? SignertDato { get; set; }
 
     [JsonPropertyName("onsketSkifteform")]
-    public string? OnsketSkifteform { get; set; }
+    public string OnsketSkifteform { get; set; }
 
     [JsonPropertyName("paatarGjeldsansvar")]
     public required bool PaatarGjeldsansvar { get; set; }

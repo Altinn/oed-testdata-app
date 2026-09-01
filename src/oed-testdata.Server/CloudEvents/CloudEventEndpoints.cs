@@ -36,13 +36,22 @@ public static class CloudEventEndpoints
         IOedClient oedClient,
         ILoggerFactory loggerFactory)
     {
-        var logger = loggerFactory.CreateLogger(typeof(CloudEventEndpoints).FullName!);
+        var logger = loggerFactory.CreateLogger(typeof(CloudEventEndpoints));
+
+        if (Environment.GetEnvironmentVariable("AUTO_APPROVE_SUBMITTED_DECLARATIONS") != "true")
+        {
+            logger.LogWarning("Environment variable [AUTO_APPROVE_SUBMITTED_DECLARATIONS] is not set to 'true'. Cloud events will be ignored.");
+            return TypedResults.Ok();
+        }
+
         var cloudEvent = cloudEventWrapper.Item;
 
         logger.LogInformation("Received cloud event type [{CloudEventType}]", cloudEvent.Type);
 
         // Unknown events are ignored 
-        if (cloudEvent.Type != CloudEventType.DeclarationSubmitted)
+        if (cloudEvent.Type is
+            not CloudEventType.DeclarationSubmitted and
+            not CloudEventType.DeclarationV2Submitted)
         {
             logger.LogInformation("Ignoring unknown cloud event type [{CloudEventType}]", cloudEvent.Type);
             return TypedResults.Ok();
@@ -62,18 +71,18 @@ public static class CloudEventEndpoints
         logger.LogInformation("Handling cloud event for subject [{Subject}]", cloudEvent.Subject);
 
         var eventData = (cloudEvent.Data as JsonElement?)?.Deserialize<DeclarationSubmittedData>();
-        
-        var declarationInstances = await altinnClient.GetOedDeclarationInstancesByDeceasedNin(estate.EstateSsn);
-        var partyId = declarationInstances.First().InstanceOwner.PartyId;
-        var oedDeclarationInstanceGuid = declarationInstances.First().Data.First().InstanceGuid;
+
+        var declarationInstance = await GetDeclarationInstance();
+        var partyId = declarationInstance.InstanceOwner.PartyId;
+        var oedDeclarationInstanceGuid = declarationInstance.Data.First().InstanceGuid;
 
         var declaration = await maskinportenClient.GetDeclaration(partyId, oedDeclarationInstanceGuid);
-        
+
         var daCase = estate.Data.DaCaseList.First();
         daCase.SakId = eventData?.DaCaseId ?? daCase.SakId;
 
         // Do we have alle the data we need to issue the probate? If not, ignore the event
-        if (declaration.Heirs is null or {Count: 0} || declaration.SignatureClaims?.Signatures is null or  {Count: 0})
+        if (declaration.Heirs is null or { Count: 0 } || declaration.SignatureClaims?.Signatures is null or { Count: 0 })
         {
             logger.LogInformation("Ignoring cloud event due to missing data for subject [{Subject}]", cloudEvent.Subject);
             return TypedResults.Ok();
@@ -111,11 +120,23 @@ public static class CloudEventEndpoints
                 .OfType<PersonSkifteattest>()
                 .First(arving => arving.PaatarGjeldsansvar).Nin)
             .MottakerOriginalSkifteattest = true;
-        
+
         await oedClient.PostDaEvent(estate.Data);
         logger.LogInformation("Issued probate for subject [{Subject}]", cloudEvent.Subject);
 
         return TypedResults.Ok();
+
+        async Task<Altinn.Platform.Storage.Interface.Models.Instance> GetDeclarationInstance()
+        {
+            var instances = cloudEvent.Type switch
+            {
+                CloudEventType.DeclarationSubmitted => await altinnClient.GetOedDeclarationInstancesByDeceasedNin(estate.EstateSsn),
+                CloudEventType.DeclarationV2Submitted => await altinnClient.GetDdPrivateProbateInstancesByDeceasedNin(estate.EstateSsn),
+                _ => throw new InvalidOperationException($"Unknown cloud event type [{cloudEvent.Type}]"),
+            };
+        
+            return instances.First();
+        }
     }
 }
 

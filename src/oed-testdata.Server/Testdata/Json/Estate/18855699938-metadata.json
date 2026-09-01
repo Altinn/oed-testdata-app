@@ -29,10 +29,15 @@
     {
       "nin": "18878097390",
       "name": "FORDEKT FILM"
-    }    
+    },
+    {
+      "nin": "64820575715",
+      "name": "MÅTEHOLDEN KONSEKVENS (Har verge 13830497484)"
+    }
   ],
   "tags": [
     "Utviklere",
-    "Lars Olav"
+    "Lars Olav",
+    "Vergemål"
   ]
 }

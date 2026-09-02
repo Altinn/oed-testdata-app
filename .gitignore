@@ -482,3 +482,9 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# QA gate scratch output: the SonarQube scanner working dir, and the per-run
+# snapshots both QA gates write. Ignored in the other repos in this programme;
+# these two were leaving them untracked after every nightly run.
+**/.sonarqube/
+/QaTests/history/

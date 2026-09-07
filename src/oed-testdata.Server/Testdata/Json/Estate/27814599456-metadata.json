@@ -1,10 +1,6 @@
 {
   "persons": [
     {
-      "nin": "27814599456",
-      "name": "OPPSTEMT SØNNAVIND"
-    },
-    {
       "nin": "27899697699",
       "name": "UMODEN PUB"
     },
@@ -16,5 +12,8 @@
       "nin": "10841799297",
       "name": "BLØT BIOGRAFI"
     }
+  ],
+  "tags": [
+    "Formuesfullmakt"
   ]
 }

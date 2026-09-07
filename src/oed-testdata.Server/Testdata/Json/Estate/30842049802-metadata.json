@@ -1,0 +1,19 @@
+{
+  "persons": [
+    {
+      "nin": "01834897683",
+      "name": "JUSTERBAR MUSKEL"
+    },
+    {
+      "nin": "14885297553",
+      "name": "RYDDIG ABAKUS"
+    },
+    {
+      "nin": "18925598425",
+      "name": "SELVHJULPEN REISE"
+    }
+  ],
+  "tags": [
+    "Skatt"
+  ]
+}

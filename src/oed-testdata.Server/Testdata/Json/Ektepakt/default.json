@@ -1,8 +1,8 @@
 {
   "ektepakter": [
     {
-      "spouseName": "TULLETE NISSEMOR",
-      "entryDate":  "1981-06-14"
+      "spouseNames": [ "TULLETE NISSEMOR" ],
+      "entryDate": "1981-06-14"
     }
   ]
 }

@@ -1,15 +1,15 @@
 {
   "ektepakter": [
     {
-      "spouseName": "ROTETE BARNESKOLE",
+      "spouseNames": [ "RYDDIG BARNESKOLE", "ROTETE BARNESKOLE" ],
       "entryDate": "1981-06-14"
     },
     {
-      "spouseName": "RYDDIG NISSEMOR",
+      "spouseNames": [ "RYDDIG BARNESKOLE", "RYDDIG NISSEMOR" ],
       "entryDate": "1988-12-24"
     },
     {
-      "spouseName": "TULLETE NISSEMOR",
+      "spouseNames": [ "RYDDIG BARNESKOLE", "TULLETE NISSEMOR" ],
       "entryDate": "1994-12-24"
     }
   ]

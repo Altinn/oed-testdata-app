@@ -9,7 +9,7 @@ public class EktepaktResponse
 
 public class Ektepakt
 {
-    public string SpouseName { get; set; }
+    public List<string> SpouseNames { get; set; }
 
     public DateTime? EntryDate { get; set; }
 }

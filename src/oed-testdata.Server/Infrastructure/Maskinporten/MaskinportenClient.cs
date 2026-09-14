@@ -7,6 +7,7 @@ namespace oed_testdata.Server.Infrastructure.Maskinporten
     public interface IMaskinportenClient
     {
         public Task<Declaration> GetDeclaration(string partyId, string oedDeclarationInstanceGuid);
+        public Task<SubAppDeclaration> GetSubAppDeclaration(Uri declarationUrl);
         public Task<TenorWrapper> TenorSearch(TenorQueryParameters searchQuery);
         public Task<TenorCompanyWrapper> TenorCompanySearch(TenorCompanyQueryParameters searchQuery);
     }
@@ -24,6 +25,23 @@ namespace oed_testdata.Server.Infrastructure.Maskinporten
 
             await using var contentStream = await response.Content.ReadAsStreamAsync();
             var data = await JsonSerializer.DeserializeAsync<Declaration>(contentStream);
+
+            return data!;
+        }
+
+        /// <summary>
+        /// Reads an individual (v2) declaration straight from the url carried by the cloud
+        /// event. OED builds that url as the sub-app declaration endpoint, so there is nothing
+        /// to look up: the event already names the heir instance it came from.
+        /// </summary>
+        public async Task<SubAppDeclaration> GetSubAppDeclaration(Uri declarationUrl)
+        {
+            var response = await _httpClient.GetAsync(declarationUrl);
+
+            response.EnsureSuccessStatusCode();
+
+            await using var contentStream = await response.Content.ReadAsStreamAsync();
+            var data = await JsonSerializer.DeserializeAsync<SubAppDeclaration>(contentStream);
 
             return data!;
         }

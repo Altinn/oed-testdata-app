@@ -72,6 +72,15 @@ public static class CloudEventEndpoints
 
         var eventData = (cloudEvent.Data as JsonElement?)?.Deserialize<DeclarationSubmittedData>();
 
+        // An individual (v2) declaration is filled in by one heir and carries no
+        // SignatureClaims, so the joint flow below cannot read it. Issue from the submitting
+        // heir's own answers instead: the event fires once per heir, and the first one
+        // completes the case.
+        if (cloudEvent.Type == CloudEventType.DeclarationV2Submitted)
+        {
+            return await IssueProbateFromIndividualDeclaration();
+        }
+
         var declarationInstance = await GetDeclarationInstance();
 
         // A missing declaration instance is not exceptional. DeclarationV2Submitted events in
@@ -149,6 +158,77 @@ public static class CloudEventEndpoints
         logger.LogInformation("Issued probate for subject [{Subject}]", cloudEvent.Subject);
 
         return TypedResults.Ok();
+
+        async Task<IResult> IssueProbateFromIndividualDeclaration()
+        {
+            if (cloudEvent.Source is null)
+            {
+                logger.LogWarning(
+                    "Ignoring cloud event for subject [{Subject}]: no source to read the declaration from",
+                    cloudEvent.Subject);
+                return TypedResults.Ok();
+            }
+
+            // OED sets the event source to its sub-app declaration endpoint, so the event
+            // already names the heir instance and no lookup is needed.
+            var individualDeclaration = await maskinportenClient.GetSubAppDeclaration(cloudEvent.Source);
+
+            var individualDaCase = estate.Data.DaCaseList.First();
+            individualDaCase.SakId = eventData?.DaCaseId ?? individualDaCase.SakId;
+
+            individualDaCase.Status = "FERDIGBEHANDLET";
+            individualDaCase.ResultatType = "PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99";
+            individualDaCase.Skifteattest = new Skifteattest
+            {
+                Resultat = "PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99",
+                Arvinger = individualDaCase.Parter
+                    .Select(part =>
+                    {
+                        var arving = ArvingExtensions.GetArvingSkifteattestFromPart(part);
+
+                        // Only the submitting heir has actually answered the debt question.
+                        // Everyone else keeps the default their part carries.
+                        if (arving is PersonSkifteattest personArving &&
+                            personArving.Nin == individualDeclaration.SubmittedBy)
+                        {
+                            personArving.PaatarGjeldsansvar = individualDeclaration.AcceptsDebt;
+                        }
+
+                        return arving;
+                    })
+                    .ToArray(),
+            };
+
+            // Whoever takes on the debt receives the original. Single() would throw when nobody
+            // does, which is a legitimate state for an individual declaration.
+            var ninsAcceptingDebt = individualDaCase.Skifteattest.Arvinger
+                .OfType<PersonSkifteattest>()
+                .Where(arving => arving.PaatarGjeldsansvar)
+                .Select(arving => arving.Nin)
+                .ToHashSet();
+
+            var recipient = individualDaCase.Parter
+                .OfType<PersonPart>()
+                .FirstOrDefault(part => ninsAcceptingDebt.Contains(part.Nin));
+
+            if (recipient is null)
+            {
+                logger.LogWarning(
+                    "No heir accepts debt for subject [{Subject}]; issuing probate without a MottakerOriginalSkifteattest",
+                    cloudEvent.Subject);
+            }
+            else
+            {
+                recipient.MottakerOriginalSkifteattest = true;
+            }
+
+            await oedClient.PostDaEvent(estate.Data);
+            logger.LogInformation(
+                "Issued probate for subject [{Subject}] from individual declaration submitted by [{SubmittedBy}]",
+                cloudEvent.Subject, individualDeclaration.SubmittedBy);
+
+            return TypedResults.Ok();
+        }
 
         async Task<Altinn.Platform.Storage.Interface.Models.Instance?> GetDeclarationInstance()
         {

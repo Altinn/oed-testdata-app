@@ -73,8 +73,32 @@ public static class CloudEventEndpoints
         var eventData = (cloudEvent.Data as JsonElement?)?.Deserialize<DeclarationSubmittedData>();
 
         var declarationInstance = await GetDeclarationInstance();
+
+        // A missing declaration instance is not exceptional. DeclarationV2Submitted events in
+        // particular look up dd-private-probate instances by the deceased NIN, but those instances
+        // are owned by the submitting heir, so the lookup finds nothing. Ack the event instead of
+        // throwing - an unhandled exception here returns 500 and Altinn retries the delivery for
+        // half an hour.
+        if (declarationInstance is null)
+        {
+            logger.LogWarning(
+                "Ignoring cloud event of type [{CloudEventType}] for subject [{Subject}]: no declaration instance found",
+                cloudEvent.Type, cloudEvent.Subject);
+            return TypedResults.Ok();
+        }
+
         var partyId = declarationInstance.InstanceOwner.PartyId;
-        var oedDeclarationInstanceGuid = declarationInstance.Data.First().InstanceGuid;
+
+        var declarationDataElement = declarationInstance.Data.FirstOrDefault();
+        if (declarationDataElement is null)
+        {
+            logger.LogWarning(
+                "Ignoring cloud event for subject [{Subject}]: declaration instance [{InstanceId}] has no data elements",
+                cloudEvent.Subject, declarationInstance.Id);
+            return TypedResults.Ok();
+        }
+
+        var oedDeclarationInstanceGuid = declarationDataElement.InstanceGuid;
 
         var declaration = await maskinportenClient.GetDeclaration(partyId, oedDeclarationInstanceGuid);
 
@@ -126,7 +150,7 @@ public static class CloudEventEndpoints
 
         return TypedResults.Ok();
 
-        async Task<Altinn.Platform.Storage.Interface.Models.Instance> GetDeclarationInstance()
+        async Task<Altinn.Platform.Storage.Interface.Models.Instance?> GetDeclarationInstance()
         {
             var instances = cloudEvent.Type switch
             {
@@ -135,7 +159,7 @@ public static class CloudEventEndpoints
                 _ => throw new InvalidOperationException($"Unknown cloud event type [{cloudEvent.Type}]"),
             };
         
-            return instances.First();
+            return instances.FirstOrDefault();
         }
     }
 }

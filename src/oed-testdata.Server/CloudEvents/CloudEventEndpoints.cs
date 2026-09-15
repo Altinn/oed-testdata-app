@@ -174,34 +174,25 @@ public static class CloudEventEndpoints
             var individualDeclaration = await maskinportenClient.GetSubAppDeclaration(cloudEvent.Source);
 
             var individualDaCase = estate.Data.DaCaseList.First();
-            individualDaCase.SakId = eventData?.DaCaseId ?? individualDaCase.SakId;
 
-            individualDaCase.Status = "FERDIGBEHANDLET";
-            individualDaCase.ResultatType = "PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99";
-            individualDaCase.Skifteattest = new Skifteattest
-            {
-                Resultat = "PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99",
-                Arvinger = individualDaCase.Parter
-                    .Select(part =>
+            var arvinger = individualDaCase.Parter
+                .Select(part =>
+                {
+                    var arving = ArvingExtensions.GetArvingSkifteattestFromPart(part);
+
+                    // Only the submitting heir has actually answered the debt question.
+                    // Everyone else keeps the default their part carries.
+                    if (arving is PersonSkifteattest personArving &&
+                        personArving.Nin == individualDeclaration.SubmittedBy)
                     {
-                        var arving = ArvingExtensions.GetArvingSkifteattestFromPart(part);
+                        personArving.PaatarGjeldsansvar = individualDeclaration.AcceptsDebt;
+                    }
 
-                        // Only the submitting heir has actually answered the debt question.
-                        // Everyone else keeps the default their part carries.
-                        if (arving is PersonSkifteattest personArving &&
-                            personArving.Nin == individualDeclaration.SubmittedBy)
-                        {
-                            personArving.PaatarGjeldsansvar = individualDeclaration.AcceptsDebt;
-                        }
+                    return arving;
+                })
+                .ToArray();
 
-                        return arving;
-                    })
-                    .ToArray(),
-            };
-
-            // Whoever takes on the debt receives the original. Single() would throw when nobody
-            // does, which is a legitimate state for an individual declaration.
-            var ninsAcceptingDebt = individualDaCase.Skifteattest.Arvinger
+            var ninsAcceptingDebt = arvinger
                 .OfType<PersonSkifteattest>()
                 .Where(arving => arving.PaatarGjeldsansvar)
                 .Select(arving => arving.Nin)
@@ -211,16 +202,28 @@ public static class CloudEventEndpoints
                 .OfType<PersonPart>()
                 .FirstOrDefault(part => ninsAcceptingDebt.Contains(part.Nin));
 
+            // A privat skifte under arveloven is only valid once an heir assumes gjeldsansvar,
+            // so there is no certificate to issue until one does. Decided before the case is
+            // touched, so an ignored event leaves no half-applied probate behind. The event
+            // fires again for every further heir, so a later submission can still complete it.
             if (recipient is null)
             {
                 logger.LogWarning(
-                    "No heir accepts debt for subject [{Subject}]; issuing probate without a MottakerOriginalSkifteattest",
+                    "Ignoring cloud event for subject [{Subject}]: no heir has assumed gjeldsansvar, so no probate can be issued",
                     cloudEvent.Subject);
+                return TypedResults.Ok();
             }
-            else
+
+            individualDaCase.SakId = eventData?.DaCaseId ?? individualDaCase.SakId;
+            individualDaCase.Status = "FERDIGBEHANDLET";
+            individualDaCase.ResultatType = "PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99";
+            individualDaCase.Skifteattest = new Skifteattest
             {
-                recipient.MottakerOriginalSkifteattest = true;
-            }
+                Resultat = "PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99",
+                Arvinger = arvinger,
+            };
+
+            recipient.MottakerOriginalSkifteattest = true;
 
             await oedClient.PostDaEvent(estate.Data);
             logger.LogInformation(

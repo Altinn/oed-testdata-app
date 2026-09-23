@@ -6,6 +6,7 @@
     }
   ],
   "tags": [
-    "Auto-reset"
+    "Auto-reset",
+    "E2E-test"
   ]
 }

@@ -30,29 +30,20 @@ public class EstateService(
 
         // Delete any existing declarations for this estate
         var declarationInstances = await altinnClient.GetOedDeclarationInstancesByDeceasedNin(estate.EstateSsn);
-        if (declarationInstances is { Count: > 0 })
+        foreach (var declarationInstance in declarationInstances ?? [])
         {
-            var partyId = declarationInstances.First().InstanceOwner.PartyId;
-            //var declarationInstanceGuid = declarationInstances.First().Data.First().InstanceGuid;
-            var declarationInstanceGuid = declarationInstances.First().Id.Split("/")[1];
+            var partyId = declarationInstance.InstanceOwner.PartyId;
+            var declarationInstanceGuid = declarationInstance.Id.Split("/").Last();
             await oedClient.DeleteOedDeclarationInstance(partyId, declarationInstanceGuid);
         }
 
         // Delete any existing instance data for this estate
         var estateInstances = await altinnClient.GetOedInstancesByDeceasedNin(estate.EstateSsn);
-        if (estateInstances is { Count: > 0 })
+        foreach (var estateInstance in estateInstances ?? [])
         {
-            var activeInstance = estateInstances.First();
-            var partyId = activeInstance.InstanceOwner.PartyId;
-            var instanceGuid = activeInstance.Id.Split("/").Last();
-
+            var partyId = estateInstance.InstanceOwner.PartyId;
+            var instanceGuid = estateInstance.Id.Split("/").Last();
             await oedClient.DeleteOedInstance(partyId, instanceGuid);
-
-            if (activeInstance.Data is { Count: > 0 })
-            {
-                var dataInstanceGuid = activeInstance.Data.First().InstanceGuid;
-                await oedClient.DeleteOedInstance(partyId, dataInstanceGuid);
-            }
         }
 
         // Update estate data and post DA event to create/recreate estate from scratch

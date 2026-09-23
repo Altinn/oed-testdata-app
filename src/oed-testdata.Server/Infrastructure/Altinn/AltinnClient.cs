@@ -55,7 +55,7 @@ public class AltinnClient(HttpClient httpClient) : IAltinnClient
 
     public async Task<List<Instance>> GetOedDeclarationInstancesByDeceasedNin(string deceasedNin)
     {
-        const string path = "/storage/api/v1/instances?org=digdir&appId=digdir/oed-declaration&status.isHardDeleted=false";
+        const string path = "/storage/api/v1/instances?org=digdir&appId=digdir/oed-declaration&status.isHardDeleted=false&status.isSoftDeleted=false";
 
         var request = new HttpRequestMessage(HttpMethod.Get, path);
         request.Headers.TryAddWithoutValidation("X-Ai-InstanceOwnerIdentifier", $"person:{deceasedNin}");

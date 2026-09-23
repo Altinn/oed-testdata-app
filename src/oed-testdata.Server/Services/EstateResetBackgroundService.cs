@@ -8,6 +8,7 @@ public class EstateResetBackgroundService(
 {
     private static readonly TimeZoneInfo OsloTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Europe/Oslo");
     private static readonly TimeOnly RunAt = new(3, 0);
+    private const string AutoResetTag = "Auto-reset";
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
@@ -51,7 +52,7 @@ public class EstateResetBackgroundService(
 
         var allEstates = await store.ListAll();
         var estatesToReset = allEstates
-            .Where(e => e.Metadata.AutoReset)
+            .Where(e => e.Metadata.Tags.Contains(AutoResetTag))
             .Select(e => e.EstateSsn)
             .ToList();
 

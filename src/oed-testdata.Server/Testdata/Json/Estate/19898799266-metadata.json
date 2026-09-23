@@ -13,6 +13,7 @@
       "name": "AUTORISERT APE"
     }
   ],
-  "autoReset": true,
-  "tags": []
+  "tags": [
+    "Auto-reset"
+  ]
 }

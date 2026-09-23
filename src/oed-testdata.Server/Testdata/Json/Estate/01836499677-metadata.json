@@ -17,6 +17,7 @@
       "name": "VIDSYNT BLOGG"
     }
   ],
-  "autoReset": true,
-  "tags": []
+  "tags": [
+    "Auto-reset"
+  ]
 }

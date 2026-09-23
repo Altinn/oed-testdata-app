@@ -21,8 +21,8 @@
       "name": "POPULÆR OMTALE"
     }
   ],
-  "autoReset": true,
   "tags": [
-    "Brukerstøtte"
+    "Brukerstøtte",
+    "Auto-reset"
   ]
 }

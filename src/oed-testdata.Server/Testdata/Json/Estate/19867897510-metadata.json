@@ -13,6 +13,7 @@
       "name": "TYPISK BLOGG"
     }
   ],
-  "autoReset": true,
-  "tags": []
+  "tags": [
+    "Auto-reset"
+  ]
 }

@@ -5,6 +5,7 @@
       "name": "VIRKELIG AVENY BAKHJULSDRIFT"
     }
   ],
-  "autoReset": true,
-  "tags": []
+  "tags": [
+    "Auto-reset"
+  ]
 }

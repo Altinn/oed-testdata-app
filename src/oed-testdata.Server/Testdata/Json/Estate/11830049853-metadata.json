@@ -17,8 +17,8 @@
       "name": "TURKIS FYRSTE"
     }
   ],
-  "autoReset": true,
   "tags": [
-    "Brukerstøtte"
+    "Brukerstøtte",
+    "Auto-reset"
   ]
 }

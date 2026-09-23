@@ -43,6 +43,7 @@ builder.Services.AddApplicationInsightsTelemetry();
 builder.Services.AddOpenApi();
 
 builder.Services.AddTransient<ITestService, TestService>();
+builder.Services.AddTransient<IEstateService, EstateService>();
 builder.Services.AddAltinnClient(builder.Configuration);
 builder.Services.AddMaskinportenClient(builder.Configuration);
 builder.Services.AddOedClient(builder.Configuration);

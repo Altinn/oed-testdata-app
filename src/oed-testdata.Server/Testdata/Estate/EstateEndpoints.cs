@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using oed_testdata.Server.Infrastructure.Altinn;
 using oed_testdata.Server.Infrastructure.OedEvents;
 using oed_testdata.Server.Infrastructure.TestdataStore.Estate;
+using oed_testdata.Server.Services;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 
@@ -45,10 +45,8 @@ namespace oed_testdata.Server.Testdata.Estate
         }
 
         private static async Task<IResult> CreateOrRecreateEstate(
-            IEstateStore store,
+            IEstateService estateService,
             ILoggerFactory loggerFactory,
-            IOedClient oedClient,
-            IAltinnClient altinnClient,
             [FromBody] CreateOrUpdateEstateRequest request)
         {
             var logger = loggerFactory.CreateLogger(typeof(EstateEndpoints));
@@ -58,47 +56,11 @@ namespace oed_testdata.Server.Testdata.Estate
 
             try
             {
-                // Get estate from testapp store (files)
-                var estate = await store.GetByEstateSsn(request.EstateSsn);
+                var estate = await estateService.CreateOrRecreateEstate(request.EstateSsn, request.TilgangsdatoDigitaltDodsbo);
                 if (estate is null)
                 {
                     return TypedResults.BadRequest();
                 }
-
-                // Delete any existing declarations for this estate
-                var declarationInstances = await altinnClient.GetOedDeclarationInstancesByDeceasedNin(estate.EstateSsn);
-                if (declarationInstances is { Count: > 0 })
-                {
-                    var partyId = declarationInstances.First().InstanceOwner.PartyId;
-                    //var declarationInstanceGuid = declarationInstances.First().Data.First().InstanceGuid;
-                    var declarationInstanceGuid = declarationInstances.First().Id.Split("/")[1];
-                    await oedClient.DeleteOedDeclarationInstance(partyId, declarationInstanceGuid);
-                }
-
-                // Delete any existing instance data for this estate
-                var estateInstances = await altinnClient.GetOedInstancesByDeceasedNin(estate.EstateSsn);
-                if (estateInstances is { Count: > 0 })
-                {
-                    var activeInstance = estateInstances.First();
-                    var partyId = activeInstance.InstanceOwner.PartyId;
-                    var instanceGuid = activeInstance.Id.Split("/").Last();
-
-                    await oedClient.DeleteOedInstance(partyId, instanceGuid);
-
-                    if (activeInstance.Data is { Count: > 0 })
-                    {
-                        var dataInstanceGuid = activeInstance.Data.First().InstanceGuid;
-                        await oedClient.DeleteOedInstance(partyId, dataInstanceGuid);
-                    }
-                }
-
-                // Update estate data and post DA event to create/recreate estate from scratch
-                var data = estate.Data;
-                data.SetMottattStatus();
-                data.UpdateTimestamps(DateTimeOffset.Now);
-                data.UpdateTilgangsdato(request.TilgangsdatoDigitaltDodsbo);
-
-                await oedClient.PostDaEvent(data);
 
                 return TypedResults.Ok(EstateMapper.Map(estate));
             }

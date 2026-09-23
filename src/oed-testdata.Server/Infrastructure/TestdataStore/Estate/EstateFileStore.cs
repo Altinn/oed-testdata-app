@@ -16,6 +16,8 @@ public class EstateMetadata()
     // and this is the easiest way to do it without changing too much of the existing code
     public List<EstateMetadataPerson> Persons { get; init; } = [];
     public List<string> Tags { get; init; } = [];
+
+    public bool AutoReset { get; init; }
 }
 
 public class EstateData

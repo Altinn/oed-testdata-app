@@ -1,0 +1,18 @@
+{
+  "persons": [
+    {
+      "nin": "09869098776",
+      "name": "NETT BOOM"
+    },
+    {
+      "nin": "13825698412",
+      "name": "LITT NEPE"
+    },
+    {
+      "nin": "19825996993",
+      "name": "AUTORISERT APE"
+    }
+  ],
+  "autoReset": true,
+  "tags": []
+}

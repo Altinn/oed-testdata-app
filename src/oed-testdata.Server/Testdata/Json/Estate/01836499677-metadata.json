@@ -1,0 +1,22 @@
+{
+  "persons": [
+    {
+      "nin": "01846597758",
+      "name": "IVRIG PAUSE"
+    },
+    {
+      "nin": "30868898948",
+      "name": "BETYDELIG SKYTTE"
+    },
+    {
+      "nin": "22829299791",
+      "name": "OBSERVANT STASJONSVOGN"
+    },
+    {
+      "nin": "25889698848",
+      "name": "VIDSYNT BLOGG"
+    }
+  ],
+  "autoReset": true,
+  "tags": []
+}

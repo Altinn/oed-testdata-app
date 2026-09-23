@@ -1,0 +1,18 @@
+{
+  "persons": [
+    {
+      "nin": "24890297826",
+      "name": "TURKIS LYTE"
+    },
+    {
+      "nin": "23901197903",
+      "name": "MOSEGRODD LYTE"
+    },
+    {
+      "nin": "18832398531",
+      "name": "TYPISK BLOGG"
+    }
+  ],
+  "autoReset": true,
+  "tags": []
+}

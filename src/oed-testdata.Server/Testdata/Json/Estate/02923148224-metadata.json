@@ -1,0 +1,18 @@
+{
+  "persons": [
+    {
+      "nin": "24825696330",
+      "name": "IMPULSIV DIODE"
+    },
+    {
+      "nin": "09816197969",
+      "name": "KURSIV LERKE"
+    },
+    {
+      "nin": "19896396784",
+      "name": "ALGERISK BOKHANDEL"
+    }
+  ],
+  "autoReset": true,
+  "tags": []
+}

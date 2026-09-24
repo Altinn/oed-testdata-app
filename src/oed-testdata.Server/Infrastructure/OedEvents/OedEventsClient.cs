@@ -9,6 +9,7 @@ public interface IOedClient
     public Task PostDaEvent(DaData data);
     public Task DeleteOedInstance(string partyId, string oedInstanceGuid);
     public Task DeleteOedDeclarationInstance(string partyId, string oedDeclarationInstanceGuid);
+    public Task DeleteDdPrivateProbateInstance(string partyId, string instanceGuid);
 }
 
 public class OedClient(HttpClient httpClient) : IOedClient
@@ -35,6 +36,14 @@ public class OedClient(HttpClient httpClient) : IOedClient
     public async Task DeleteOedDeclarationInstance(string partyId, string oedDeclarationInstanceGuid)
     {
         var path = $"/digdir/oed-declaration/instances/{partyId}/{oedDeclarationInstanceGuid}?hard=true";
+
+        var response = await httpClient.DeleteAsync(path);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task DeleteDdPrivateProbateInstance(string partyId, string instanceGuid)
+    {
+        var path = $"/digdir/dd-private-probate/instances/{partyId}/{instanceGuid}?hard=true";
 
         var response = await httpClient.DeleteAsync(path);
         response.EnsureSuccessStatusCode();

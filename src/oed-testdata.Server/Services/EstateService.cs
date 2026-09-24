@@ -37,9 +37,39 @@ public class EstateService(
             await oedClient.DeleteOedDeclarationInstance(partyId, declarationInstanceGuid);
         }
 
+        var estateInstances = await altinnClient.GetOedInstancesByDeceasedNin(estate.EstateSsn) ?? [];
+
+        // Delete the heirs' individual declarations (dd-private-probate) for this estate. They are owned by
+        // the heir and point back through referrerOedInstanceId. Match on the deceased's party rather than
+        // the current oed instance, so declarations left behind by earlier resets are removed too.
+        var deceasedPartyIds = estateInstances
+            .Concat(declarationInstances ?? [])
+            .Select(instance => instance.InstanceOwner.PartyId)
+            .ToHashSet();
+
+        if (deceasedPartyIds.Count > 0)
+        {
+            foreach (var instanceOwner in GetHeirInstanceOwnerIdentifiers(estate.Data.DaCaseList.Single()))
+            {
+                var probateInstances = await altinnClient.GetDdPrivateProbateInstancesByInstanceOwner(instanceOwner);
+                foreach (var probateInstance in probateInstances ?? [])
+                {
+                    if (probateInstance.DataValues?.TryGetValue("referrerOedInstanceId", out var referrer) != true ||
+                        referrer is null ||
+                        !deceasedPartyIds.Contains(referrer.Split("/").First()))
+                    {
+                        continue;
+                    }
+
+                    var partyId = probateInstance.InstanceOwner.PartyId;
+                    var instanceGuid = probateInstance.Id.Split("/").Last();
+                    await oedClient.DeleteDdPrivateProbateInstance(partyId, instanceGuid);
+                }
+            }
+        }
+
         // Delete any existing instance data for this estate
-        var estateInstances = await altinnClient.GetOedInstancesByDeceasedNin(estate.EstateSsn);
-        foreach (var estateInstance in estateInstances ?? [])
+        foreach (var estateInstance in estateInstances)
         {
             var partyId = estateInstance.InstanceOwner.PartyId;
             var instanceGuid = estateInstance.Id.Split("/").Last();
@@ -55,5 +85,22 @@ public class EstateService(
         await oedClient.PostDaEvent(data);
 
         return estate;
+    }
+
+    private static IEnumerable<string> GetHeirInstanceOwnerIdentifiers(DaCase daCase)
+    {
+        foreach (var part in daCase.Parter)
+        {
+            switch (part)
+            {
+                case PersonPart { Nin: { Length: > 0 } nin }:
+                    yield return $"person:{nin}";
+                    break;
+                // Storage only accepts the British spelling; "organization:" is rejected with 400
+                case ForetakPart { OrganisasjonsNummer: { } orgNr }:
+                    yield return $"organisation:{(long)orgNr}";
+                    break;
+            }
+        }
     }
 }

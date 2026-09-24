@@ -9,6 +9,7 @@ public interface IAltinnClient
     public Task<List<Instance>> GetOedInstancesByDeceasedNin(string deceasedNin);
     public Task<List<Instance>> GetOedDeclarationInstancesByDeceasedNin(string deceasedNin);
     public Task<List<Instance>> GetDdPrivateProbateInstancesByDeceasedNin(string deceasedNin);
+    public Task<List<Instance>> GetDdPrivateProbateInstancesByInstanceOwner(string instanceOwnerIdentifier);
     public Task<T> GetInstanceData<T>(string partyId, string instanceId, string instanceDataId);
 }
 
@@ -32,6 +33,23 @@ public class AltinnClient(HttpClient httpClient) : IAltinnClient
 
         var request = new HttpRequestMessage(HttpMethod.Get, path);
         request.Headers.TryAddWithoutValidation("X-Ai-InstanceOwnerIdentifier", $"person:{deceasedNin}");
+        var response = await httpClient.SendAsync(request);
+
+        await using var contentStream = await response.Content.ReadAsStreamAsync();
+        var altinnResponse = await AltinnJsonSerializer.Deserialize<AltinnInstancesResponse>(contentStream);
+        return altinnResponse.Instances;
+    }
+
+    /// <summary>
+    /// Lists dd-private-probate instances owned by the given party, e.g. "person:{nin}" or
+    /// "organisation:{orgNr}". These are owned by the heir filling them in, not the deceased.
+    /// </summary>
+    public async Task<List<Instance>> GetDdPrivateProbateInstancesByInstanceOwner(string instanceOwnerIdentifier)
+    {
+        const string path = "/storage/api/v1/instances?org=digdir&appId=digdir/dd-private-probate&status.isHardDeleted=false";
+
+        var request = new HttpRequestMessage(HttpMethod.Get, path);
+        request.Headers.TryAddWithoutValidation("X-Ai-InstanceOwnerIdentifier", instanceOwnerIdentifier);
         var response = await httpClient.SendAsync(request);
 
         await using var contentStream = await response.Content.ReadAsStreamAsync();

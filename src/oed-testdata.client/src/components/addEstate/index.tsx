@@ -395,13 +395,12 @@ export function NewEstateForm({ uniqueTags }: Props) {
 
   const updateHeirRelation = (
     id: string,
-    relationItem: SuggestionItem | undefined
+    relationItem: SuggestionItem | null
   ) => {
-    if (!relationItem) return;
     setFormData((prev) => ({
       ...prev,
       heirs: prev.heirs.map((heir) =>
-        heir.id === id ? { ...heir, relation: relationItem } : heir
+        heir.id === id ? { ...heir, relation: relationItem ?? undefined } : heir
       ),
     }));
 

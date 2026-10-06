@@ -51,7 +51,7 @@ export interface HeirFormProps<T extends Heir> {
     onFetch?: (id: string, num: string) => void;
     onRandom: (id: string) => void;
     onRemove: (id: string) => void;
-    onRelation?: (id: string, item: SuggestionItem | undefined) => void;
+    onRelation?: (id: string, item: SuggestionItem | null) => void;
     errors: Record<string, string>;
 }
 

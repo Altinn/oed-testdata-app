@@ -49,6 +49,13 @@
           "role": "BARN",
           "formuesfullmakt": true,
           "signertDato": null
+        },
+        {
+          "type": "Person",
+          "nin": "28891999595",
+          "role": "BARNEBARN",
+          "formuesfullmakt": true,
+          "signertDato": null
         }
       ],
       "receivedDate": "1900-01-01T00:00:00Z",

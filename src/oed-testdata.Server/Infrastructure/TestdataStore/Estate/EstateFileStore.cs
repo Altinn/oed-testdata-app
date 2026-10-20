@@ -143,6 +143,6 @@ public class EstateFileStore : IEstateStore
     private static void EnsureDirectory()
     {
         if (!Directory.Exists(EstatePath))
-            throw new Exception("No path");
+            throw new DirectoryNotFoundException("No path");
     }
 }

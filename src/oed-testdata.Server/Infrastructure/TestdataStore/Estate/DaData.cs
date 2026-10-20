@@ -26,11 +26,6 @@ public class DaData
         daCase.DeadlineDate = timestamp.AddDays(60);
     }
 
-    public void SetFeilfortStatus()
-    {
-        DaCaseList.Single().Status = "FEILFORT";
-    }
-
     public void SetMottattStatus()
     {
         DaCaseList.Single().Status = "MOTTATT";
@@ -181,16 +176,6 @@ public partial class ForetakPappSkifteattest : ArvingSkifteattest
 
 
 //------------------------------------------------
-public class SkifteattestArvingPerson
-{
-    [JsonPropertyName("type")]
-    public required string Type { get; set; } = "Person";
-    [JsonPropertyName("nin")]
-    public string Nin { get; set; }
-    [JsonPropertyName("paatarGjeldsansvar")]
-    public bool PaatarGjeldsansvar { get; set; }
-}
-
 public class Parter
 {
     [JsonPropertyName("type")]

@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using oed_testdata.Server.Infrastructure.Maskinporten;
-using oed_testdata.Server.Infrastructure.TestdataStore.Estate;
 
 namespace oed_testdata.Server.Testdata.Foretak;
 
@@ -24,7 +23,6 @@ public static class ForetakEndpoints
 
     private static async Task<Ok<List<ForetakDto>>> GetForetakByQuery(
         IMaskinportenClient mpClient,
-        IEstateStore estateStore,
         [AsParameters] ForetakQuery query)
     {
         var tenorWrapper = await mpClient.TenorCompanySearch(ForetakMapper.Map(query));

@@ -33,9 +33,9 @@ namespace oed_testdata.Server.Oed
         {
             var instances = await altinnClient.GetOedInstancesByDeceasedNin(estateSsn);
 
-            var partyId = instances.First().InstanceOwner.PartyId;
-            var oedInstanceGuid = instances.First().Data.First().InstanceGuid;
-            var oedInstanceDataGuid = instances.First().Data.First(data => data.ContentType == "application/xml").Id;
+            var partyId = instances[0].InstanceOwner.PartyId;
+            var oedInstanceGuid = instances[0].Data[0].InstanceGuid;
+            var oedInstanceDataGuid = instances[0].Data.First(data => data.ContentType == "application/xml").Id;
 
             var data = await altinnClient.GetInstanceData<OED_M>(partyId, oedInstanceGuid, oedInstanceDataGuid);
 

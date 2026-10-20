@@ -1,5 +1,4 @@
 using System.Text.Json;
-using System.Web;
 using oed_testdata.Server.Infrastructure.Maskinporten.Models;
 
 namespace oed_testdata.Server.Infrastructure.Maskinporten

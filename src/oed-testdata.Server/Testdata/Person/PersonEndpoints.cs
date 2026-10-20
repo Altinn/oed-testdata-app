@@ -28,13 +28,12 @@ public static class PersonEndpoints
         [AsParameters] PersonQuery query)
     {
         var tenorWrapper = await mpClient.TenorSearch(PersonMapper.Map(query));
-        var documents = tenorWrapper.Documents;
-        
+
         // Does not return deceased if existing deceased
         var estates = await estateStore.ListAll();
         var deceasedNins = estates.Select(x => x.EstateSsn).ToHashSet();
 
-        documents = tenorWrapper.Documents
+        var documents = tenorWrapper.Documents
             .Where(doc => !deceasedNins.Contains(doc.Id)).ToList();
 
         return TypedResults.Ok(PersonMapper.Map(documents));

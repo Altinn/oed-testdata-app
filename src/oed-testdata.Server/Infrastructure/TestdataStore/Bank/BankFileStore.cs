@@ -13,11 +13,11 @@ public class BankFileStore(ILogger<BankFileStore> logger) : FileStore, IBankStor
         var response = await GetForParty<BankRelations>(CustomerRelationsPath, partyId);
         if (response is not null)
         {
-            logger.LogInformation("Returning SPECIFIC customer relations testdata for partyId [{partyId}]", partyId);
+            logger.LogInformation("Returning SPECIFIC customer relations testdata for partyId [{PartyId}]", partyId);
             return response;
         }
 
-        logger.LogInformation("Returning DEFAULT customer relations testdata for partyId [{partyId}]", partyId);
+        logger.LogInformation("Returning DEFAULT customer relations testdata for partyId [{PartyId}]", partyId);
         return await GetDefault<BankRelations>(CustomerRelationsPath);
     }
 
@@ -28,11 +28,11 @@ public class BankFileStore(ILogger<BankFileStore> logger) : FileStore, IBankStor
         var response = await GetSpecificBankDetails(partyId, bankOrgNo);
         if (response is not null)
         {
-            logger.LogInformation("Returning SPECIFIC bank details testdata for partyId [{partyId}], bankOrgNo [{bankOrgNo}]", partyId, bankOrgNo);
+            logger.LogInformation("Returning SPECIFIC bank details testdata for partyId [{PartyId}], bankOrgNo [{BankOrgNo}]", partyId, bankOrgNo);
             return response;
         }
 
-        logger.LogInformation("Returning DEFAULT bank details testdata for partyId [{partyId}], bankOrgNo [{bankOrgNo}]", partyId, bankOrgNo);
+        logger.LogInformation("Returning DEFAULT bank details testdata for partyId [{PartyId}], bankOrgNo [{BankOrgNo}]", partyId, bankOrgNo);
         return await GetDefault<BankResponse>(BankDetailsPath);
     }
 

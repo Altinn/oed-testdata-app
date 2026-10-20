@@ -26,7 +26,7 @@ public static class KartverketEndpoints
         ILoggerFactory loggerFactory)
     {
         var logger = loggerFactory.CreateLogger(typeof(KartverketEndpoints));
-        logger.LogInformation("Handling call for {path}", httpContext.Request.Path.Value);
+        logger.LogInformation("Handling call for {Path}", httpContext.Request.Path.Value);
 
         var resp = await store.GetAsync<KartverketResponse>("./Testdata/Json/Kartverket", instanceOwnerPartyId);
         return Results.Ok(resp);

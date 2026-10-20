@@ -12,11 +12,11 @@ public class TestdataFileStore(ILogger<TestdataFileStore> logger) : FileStore, I
         var response = await GetForParty<TResponse>(path, partyId);
         if (response is not null)
         {
-            logger.LogInformation("Returning SPECIFIC testdata for partyId [{partyId}] from [{path}]", partyId, path);
+            logger.LogInformation("Returning SPECIFIC testdata for partyId [{PartyId}] from [{Path}]", partyId, path);
             return response;
         }
 
-        logger.LogInformation("Returning DEFAULT testdata for partyId [{partyId}] from [{path}]", partyId, path);
+        logger.LogInformation("Returning DEFAULT testdata for partyId [{PartyId}] from [{Path}]", partyId, path);
         return await GetDefault<TResponse>(path);
     }
 }

@@ -8,10 +8,4 @@
         public const string WebhookValidation = "platform.events.validatesubscription";
         public const string HeirRolesUpdated = "no.altinn.events.digitalt-dodsbo.v1.heir-roles-updated";
     }
-
-    public static class OtherStuff
-    {
-        public const string ServiceResourceId = "urn:altinn:resource:dodsbo-domstoladmin-api";
-        public const string AppProcessCompleted = "app.instance.process.completed";
-    }
 }

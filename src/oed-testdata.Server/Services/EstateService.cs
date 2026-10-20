@@ -33,7 +33,7 @@ public class EstateService(
         foreach (var declarationInstance in declarationInstances ?? [])
         {
             var partyId = declarationInstance.InstanceOwner.PartyId;
-            var declarationInstanceGuid = declarationInstance.Id.Split("/").Last();
+            var declarationInstanceGuid = declarationInstance.Id.Split("/")[^1];
             await oedClient.DeleteOedDeclarationInstance(partyId, declarationInstanceGuid);
         }
 
@@ -56,13 +56,13 @@ public class EstateService(
                 {
                     if (probateInstance.DataValues?.TryGetValue("referrerOedInstanceId", out var referrer) != true ||
                         referrer is null ||
-                        !deceasedPartyIds.Contains(referrer.Split("/").First()))
+                        !deceasedPartyIds.Contains(referrer.Split("/")[0]))
                     {
                         continue;
                     }
 
                     var partyId = probateInstance.InstanceOwner.PartyId;
-                    var instanceGuid = probateInstance.Id.Split("/").Last();
+                    var instanceGuid = probateInstance.Id.Split("/")[^1];
                     await oedClient.DeleteDdPrivateProbateInstance(partyId, instanceGuid);
                 }
             }
@@ -72,7 +72,7 @@ public class EstateService(
         foreach (var estateInstance in estateInstances)
         {
             var partyId = estateInstance.InstanceOwner.PartyId;
-            var instanceGuid = estateInstance.Id.Split("/").Last();
+            var instanceGuid = estateInstance.Id.Split("/")[^1];
             await oedClient.DeleteOedInstance(partyId, instanceGuid);
         }
 

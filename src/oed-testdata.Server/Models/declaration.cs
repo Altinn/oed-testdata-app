@@ -210,7 +210,7 @@ namespace Altinn.App.Models
     [Newtonsoft.Json.JsonIgnore]
     public Guid AltinnRowId { get; set; }
 
-    public bool ShouldSerializeAltinnRowId() => AltinnRowId != default;
+    public bool ShouldSerializeAltinnRowId() => AltinnRowId != Guid.Empty;
 
     [XmlElement("DateOfSignature", Order = 1)]
     [JsonProperty("DateOfSignature")]
@@ -242,7 +242,7 @@ namespace Altinn.App.Models
     [Newtonsoft.Json.JsonIgnore]
     public Guid AltinnRowId { get; set; }
 
-    public bool ShouldSerializeAltinnRowId() => AltinnRowId != default;
+    public bool ShouldSerializeAltinnRowId() => AltinnRowId != Guid.Empty;
 
     [XmlElement("SF_DateOfSignature", Order = 1)]
     [JsonProperty("SF_DateOfSignature")]
@@ -259,7 +259,7 @@ namespace Altinn.App.Models
     [Newtonsoft.Json.JsonIgnore]
     public Guid AltinnRowId { get; set; }
 
-    public bool ShouldSerializeAltinnRowId() => AltinnRowId != default;
+    public bool ShouldSerializeAltinnRowId() => AltinnRowId != Guid.Empty;
 
     [XmlElement("DateOfSignature", Order = 1)]
     [JsonProperty("DateOfSignature")]
@@ -291,7 +291,7 @@ namespace Altinn.App.Models
     [Newtonsoft.Json.JsonIgnore]
     public Guid AltinnRowId { get; set; }
 
-    public bool ShouldSerializeAltinnRowId() => AltinnRowId != default;
+    public bool ShouldSerializeAltinnRowId() => AltinnRowId != Guid.Empty;
 
     [XmlElement("SF_DateOfSignature", Order = 1)]
     [JsonProperty("SF_DateOfSignature")]
@@ -308,7 +308,7 @@ namespace Altinn.App.Models
     [Newtonsoft.Json.JsonIgnore]
     public Guid AltinnRowId { get; set; }
 
-    public bool ShouldSerializeAltinnRowId() => AltinnRowId != default;
+    public bool ShouldSerializeAltinnRowId() => AltinnRowId != Guid.Empty;
 
     [XmlElement("MunicipalityNumber", Order = 1)]
     [JsonProperty("MunicipalityNumber")]
@@ -355,7 +355,7 @@ namespace Altinn.App.Models
     [Newtonsoft.Json.JsonIgnore]
     public Guid AltinnRowId { get; set; }
 
-    public bool ShouldSerializeAltinnRowId() => AltinnRowId != default;
+    public bool ShouldSerializeAltinnRowId() => AltinnRowId != Guid.Empty;
 
     [XmlElement("SF_MunicipalityNumber", Order = 1)]
     [JsonProperty("SF_MunicipalityNumber")]
@@ -415,7 +415,7 @@ namespace Altinn.App.Models
     [Newtonsoft.Json.JsonIgnore]
     public Guid AltinnRowId { get; set; }
 
-    public bool ShouldSerializeAltinnRowId() => AltinnRowId != default;
+    public bool ShouldSerializeAltinnRowId() => AltinnRowId != Guid.Empty;
 
     [XmlElement("PartyId", Order = 1)]
     [JsonProperty("PartyId")]
@@ -540,7 +540,7 @@ namespace Altinn.App.Models
     [Newtonsoft.Json.JsonIgnore]
     public Guid AltinnRowId { get; set; }
 
-    public bool ShouldSerializeAltinnRowId() => AltinnRowId != default;
+    public bool ShouldSerializeAltinnRowId() => AltinnRowId != Guid.Empty;
 
     [XmlElement("Name", Order = 1)]
     [JsonProperty("Name")]
@@ -570,7 +570,7 @@ namespace Altinn.App.Models
     [Newtonsoft.Json.JsonIgnore]
     public Guid AltinnRowId { get; set; }
 
-    public bool ShouldSerializeAltinnRowId() => AltinnRowId != default;
+    public bool ShouldSerializeAltinnRowId() => AltinnRowId != Guid.Empty;
 
     [XmlElement("DateOfSignature", Order = 1)]
     [JsonProperty("DateOfSignature")]
@@ -592,7 +592,7 @@ namespace Altinn.App.Models
     [Newtonsoft.Json.JsonIgnore]
     public Guid AltinnRowId { get; set; }
 
-    public bool ShouldSerializeAltinnRowId() => AltinnRowId != default;
+    public bool ShouldSerializeAltinnRowId() => AltinnRowId != Guid.Empty;
 
     [XmlElement("MunicipalityLandNumber", Order = 1)]
     [JsonProperty("MunicipalityLandNumber")]

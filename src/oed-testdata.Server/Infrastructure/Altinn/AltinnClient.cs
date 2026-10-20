@@ -15,6 +15,8 @@ public interface IAltinnClient
 
 public class AltinnClient(HttpClient httpClient) : IAltinnClient
 {
+    private const string InstanceOwnerIdentifierHeader = "X-Ai-InstanceOwnerIdentifier";
+
     public async Task<List<Instance>> GetAllOedInstances()
     {
         const string path = "/storage/api/v1/instances?org=digdir&appId=digdir/oed&status.isHardDeleted=false&status.isSoftDeleted=false&size=50";
@@ -32,7 +34,7 @@ public class AltinnClient(HttpClient httpClient) : IAltinnClient
         const string path = "/storage/api/v1/instances?org=digdir&appId=digdir/dd-private-probate&status.isHardDeleted=false";
 
         var request = new HttpRequestMessage(HttpMethod.Get, path);
-        request.Headers.TryAddWithoutValidation("X-Ai-InstanceOwnerIdentifier", $"person:{deceasedNin}");
+        request.Headers.TryAddWithoutValidation(InstanceOwnerIdentifierHeader, $"person:{deceasedNin}");
         var response = await httpClient.SendAsync(request);
 
         await using var contentStream = await response.Content.ReadAsStreamAsync();
@@ -49,7 +51,7 @@ public class AltinnClient(HttpClient httpClient) : IAltinnClient
         const string path = "/storage/api/v1/instances?org=digdir&appId=digdir/dd-private-probate&status.isHardDeleted=false";
 
         var request = new HttpRequestMessage(HttpMethod.Get, path);
-        request.Headers.TryAddWithoutValidation("X-Ai-InstanceOwnerIdentifier", instanceOwnerIdentifier);
+        request.Headers.TryAddWithoutValidation(InstanceOwnerIdentifierHeader, instanceOwnerIdentifier);
         var response = await httpClient.SendAsync(request);
 
         await using var contentStream = await response.Content.ReadAsStreamAsync();
@@ -62,7 +64,7 @@ public class AltinnClient(HttpClient httpClient) : IAltinnClient
         const string path = "/storage/api/v1/instances?org=digdir&appId=digdir/oed&status.isHardDeleted=false&status.isSoftDeleted=false";
 
         var request = new HttpRequestMessage(HttpMethod.Get, path);
-        request.Headers.TryAddWithoutValidation("X-Ai-InstanceOwnerIdentifier", $"person:{deceasedNin}");
+        request.Headers.TryAddWithoutValidation(InstanceOwnerIdentifierHeader, $"person:{deceasedNin}");
         var response = await httpClient.SendAsync(request);
         
         await using var contentStream = await response.Content.ReadAsStreamAsync();
@@ -76,7 +78,7 @@ public class AltinnClient(HttpClient httpClient) : IAltinnClient
         const string path = "/storage/api/v1/instances?org=digdir&appId=digdir/oed-declaration&status.isHardDeleted=false&status.isSoftDeleted=false";
 
         var request = new HttpRequestMessage(HttpMethod.Get, path);
-        request.Headers.TryAddWithoutValidation("X-Ai-InstanceOwnerIdentifier", $"person:{deceasedNin}");
+        request.Headers.TryAddWithoutValidation(InstanceOwnerIdentifierHeader, $"person:{deceasedNin}");
         var response = await httpClient.SendAsync(request);
 
         await using var contentStream = await response.Content.ReadAsStreamAsync();

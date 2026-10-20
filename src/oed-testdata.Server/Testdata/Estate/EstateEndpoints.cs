@@ -100,25 +100,7 @@ namespace oed_testdata.Server.Testdata.Estate
 
                 if (request.ResultatType is not null)
                 {
-                    daCase.Status = "FERDIGBEHANDLET";
-                    daCase.ResultatType = request.ResultatType;
-
-                    // NB! Skifteattest vil KUN bli populert med data fra DA for privat skifte, for alle andre skifteformer vil denne være null
-                    if (request.ResultatType.StartsWith("PRIVAT_SKIFTE"))
-                    {
-                        daCase.Skifteattest = new Skifteattest
-                        {
-                            Resultat = request.ResultatType,
-                            Arvinger = daCase.Parter
-                                .Select(ArvingExtensions.GetArvingSkifteattestFromPart)
-                                .ToArray()
-                        };
-                        daCase.Parter.OfType<PersonPart>().First().MottakerOriginalSkifteattest = true;
-                    }
-                    else
-                    {
-                        daCase.Skifteattest = null;
-                    }
+                    ApplyResultatType(daCase, request.ResultatType);
                 }
 
                 if (request.TilgangsdatoDigitaltDodsbo is not null)
@@ -128,18 +110,9 @@ namespace oed_testdata.Server.Testdata.Estate
 
                 if (request.Heirs is not null)
                 {
-                    foreach (var heirFromRequest in request.Heirs)
-                    {
-                        var part = daCase.Parter.OfType<PersonPart>().SingleOrDefault(p => p.Nin == heirFromRequest.Nin);
-                        if (part is null) continue;
-
-                        if (heirFromRequest.PowerOfAttorney.HasValue)
-                        {
-                            part.Formuesfullmakt = heirFromRequest.PowerOfAttorney.Value;
-                        }
-                    }
+                    ApplyHeirs(daCase, request.Heirs);
                 }
-                
+
                 data.UpdateTimestamps(DateTimeOffset.Now);
                 await oedClient.PostDaEvent(data);
 
@@ -149,6 +122,43 @@ namespace oed_testdata.Server.Testdata.Estate
             {
                 logger.LogError(e, "Ooops!");
                 return TypedResults.BadRequest();
+            }
+        }
+
+        private static void ApplyResultatType(DaCase daCase, string resultatType)
+        {
+            daCase.Status = "FERDIGBEHANDLET";
+            daCase.ResultatType = resultatType;
+
+            // NB! Skifteattest vil KUN bli populert med data fra DA for privat skifte, for alle andre skifteformer vil denne være null
+            if (resultatType.StartsWith("PRIVAT_SKIFTE"))
+            {
+                daCase.Skifteattest = new Skifteattest
+                {
+                    Resultat = resultatType,
+                    Arvinger = daCase.Parter
+                        .Select(ArvingExtensions.GetArvingSkifteattestFromPart)
+                        .ToArray()
+                };
+                daCase.Parter.OfType<PersonPart>().First().MottakerOriginalSkifteattest = true;
+            }
+            else
+            {
+                daCase.Skifteattest = null;
+            }
+        }
+
+        private static void ApplyHeirs(DaCase daCase, IEnumerable<PatchEstateHeirRequest> heirs)
+        {
+            foreach (var heirFromRequest in heirs)
+            {
+                var part = daCase.Parter.OfType<PersonPart>().SingleOrDefault(p => p.Nin == heirFromRequest.Nin);
+                if (part is null) continue;
+
+                if (heirFromRequest.PowerOfAttorney.HasValue)
+                {
+                    part.Formuesfullmakt = heirFromRequest.PowerOfAttorney.Value;
+                }
             }
         }
 

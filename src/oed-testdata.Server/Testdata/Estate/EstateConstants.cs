@@ -2,7 +2,7 @@
 {
     public static class EstateConstants
     {
-        public static string[] HiddenEstates = [
+        public static readonly IReadOnlyList<string> HiddenEstates = [
             "18855699938",          // LOK - RYDDIG BARNESKOLE
             "06888298329",          // TOE - DISKRET_LEVERANDØR
             "16873948381",          // DRJ - UPERSONLIG_SYRE

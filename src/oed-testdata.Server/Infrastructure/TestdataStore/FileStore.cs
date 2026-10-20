@@ -42,6 +42,6 @@ public abstract class FileStore
     protected static void EnsureDirectory(string path)
     {
         if (!Directory.Exists(path))
-            throw new Exception("No path");
+            throw new DirectoryNotFoundException("No path");
     }
 }

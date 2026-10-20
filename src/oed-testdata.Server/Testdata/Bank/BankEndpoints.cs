@@ -49,9 +49,6 @@ public static class BankEndpoints
     }
 
     private static async Task<IResult> GetAccountTransactions(
-        int instanceOwnerPartyId,
-        string bankOrgNo,
-        string accountRefNo,
         HttpContext httpContext,
         IBankStore bankStore,
         ILoggerFactory loggerFactory)
@@ -64,8 +61,6 @@ public static class BankEndpoints
     }
 
     private static async Task<IResult> GetBankTransactions(
-        int instanceOwnerPartyId,
-        string bankOrgNo,
         HttpContext httpContext,
         IBankStore bankStore,
         ILoggerFactory loggerFactory)

@@ -11,6 +11,8 @@ namespace oed_testdata.Server.CloudEvents;
 
 public static class CloudEventEndpoints
 {
+    private const string PrivatSkifteParagraf99 = "PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99";
+
     public static void MapCloudEventEndpoints(this WebApplication app)
     {
         app
@@ -78,9 +80,21 @@ public static class CloudEventEndpoints
         // completes the case.
         if (cloudEvent.Type == CloudEventType.DeclarationV2Submitted)
         {
-            return await IssueProbateFromIndividualDeclaration();
+            return await IssueProbateFromIndividualDeclaration(cloudEvent, estate, eventData, maskinportenClient, oedClient, logger);
         }
 
+        return await IssueProbateFromJointDeclaration(cloudEvent, estate, eventData, altinnClient, maskinportenClient, oedClient, logger);
+    }
+
+    private static async Task<IResult> IssueProbateFromJointDeclaration(
+        CloudEvent cloudEvent,
+        EstateData estate,
+        DeclarationSubmittedData? eventData,
+        IAltinnClient altinnClient,
+        IMaskinportenClient maskinportenClient,
+        IOedClient oedClient,
+        ILogger logger)
+    {
         var declarationInstance = await GetDeclarationInstance();
 
         // A missing declaration instance is not exceptional. DeclarationV2Submitted events in
@@ -111,7 +125,7 @@ public static class CloudEventEndpoints
 
         var declaration = await maskinportenClient.GetDeclaration(partyId, oedDeclarationInstanceGuid);
 
-        var daCase = estate.Data.DaCaseList.First();
+        var daCase = estate.Data.DaCaseList[0];
         daCase.SakId = eventData?.DaCaseId ?? daCase.SakId;
 
         // Do we have alle the data we need to issue the probate? If not, ignore the event
@@ -123,10 +137,10 @@ public static class CloudEventEndpoints
 
         // Issue probate based on data from the declaration
         daCase.Status = "FERDIGBEHANDLET";
-        daCase.ResultatType = "PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99";
+        daCase.ResultatType = PrivatSkifteParagraf99;
         daCase.Skifteattest = new Skifteattest
         {
-            Resultat = "PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99",
+            Resultat = PrivatSkifteParagraf99,
             Arvinger = daCase.Parter
                 .Select(part =>
                 {
@@ -159,80 +173,6 @@ public static class CloudEventEndpoints
 
         return TypedResults.Ok();
 
-        async Task<IResult> IssueProbateFromIndividualDeclaration()
-        {
-            if (cloudEvent.Source is null)
-            {
-                logger.LogWarning(
-                    "Ignoring cloud event for subject [{Subject}]: no source to read the declaration from",
-                    cloudEvent.Subject);
-                return TypedResults.Ok();
-            }
-
-            // OED sets the event source to its sub-app declaration endpoint, so the event
-            // already names the heir instance and no lookup is needed.
-            var individualDeclaration = await maskinportenClient.GetSubAppDeclaration(cloudEvent.Source);
-
-            var individualDaCase = estate.Data.DaCaseList.First();
-
-            var arvinger = individualDaCase.Parter
-                .Select(part =>
-                {
-                    var arving = ArvingExtensions.GetArvingSkifteattestFromPart(part);
-
-                    // Only the submitting heir has actually answered the debt question.
-                    // Everyone else keeps the default their part carries.
-                    if (arving is PersonSkifteattest personArving &&
-                        personArving.Nin == individualDeclaration.SubmittedBy)
-                    {
-                        personArving.PaatarGjeldsansvar = individualDeclaration.AcceptsDebt;
-                    }
-
-                    return arving;
-                })
-                .ToArray();
-
-            var ninsAcceptingDebt = arvinger
-                .OfType<PersonSkifteattest>()
-                .Where(arving => arving.PaatarGjeldsansvar)
-                .Select(arving => arving.Nin)
-                .ToHashSet();
-
-            var recipient = individualDaCase.Parter
-                .OfType<PersonPart>()
-                .FirstOrDefault(part => ninsAcceptingDebt.Contains(part.Nin));
-
-            // A privat skifte under arveloven is only valid once an heir assumes gjeldsansvar,
-            // so there is no certificate to issue until one does. Decided before the case is
-            // touched, so an ignored event leaves no half-applied probate behind. The event
-            // fires again for every further heir, so a later submission can still complete it.
-            if (recipient is null)
-            {
-                logger.LogWarning(
-                    "Ignoring cloud event for subject [{Subject}]: no heir has assumed gjeldsansvar, so no probate can be issued",
-                    cloudEvent.Subject);
-                return TypedResults.Ok();
-            }
-
-            individualDaCase.SakId = eventData?.DaCaseId ?? individualDaCase.SakId;
-            individualDaCase.Status = "FERDIGBEHANDLET";
-            individualDaCase.ResultatType = "PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99";
-            individualDaCase.Skifteattest = new Skifteattest
-            {
-                Resultat = "PRIVAT_SKIFTE_IHT_ARVELOVEN_PARAGRAF_99",
-                Arvinger = arvinger,
-            };
-
-            recipient.MottakerOriginalSkifteattest = true;
-
-            await oedClient.PostDaEvent(estate.Data);
-            logger.LogInformation(
-                "Issued probate for subject [{Subject}] from individual declaration submitted by [{SubmittedBy}]",
-                cloudEvent.Subject, individualDeclaration.SubmittedBy);
-
-            return TypedResults.Ok();
-        }
-
         async Task<Altinn.Platform.Storage.Interface.Models.Instance?> GetDeclarationInstance()
         {
             var instances = cloudEvent.Type switch
@@ -244,6 +184,86 @@ public static class CloudEventEndpoints
         
             return instances.FirstOrDefault();
         }
+    }
+
+    private static async Task<IResult> IssueProbateFromIndividualDeclaration(
+        CloudEvent cloudEvent,
+        EstateData estate,
+        DeclarationSubmittedData? eventData,
+        IMaskinportenClient maskinportenClient,
+        IOedClient oedClient,
+        ILogger logger)
+    {
+        if (cloudEvent.Source is null)
+        {
+            logger.LogWarning(
+                "Ignoring cloud event for subject [{Subject}]: no source to read the declaration from",
+                cloudEvent.Subject);
+            return TypedResults.Ok();
+        }
+
+        // OED sets the event source to its sub-app declaration endpoint, so the event
+        // already names the heir instance and no lookup is needed.
+        var individualDeclaration = await maskinportenClient.GetSubAppDeclaration(cloudEvent.Source);
+
+        var individualDaCase = estate.Data.DaCaseList[0];
+
+        var arvinger = individualDaCase.Parter
+            .Select(part =>
+            {
+                var arving = ArvingExtensions.GetArvingSkifteattestFromPart(part);
+
+                // Only the submitting heir has actually answered the debt question.
+                // Everyone else keeps the default their part carries.
+                if (arving is PersonSkifteattest personArving &&
+                    personArving.Nin == individualDeclaration.SubmittedBy)
+                {
+                    personArving.PaatarGjeldsansvar = individualDeclaration.AcceptsDebt;
+                }
+
+                return arving;
+            })
+            .ToArray();
+
+        var ninsAcceptingDebt = arvinger
+            .OfType<PersonSkifteattest>()
+            .Where(arving => arving.PaatarGjeldsansvar)
+            .Select(arving => arving.Nin)
+            .ToHashSet();
+
+        var recipient = individualDaCase.Parter
+            .OfType<PersonPart>()
+            .FirstOrDefault(part => ninsAcceptingDebt.Contains(part.Nin));
+
+        // A privat skifte under arveloven is only valid once an heir assumes gjeldsansvar,
+        // so there is no certificate to issue until one does. Decided before the case is
+        // touched, so an ignored event leaves no half-applied probate behind. The event
+        // fires again for every further heir, so a later submission can still complete it.
+        if (recipient is null)
+        {
+            logger.LogWarning(
+                "Ignoring cloud event for subject [{Subject}]: no heir has assumed gjeldsansvar, so no probate can be issued",
+                cloudEvent.Subject);
+            return TypedResults.Ok();
+        }
+
+        individualDaCase.SakId = eventData?.DaCaseId ?? individualDaCase.SakId;
+        individualDaCase.Status = "FERDIGBEHANDLET";
+        individualDaCase.ResultatType = PrivatSkifteParagraf99;
+        individualDaCase.Skifteattest = new Skifteattest
+        {
+            Resultat = PrivatSkifteParagraf99,
+            Arvinger = arvinger,
+        };
+
+        recipient.MottakerOriginalSkifteattest = true;
+
+        await oedClient.PostDaEvent(estate.Data);
+        logger.LogInformation(
+            "Issued probate for subject [{Subject}] from individual declaration submitted by [{SubmittedBy}]",
+            cloudEvent.Subject, individualDeclaration.SubmittedBy);
+
+        return TypedResults.Ok();
     }
 }
 

@@ -24,7 +24,6 @@ public static class ForetakEndpoints
 
     private static async Task<Ok<List<ForetakDto>>> GetForetakByQuery(
         IMaskinportenClient mpClient,
-        IEstateStore estateStore,
         [AsParameters] ForetakQuery query)
     {
         var tenorWrapper = await mpClient.TenorCompanySearch(ForetakMapper.Map(query));

@@ -51,7 +51,6 @@ namespace oed_testdata.Server.Infrastructure.Altinn
                 { "orgNo", "991825827" },
                 { "org", "digdir" },
                 { "ttl", "86400" },
-                //{ "partyId", "50552094" },
                 { "scopes", scopes }
             };
 

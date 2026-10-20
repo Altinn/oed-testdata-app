@@ -26,7 +26,7 @@ public static class NorskPensjonEndpoints
         ILoggerFactory loggerFactory)
     {
         var logger = loggerFactory.CreateLogger(typeof(NorskPensjonEndpoints));
-        logger.LogInformation("Handling call for {path}", httpContext.Request.Path.Value);
+        logger.LogInformation("Handling call for {Path}", httpContext.Request.Path.Value);
 
         var resp = await store.GetAsync<PensionResponse>("./Testdata/Json/NorskPensjon", instanceOwnerPartyId);
         return Results.Ok(resp);

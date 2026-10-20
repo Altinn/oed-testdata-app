@@ -26,7 +26,7 @@ public static class SvvEndpoints
         ILoggerFactory loggerFactory)
     {
         var logger = loggerFactory.CreateLogger(typeof(SvvEndpoints));
-        logger.LogInformation("Handling call for {path}", httpContext.Request.Path.Value);
+        logger.LogInformation("Handling call for {Path}", httpContext.Request.Path.Value);
 
         var resp = await store.GetAsync<SvvResponse>("./Testdata/Json/Svv", instanceOwnerPartyId);
         return Results.Ok(resp);

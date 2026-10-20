@@ -2,3 +2,8 @@
 
 # CA1873: Avoid potentially expensive logging
 dotnet_diagnostic.CA1873.severity = none
+
+[src/oed-testdata.Server/Models/oed.cs]
+
+# S101: OED_M is generated from the oed app data model and keeps its name
+dotnet_diagnostic.S101.severity = none

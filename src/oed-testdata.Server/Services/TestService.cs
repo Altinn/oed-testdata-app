@@ -25,9 +25,9 @@ public class TestService(
         if (oedInstances.Count == 0)
             return "No oed instance";
 
-        var partyId = oedInstances.First().InstanceOwner.PartyId;
-        var oedInstanceGuid = oedInstances.First().Data.First().InstanceGuid;
-        var oedInstanceDataGuid = oedInstances.First().Data.First(data => data.ContentType == "application/xml").Id;
+        var partyId = oedInstances[0].InstanceOwner.PartyId;
+        var oedInstanceGuid = oedInstances[0].Data[0].InstanceGuid;
+        var oedInstanceDataGuid = oedInstances[0].Data.First(data => data.ContentType == "application/xml").Id;
 
         var oedInstanceData = await altinnClient.GetInstanceData<OED_M>(partyId, oedInstanceGuid, oedInstanceDataGuid);
             
@@ -37,7 +37,7 @@ public class TestService(
         if (decalrationInstances.Count == 0)
             return oedInstanceData;
 
-        var oedDeclarationInstanceGuid = decalrationInstances.First().Data.First().InstanceGuid;
+        var oedDeclarationInstanceGuid = decalrationInstances[0].Data[0].InstanceGuid;
 
         // Get declaration
         var declaration = await maskinportenClient.GetDeclaration(partyId, oedDeclarationInstanceGuid);

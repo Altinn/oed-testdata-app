@@ -40,15 +40,13 @@ namespace oed_testdata.Server.Infrastructure.Auth
             services.AddHttpContextAccessor();
             services.AddScoped<IAuthorizationHandler, QueryParamRequirementHandler>();
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy(AuthorizationPolicies.CloudEvents, builder =>
+            services.AddAuthorizationBuilder()
+                .AddPolicy(AuthorizationPolicies.CloudEvents, builder =>
                 {
                     builder.AddRequirements(new QueryParamRequirement(
                         auth!.CloudEventQueryParamName,
                         auth.CloudEventSecret));
                 });
-            });
 
             return services;
         }

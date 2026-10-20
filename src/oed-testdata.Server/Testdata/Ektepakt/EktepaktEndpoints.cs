@@ -26,7 +26,7 @@ public static class EktepaktEndpoints
         ILoggerFactory loggerFactory)
     {
         var logger = loggerFactory.CreateLogger(typeof(EktepaktEndpoints));
-        logger.LogInformation("Handling call for {path}", httpContext.Request.Path.Value);
+        logger.LogInformation("Handling call for {Path}", httpContext.Request.Path.Value);
 
         var resp = await store.GetAsync<EktepaktResponse>("./Testdata/Json/Ektepakt", instanceOwnerPartyId);
         return Results.Ok(resp);

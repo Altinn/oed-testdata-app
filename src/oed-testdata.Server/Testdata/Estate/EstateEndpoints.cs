@@ -222,7 +222,7 @@ namespace oed_testdata.Server.Testdata.Estate
                 ]
             };
             
-            foreach (var part in daData.DaCaseList.First().Parter)
+            foreach (var part in daData.DaCaseList[0].Parter)
             {
                 part.AdditionalProperties.Clear();
             }

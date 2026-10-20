@@ -28,7 +28,7 @@ if (builder.Environment.IsDevelopment())
                 .SetIsOriginAllowed(origin =>
                 {
                     if (string.IsNullOrWhiteSpace(origin)) return false;
-                    if (origin.ToLower().StartsWith("https://localhost")) return true;
+                    if (origin.StartsWith("https://localhost", StringComparison.OrdinalIgnoreCase)) return true;
                     return false;
                 });
         })

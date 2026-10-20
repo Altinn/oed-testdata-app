@@ -62,7 +62,7 @@ public class EstateService(
                     }
 
                     var partyId = probateInstance.InstanceOwner.PartyId;
-                    var instanceGuid = probateInstance.Id.Split("/").Last();
+                    var instanceGuid = probateInstance.Id.Split("/")[^1];
                     await oedClient.DeleteDdPrivateProbateInstance(partyId, instanceGuid);
                 }
             }
@@ -72,7 +72,7 @@ public class EstateService(
         foreach (var estateInstance in estateInstances)
         {
             var partyId = estateInstance.InstanceOwner.PartyId;
-            var instanceGuid = estateInstance.Id.Split("/").Last();
+            var instanceGuid = estateInstance.Id.Split("/")[^1];
             await oedClient.DeleteOedInstance(partyId, instanceGuid);
         }
 

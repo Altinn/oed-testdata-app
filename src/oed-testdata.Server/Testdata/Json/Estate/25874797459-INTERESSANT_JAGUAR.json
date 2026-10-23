@@ -1,0 +1,60 @@
+{
+  "DaEventList": [
+    [
+      {
+        "specversion": "1.0",
+        "id": "cba9341f-1763-45fa-b2c8-df0d86d4c92d",
+        "source": "https://domstol.no",
+        "type": "DODSFALLSAK-STATUS_OPPDATERT",
+        "datacontenttype": "application/json",
+        "time": "2026-01-01T00:00:00Z",
+        "data": {
+          "@id": "https://hendelsesliste.test.domstol.no/api/objects/cba9341f-1763-45fa-b2c8-df0d86d4c92d"
+        }
+      }
+    ]
+  ],
+  "DaCaseList": [
+    {
+      "sakId": "cba9341f-1763-45fa-b2c8-df0d86d4c92d",
+      "saksnummer": "25-000011DFA-TOSL/07",
+      "avdode": "25874797459",
+      "embete": "Oslo Tingrett",
+      "status": "MOTTATT",
+      "parter": [
+        {
+          "type": "Person",
+          "nin": "19874998179",
+          "role": "GJENLEV_EKTEFELLE_PARTNER",
+          "formuesfullmakt": true,
+          "signertDato": null
+        },
+        {
+          "type": "Person",
+          "nin": "17827498483",
+          "role": "BARN",
+          "formuesfullmakt": true,
+          "signertDato": null
+        },
+        {
+          "type": "Person",
+          "nin": "13898097395",
+          "role": "BARN",
+          "formuesfullmakt": true,
+          "signertDato": null
+        },
+        {
+          "type": "Person",
+          "nin": "12857297057",
+          "role": "PART_ANNEN",
+          "formuesfullmakt": true,
+          "signertDato": null
+        }
+      ],
+      "receivedDate": "2026-01-01T00:00:00Z",
+      "deadlineDate": "2026-12-01T00:00:00Z",
+      "resultatType": null,
+      "skifteattest": null
+    }
+  ]
+}

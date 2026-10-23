@@ -1,0 +1,25 @@
+{
+  "persons": [
+    {
+      "nin": "19874998179",
+      "name": "Tom Komposisjon"
+    },
+    {
+      "nin": "17827498483",
+      "name": "Tom Oppdatering"
+    },
+    {
+      "nin": "13898097395",
+      "name": "Uvitende Abonnent"
+    },
+    {
+      "nin": "12857297057",
+      "name": "Spesiell Konsert"
+    }
+  ],
+  "tags": [
+    "Formuesfullmakt",
+    "Espen",
+    "AnnenPart"
+  ]
+}

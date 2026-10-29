@@ -9,6 +9,7 @@ permissions:
   contents: read
 env:
   DOTNET_VERSION: "10.0.x" # Global environment variables
+  NODE_VERSION: "26"
   TEST_APP_SERVICE_NAME: "oed-testapp-app-linux"
 
 jobs:
@@ -28,6 +29,13 @@ jobs:
         uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Set up Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: src/oed-testdata.client/package-lock.json
 
       - name: Restore dependencies
         run: dotnet restore

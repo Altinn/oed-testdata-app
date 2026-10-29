@@ -28,7 +28,7 @@ import {
   COMPANY_API,
   RELATIONSHIP_OPTIONS,
 } from "../../utils/constants";
-import { useToast } from "../../context/toastContext";
+import { useToast } from "../../context/useToast";
 import "./style.css";
 import { HeirSearch } from "../../interfaces/IPersonSearch";
 import { Foretak, ForetakPapp, Heir, Person, PersonPapp } from "./types";

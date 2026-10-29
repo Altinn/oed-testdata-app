@@ -55,48 +55,6 @@ function App() {
     }
   };
 
-  const EstatesPanel = () => {
-    return (
-      <>
-        <Heading
-          level={2}
-          data-size="xs"
-          style={{ marginBottom: "var(--ds-size-2)" }}
-        >
-          Filtrer på tagger
-        </Heading>
-        <List.Unordered className="tag-list">
-          {uniqueTags?.length > 0 &&
-            uniqueTags.map((tag) => (
-              <List.Item key={tag}>
-                <Chip.Checkbox
-                  onClick={() => toggleTag(tag)}
-                  name={tag}
-                  value={tag}
-                  checked={selectedTags.includes(tag)}
-                  data-color="warning"
-                >
-                  {tag}
-                </Chip.Checkbox>
-              </List.Item>
-            ))}
-        </List.Unordered>
-        <List.Unordered
-          className="container__grid"
-          style={{ alignItems: "baseline" }}
-        >
-          {filteredEstates?.map((estate) => {
-            return (
-              <List.Item key={estate.estateSsn}>
-                <EstateCard data={estate} />
-              </List.Item>
-            );
-          })}
-        </List.Unordered>
-      </>
-    );
-  };
-
   if (!isAuthenticated) {
     return (
       <main>
@@ -124,6 +82,15 @@ function App() {
     });
   }
   const isDevelopment = import.meta.env.MODE === "development";
+
+  const estatesPanel = (
+    <EstatesPanel
+      uniqueTags={uniqueTags}
+      selectedTags={selectedTags}
+      toggleTag={toggleTag}
+      filteredEstates={filteredEstates}
+    />
+  );
 
   return (
     <>
@@ -164,15 +131,69 @@ function App() {
               <NewEstateForm uniqueTags={uniqueTags} />
             </Tabs.Panel>
             <Tabs.Panel value="estates" id="estates-tab">
-              <EstatesPanel />
+              {estatesPanel}
             </Tabs.Panel>
           </Tabs>
         ) : (
-          <EstatesPanel />
+          estatesPanel
         )}
       </main>
     </>
   );
 }
+
+type EstatesPanelProps = {
+  uniqueTags: string[];
+  selectedTags: string[];
+  toggleTag: (tag: string) => void;
+  filteredEstates: Estate[] | undefined;
+};
+
+const EstatesPanel = ({
+  uniqueTags,
+  selectedTags,
+  toggleTag,
+  filteredEstates,
+}: EstatesPanelProps) => {
+  return (
+    <>
+      <Heading
+        level={2}
+        data-size="xs"
+        style={{ marginBottom: "var(--ds-size-2)" }}
+      >
+        Filtrer på tagger
+      </Heading>
+      <List.Unordered className="tag-list">
+        {uniqueTags?.length > 0 &&
+          uniqueTags.map((tag) => (
+            <List.Item key={tag}>
+              <Chip.Checkbox
+                onClick={() => toggleTag(tag)}
+                name={tag}
+                value={tag}
+                checked={selectedTags.includes(tag)}
+                data-color="warning"
+              >
+                {tag}
+              </Chip.Checkbox>
+            </List.Item>
+          ))}
+      </List.Unordered>
+      <List.Unordered
+        className="container__grid"
+        style={{ alignItems: "baseline" }}
+      >
+        {filteredEstates?.map((estate) => {
+          return (
+            <List.Item key={estate.estateSsn}>
+              <EstateCard data={estate} />
+            </List.Item>
+          );
+        })}
+      </List.Unordered>
+    </>
+  );
+};
 
 export default App;

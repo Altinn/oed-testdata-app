@@ -26,7 +26,7 @@ import {
 } from "@navikt/aksel-icons";
 import { Estate } from "../../interfaces/IEstate";
 import { ESTATE_API, RELATIONSHIP_OPTIONS } from "../../utils/constants";
-import { useToast } from "../../context/toastContext";
+import { useToast } from "../../context/useToast";
 import {
   addDays,
   dateOnlyString,

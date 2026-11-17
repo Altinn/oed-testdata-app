@@ -10,7 +10,6 @@ public interface IAltinnClient
     public Task<List<Instance>> GetOedDeclarationInstancesByDeceasedNin(string deceasedNin);
     public Task<List<Instance>> GetDdPrivateProbateInstancesByDeceasedNin(string deceasedNin);
     public Task<List<Instance>> GetDdPrivateProbateInstancesByInstanceOwner(string instanceOwnerIdentifier);
-    public Task<T> GetInstanceData<T>(string partyId, string instanceId, string instanceDataId);
 }
 
 public class AltinnClient(HttpClient httpClient) : IAltinnClient
@@ -85,17 +84,5 @@ public class AltinnClient(HttpClient httpClient) : IAltinnClient
         var altinnResponse = await AltinnJsonSerializer.Deserialize<AltinnInstancesResponse>(contentStream);
 
         return altinnResponse.Instances;
-    }
-
-    public async Task<T> GetInstanceData<T>(string partyId, string instanceId, string instanceDataId)
-    {
-        var path = $"/storage/api/v1/instances/{partyId}/{instanceId}/data/{instanceDataId}";
-
-        var response = await httpClient.GetAsync(path);
-
-        await using var contentStream = await response.Content.ReadAsStreamAsync();
-        var data = AltinnXmlSerializer.Deserialize<T>(contentStream);
-
-        return data;
     }
 }

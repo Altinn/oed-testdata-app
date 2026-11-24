@@ -8,7 +8,7 @@ on:
 permissions:
   contents: read
 env:
-  DOTNET_VERSION: "10.0.x" # Global environment variables
+  DOTNET_VERSION: "11.0.x" # Global environment variables
   NODE_VERSION: "26"
   TEST_APP_SERVICE_NAME: "oed-testapp-app-linux"
 
